@@ -1,0 +1,127 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_detail">
+		<h3>Destinazione:</h3>
+		<div class="buttonmenu savebutton admin" ng-click="saveDestination()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="buttonmenu redobutton ">
+			<div class="redo buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Ricarica
+			</div>
+		</div>
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="destination_main_detail">	
+				<div class="info">
+					<div class="fields code">
+						<div class="label ">Codice *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="destination.destinationcode" value="{{destination.destinationcode}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields name">
+						<div class="label ">Ragione Sociale *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="destination.destinationname" value="{{destination.destinationname}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Codice Fiscale *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="destination.taxcode" value="{{destination.taxcode}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Partita Iva *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="destination.serialnumber" value="{{destination.serialnumber}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Attivo</div>
+						<div class="field "><input class="inputfield" type="checkbox" id="ifname" ng-model="destination.active" value="{{destination.active}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="customer_container">
+						<div class="fields code">
+							<div class="label ">Cliente </div>
+							<div class="field">
+								<select id="selgroup" class="inputfield" ng-model="currentCustomer"    ng-options="customer as customer.customername for customer in customers" ></select>
+							</div>
+						</div>
+					</div>	
+				</div>
+				
+			</div>
+			
+		</div>
+		<div class="generaltable" ng-if="selectedSection == listsections[0]">
+			<div class="destination_address_detail">	
+				<div class="contact">
+					<div class="fields address">
+						<div class="label">Indirizzo</div>
+						<div class="field address"><input class="inputfield" ng-model="destination.address.address" value="{{destination.address.address}}" /></div>
+						<div class="field number"><input class="inputfield" ng-model="destination.address.number" value="{{destination.address.number}}" /></div>
+					</div>
+					<div class="fields seventy">
+						<div class="label mobile">Città</div>
+						<div class="field mobile"><input class="inputfield" ng-model="destination.address.city" value="{{destination.address.city}}" /></div>
+					</div>
+					<div class="fields tenth">
+						<div class="label email">Provincia</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.address.zone" value="{{destination.address.zone}}" /></div>
+					</div>
+					<div class="fields fifteen_right">
+						<div class="label email">CAP</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.address.zipcode" value="{{destination.address.zipcode}}" /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="credentials" ng-if="selectedSection == listsections[0]">
+			<div class="credential">
+				<div class="fields one_on_three_left">
+					<div class="label phone">Telefono 1</div>
+					<div class="field phone"><input class="inputfield" ng-model="destination.contact.phone1" value="{{destination.contact.phone1}}" /></div>
+				</div>
+				<div class="fields one_on_three_left">
+					<div class="label phone">Telefono 2</div>
+					<div class="field phone"><input class="inputfield" ng-model="destination.contact.phone2" value="{{destination.contact.phone2}}" /></div>
+				</div>
+				<div class="fields one_on_three_right">
+						<div class="label email">Fax</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.contact.fax" value="{{destination.contact.fax}}" /></div>
+					</div>
+			</div>
+			<div class="credential">
+				<div class="fields one_on_three_left">
+						<div class="label mobile">Cellulare 1</div>
+						<div class="field mobile"><input class="inputfield" ng-model="destination.contact.mobile1" value="{{destination.contact.mobile1}}" /></div>
+					</div>
+				<div class="fields one_on_three_left">
+						<div class="label mobile">Cellulare 2</div>
+						<div class="field mobile"><input class="inputfield" ng-model="destination.contact.mobile2" value="{{destination.contact.mobile2}}" /></div>
+					</div>
+				<div class="fields one_on_three_right">
+					<div class="label email">Contatto</div>
+					<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.contact.reference" value="{{destination.contact.reference}}" /></div>
+				</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+						<div class="label email">Email 1</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.contact.email1" value="{{destination.contact.email1}}" /></div>
+					</div>
+				<div class="fields right">
+						<div class="label email">Email 2</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="destination.contact.email2" value="{{destination.contact.email2}}" /></div>
+					</div>
+			</div>
+		</div>
+			
+		
+	</div>
+</div>

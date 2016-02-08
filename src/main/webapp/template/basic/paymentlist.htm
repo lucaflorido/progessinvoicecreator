@@ -1,0 +1,106 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Pagamenti</h3>
+		<div class=" buttonmenu addbutton "  >
+			<a ng-click="addpaymentElement()" ng-if="paymentsaved == true">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Pagamento 
+				</div>
+			</a>
+		</div>
+		<div class="buttonmenu savebutton admin" ng-click="savepayments()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer counter" >
+		<table class="GECO_table three_two clearfix">
+			<tr>
+				<td class="header_table row_table first name">Codice</td>
+				
+				<td class="header_table row_table cognome">Descrizione</td>
+				<td class="header_table row_table icon half">&nbsp;</td>
+				<td class="header_table row_table icon half">&nbsp;</td>
+				<td class="header_table row_table icon half">&nbsp;</td>
+			</tr>
+		</table>
+		<div ng-repeat="payment in payments | filter:query | orderBy:orderProp" >	
+			<table class="GECO_table store_table three_two clearfix">	
+				<tbody>
+					<tr >
+						<td class="row_table first cognome">
+							<div ng-if="modifyid != payment.idPayment">&nbsp;{{payment.code}}</div><div><input ng-if="modifyid == payment.idPayment" ng-model="payment.code"  value="{{payment.code}}" />  </div>
+						</td>
+						<td class="row_table  username"  >
+							<div ng-if="modifyid != payment.idPayment">&nbsp;{{payment.description}}</div><div><input ng-if="modifyid == payment.idPayment" ng-model="payment.description"  value="{{payment.description}}" />  </div>
+						</td>
+						
+						
+						<td class="row_table half cognome"><a href="#/payment"><i class="icon_setup fi-pencil"  ng-click="modifypaymentElement(payment.idPayment)" ></i></a></td>
+						
+						<td class="row_table half cognome"><a >
+						<div class=" icon detail">
+							<div class="detailicon open" ng-click="detailView(payment.idPayment)" id="detail{{payment.idPayment}}" ></div>
+						</div>
+					</a>
+						</td>
+						
+						<td class="row_table half cognome"><a >
+							<div class="  "><div class="deleteicon" id="del{{payment.idPayment}}" ng-click="deletepaymentElement(payment.idPayment)" ></div></div>
+						</td>
+						 
+					</tr>
+				</tbody>
+			</table>
+			<div class="detailview" id="detailview{{payment.idPayment}}" on-finish-render>
+				<div class="add_container" ng-click="addDeadlineElement(payment)">
+									<div class="addlabel">
+										Aggiungi Scadenza 
+									</div>
+									<div class="add buttonicon">
+									</div>
+									
+								</div>
+				<div class="GECO_right_table">
+				
+				<table class="GECO_table GECO_table_subdetail three_two clearfix">
+					<thead>
+						<tr>
+							<td class="header_table row_table first">Giorni</td>
+							
+						</tr>
+						
+					</thead>
+					<tbody>
+						<tr  ng-repeat="deadline in payment.deadlines | orderBy:orderYear" >
+							
+							<td class="row_table first">
+								<div ng-if="modifyid != payment.idPayment">&nbsp;{{deadline.days}}</div>
+											<div><input ng-if="modifyid == payment.idPayment" ng-model="deadline.days"  value="{{deadline.days}}" />  </div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>

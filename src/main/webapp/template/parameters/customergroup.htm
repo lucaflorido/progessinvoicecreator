@@ -1,0 +1,84 @@
+<div class="container_menu userlist clearfix">
+<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td class="title_td">
+					Elenco Clienti Gruppo
+				</td>
+			</tr>
+  </table>
+  		<table class="menutable"><tr>
+	<td class="buttontd"  >
+	<a ng-click="addcustomergroupElement()" ng-if="customergroupsaved == true">
+	<div class="addlabel"> Aggiungi Gruppo
+		</div>
+		</a>
+	</td>
+	<td class="buttontd" >
+	<a ng-click="savecustomergroups()">
+	<div class="addlabel">  Salva 
+		</div>
+		</a>
+	</td>
+	</tr>
+	</table>
+
+  
+  
+	<div class="toolbar_table">
+		
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer customergroup" >
+		<!--div class="table">
+			<div class="tableheader   clearfix">
+				<div class="header_table row_table first name">Codice</div>
+				<div class="header_table row_table cognome">Nome</div>
+				<div class="header_table row_table cognome">Descrizione</div>
+				<div class="header_table row_table cognome">Note</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="customergroup in customergroups | filter:query | orderBy:orderProp">
+				<div class="row ">
+					<div class="row_table first username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.code}}</div><div><input ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.code"  value="{{customergroup.code}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.name}}</div><div><input ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.name"  value="{{customergroup.name}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.description}}</div><div><input ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.description"  value="{{customergroup.description}}" />  </div></div>
+					<div class="row_table  usernote"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.note}}</div><div><input ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.note"  value="{{customergroup.note}}" />  </div></div>
+					<a href="#/customergroup"><div class="row_table modify"><div class="modifyicon" ng-click="modifycustomergroupElement(customergroup.idGroupCustomer)" ></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletecustomergroupElement(customergroup.idGroupCustomer)" ></div></div>
+				</div>
+			</div>
+		</div-->
+		<table class="GECO_table four_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first name">Codice</td>
+					<td class="header_table row_table cognome">Nome</td>
+					<td class="header_table row_table cognome">Descrizione</td>
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr bgcolor="#FFFFFF" ng-repeat="customergroup in customergroups | filter:query | orderBy:orderProp">
+					<td class="row_table first username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.code}}</div><div><input class="input_field"  ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.code"  value="{{customergroup.code}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.name}}</div><div><input class="input_field"  ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.name"  value="{{customergroup.name}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != customergroup.idGroupCustomer">&nbsp;{{customergroup.description}}</div><div><input class="input_field"  ng-if="modifyid == customergroup.idGroupCustomer" ng-model="customergroup.description"  value="{{customergroup.description}}" />  </div></td>
+					<td class="row_table half" ><a href="#/customergroup"><div class="modify"><div class="modifyicon" ng-click="modifycustomergroupElement(customergroup.idGroupCustomer)" ></div></div></a></td>
+				    <td class="row_table half"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletecustomergroupElement(customergroup.idGroupCustomer)" ></div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

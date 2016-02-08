@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="large-6 columns">
+		<img class="ec_img_detail" ng-src="{{'data:image/png;base64,'+$parent.product.photo}}" ></img>
+	</div>
+	<div class="large-6 columns">
+		<div class="row" >
+			<div class="large-12 columns">
+				<h5>{{$parent.product.shortdescription}}</h5>
+			</div>
+			<div class="row">
+				<form class="ec_product_details">
+					<div class="row">
+						<div class="large-12 columns" ng-show="$parent.product.category.name" >
+							<label> <div class="filterlabel">Categoria</div> <h4>{{$parent.product.category.name}}</h4>
+							</label>
+						</div>
+						<div class="large-12 columns" ng-show="$parent.product.subcategory.name" >
+							<label> <div class="filterlabel">Subcategoria</div> <h4>{{$parent.product.subcategory.name}}</h4>
+							</label>
+						</div>
+						<div class="large-12 columns" ng-show="$parent.product.brand.name" >
+							<label> <div class="filterlabel">Marca</div> <h4>{{$parent.product.brand.name}}</h4>
+							</label>
+						</div>
+						<div class="large-12 columns" ng-show="$parent.product.region.name  " >
+							<label> <div class="filterlabel">Regione</div> <h4>{{$parent.product.region.name}}</h4>
+							</label>
+						</div>
+						<div class="large-12 columns" ng-show="$parent.product.group.name" >
+							<label> <div class="filterlabel">Gruppo</div> <h4>{{$parent.product.group.name}}</h4>
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="large-12 columns" >
+				<button class="button tiny extend round" ng-disabled="$parent.selectedElement.added" ng-click="$parent.addToChart($parent.selectedElement)" ><i class="fi-shopping-cart" ></i> Aggiungi al carrello</button>
+			</div>
+			<div class="large-12 columns">
+				<button class="button tiny extend round" ng-click="$parent.showProductDetails = false">Indietro</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<h4>{{$parent.product.description}}</h4>
+	</div>
+	<div class="large-12 columns">
+		<h5>{{$parent.product.longdescription}}</h5>
+	</div>
+</div>

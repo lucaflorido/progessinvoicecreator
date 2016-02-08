@@ -1,0 +1,150 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Fornitore</h3>
+		<div class=" buttonmenu addbutton admin_grant" >
+			<a href="#/supplier/0">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Fornitore 
+				</div>
+			</a>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="openFilter()">
+			<div class="search">
+			</div>
+			<div class="printlabel">
+				Filtra
+			</div>
+		</div>
+		<div class="filter">
+		<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+			
+			
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+			
+		</div>
+	</div>
+	<div>
+			<div class="PRODUCT_DIALOG" ng-show="showFilter == true">
+				<div class="PRODUCT_DIALOG_COLUMN">	
+					<div>
+						<div class="PRODUCT_fields">
+							<div class="PRODUCT_label">Gruppo </div>
+							<div class="PRODUCT_field role">
+								<select id="selgroupfilter" class="inputfield"  ng-model="currentGroup"    ng-options="group as group.name for group in groups" ng-data-provider="groups" create-chosen on-finish-chosen-update ng-change="filterSupplier.group = currentGroup">
+									<option value=""></option>
+								</select>
+							</div>
+						</div>
+						<div class="PRODUCT_fields">
+							<div class="PRODUCT_label name">Categoria</div>
+							<div class="PRODUCT_field role">
+								<select id="selcategory" class="inputfield" ng-model="currentCategory"    ng-options="category as category.name for category in categorys" ng-change="changeCategory()" ng-data-provider="categorys" create-chosen on-finish-chosen-update ng-change="filterSupplier.category = currentCategory" > <option value=""></option></select>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="PRODUCT_DIALOG_COLUMN">
+					<div >
+						
+						<div class="PRODUCT_fields">
+							<div class="PRODUCT_label name">Ricerca </div>
+							<div class="PRODUCT_field role">
+								<input class="PRODUCT_inputfield" ng-model="filterSupplier.searchstring" value={{filterSupplier.searchstring}}></input>
+							</div>
+						</div>
+						
+					</div>
+						
+					</div>
+				</div>
+		</div>
+		
+	</div>
+	</div>
+	<div class="pagination clearfix">
+				<div class="navcontainer ">
+					<ul >
+					</ul>
+					
+					
+				</div>
+				<div class="filter">
+					<button ng-click="getSuppliers()" >Filtra</button>
+				</div>
+				
+				<div class="filter">
+					<input class="filter" ng-model="pagesize" value="{{pagesize}}">
+				</div>
+				<div class="label filter">Righe per pagina:</div>
+		</div>
+	<div class="tablecontainer" >
+		<table class="GECO_table seven_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table half first">&nbsp;</td>
+					<td class="header_table row_table threequarter "><div class="sorter" ng-click="sortFunction('suppliercode')"><div class="sorter_label">Codice</div><div class="sortericon suppliercode"></div></div></div></td>
+					<td class="header_table row_table double"><div class="sorter" ng-click="sortFunction('suppliername')"><div class="sorter_label">Ragione Sociale</div><div class="sortericon suppliername"></div></div></td>
+					<td class="header_table row_table double"><div class="sorter" ng-click="sortFunction('address.address')"><div class="sorter_label">Indirizzo</div><div class="sortericon address address"></div></div></td>
+					<td class="header_table row_table single">Telefono</td>
+					<td class="header_table row_table single">Cellulare</td>
+					<td class="header_table row_table single">Fax</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="supplier in suppliers  | filter:query | orderBy:orderArray">
+					<td class=" row_table half first"><a href="#/supplier/{{supplier.idSupplier}}"><div class=" modify first"><div class="modifyicon"></div></div></a></td>
+					<td class="row_table  threequarter">&nbsp;{{supplier.suppliercode}}</td>
+					<td class="row_table double">&nbsp;{{supplier.suppliername}} </td>
+					<td class="row_table double">&nbsp;{{supplier.address.address}}</td>
+					<td class="row_table single">&nbsp;{{supplier.contact.phone1}}</td>
+					<td class="row_table single">&nbsp;{{supplier.contact.mobile1}}</td>
+					<td class="row_table single">&nbsp;{{supplier.contact.fax}}</td>
+					<td class="row_table half"><div class="deleteicon" id="del{{supplier.idSupplier}}" ng-click="deleteElement(supplier.idSupplier)"></div></td>
+				</tr>
+			</tbody>
+		</table>
+		<!--div class="table">
+			<div class="tableheader  suppliers clearfix">
+				<div class="header_table row_table modify first">&nbsp;</div>
+				<div class="header_table row_table  single">Codice</div>
+				<div class="header_table row_table double">Ragione Sociale</div>
+				<div class="header_table row_table double">Indirizzo</div>
+				<div class="header_table row_table single">Telefono</div>
+				<div class="header_table row_table single">Cellulare</div>
+				<div class="header_table row_table single">Fax</div>
+				
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="supplier in suppliers | filter:query | orderBy:orderProp">
+				<div class="row suppliers">
+					<a href="#/supplier/{{supplier.idSupplier}}"><div class="row_table modify first"><div class="modifyicon"></div></div></a>
+					<div class="row_table  single">&nbsp;{{supplier.suppliercode}}</div>
+					<div class="row_table double">&nbsp;{{supplier.suppliername}} </div>
+					<div class="row_table double">&nbsp;{{supplier.address.address}}</div>
+					<div class="row_table single">&nbsp;{{supplier.contact.phone1}}</div>
+					<div class="row_table single">&nbsp;{{supplier.contact.mobile1}}</div>
+					<div class="row_table single">&nbsp;{{supplier.contact.fax}}</div>
+					<div class="row_table delete"><div class="deleteicon" id="del{{supplier.idSupplier}}" ng-click="deleteElement(supplier.idSupplier)"></div></div>
+				</div>
+			</div>
+		</div-->
+	</div>
+</div>

@@ -1,0 +1,141 @@
+ <div class="row" >
+            	<div class="large-12 columns" >
+					<h4  class="draft_title">Il mio carrello </h4>
+				</div>
+            	<div class="large-12 small-12 columns" ng-repeat="element in draft.products">
+            		<div class="row">
+            			<div class="large-1 small-4 columns">
+            				<button class="button round tiny alert" ng-click="removeChart(element)"><i class="fi-x" ></i></button>
+            			</div>
+            			<div class="large-2 small-4 columns">
+            				<img class="ec_image_draft" ng-src="{{element.product.photo}}">
+            			</div>
+            			<div class="large-4 small-6 columns">
+            				<div class="ec_title" >{{element.product.shortdescription}}</div>
+            				<div class="ec_description" >{{element.product.description}}</div>
+            			</div>
+            			<div class="large-3 small-6 columns">
+            				<select  ng-model="element.quantity" ng-change="updateChart(element,true)" >
+                    		<option ng-repeat="o in element.range" value="{{o}}" ng-selected="element.quantity == o">{{o}}</option>
+                    	</select>
+            				<div class="ec_delivery intime" ng-show="element.directdelivery">consegna entro il{{element.deliverydate}}</div>
+                     				<div class="ec_delivery late" ng-hide="element.directdelivery">consegna con riordino entro il{{element.deliverydate}}</div>
+            			</div>
+            			<div class="large-2 small-6 columns">
+            				<div>&#8364; {{formatCurrency(element.endprice)}}</div>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+           
+             <div class="row" >
+             			<div class="row" >
+             				<div class="large-12 columns" >
+								<h4 class="draft_title">Indirizzo di consegna </h4>
+							</div>
+						</div>
+             			
+					<form name="deliveryAddress"  class="simple-form" ng-submit="gotoPay(deliveryAddress)" novalidate>	
+						<div class="row" ng-show="draftFactory.user.destinations" >
+							<div class="large-12 columns" ng-repeat= "dest in draftFactory.user.destinations | orderBy:'idDestination':true ">
+								<input type="radio"  name="delivery" ng-value="dest" ng-model="selectedDestination" ng-click="setDestination(selectedDestination)" /> {{dest.address.address}} {{dest.address.number}} {{dest.address.city}} {{dest.address.zone}} {{dest.address.country}}
+							</div>
+						</div>
+						<div class="row" ng-show="draftFactory.user.destinations" >
+							<div class="large-12 columns" >
+								<button class="button" ng-click="newDeliveryAddress()" >Nuovo Indirizzo </button>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="large-8 columns">
+								<input type="text" name="street" placeholder="Indirizzo *" ng-model="draftaddress.address" required />
+								<small class="error" ng-show="deliveryAddress.street.$error.required && (!deliveryAddress.street.$pristine || (deliveryAddress.street.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+							<div class="large-4 columns">
+								<input type="text" name="number" placeholder="Civico *" ng-model="draftaddress.number" required />
+								<small class="error" ng-show="deliveryAddress.number.$error.required && (!deliveryAddress.number.$pristine || (deliveryAddress.number.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="large-12 columns">
+								<input type="text" name="country" ng-model="draftaddress.countryObj" typeahead="state as state.name for state in countries | orderBy:'name' | filter:$viewValue " 
+			            			 typeahead-editable="true" placeholder="Nazione*"
+			            			 typeahead-on-select="onSelect($item, $model, $label)"
+			            			 class="form-control" ng-change="countryChange()" required >
+			            			 <small class="error" ng-show="deliveryAddress.country.$error.required && (!deliveryAddress.country.$pristine || (deliveryAddress.country.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+							
+						</div>
+						
+						<div class="row">
+							<div class="large-2 columns">
+								<input type="text" ng-model="draftaddress.zoneObj" typeahead="zone as zone.name for zone in zones | orderBy:'name' | filter:$viewValue " 
+			            			 typeahead-editable="true" placeholder="Provincia*" name="zone"
+			            			 typeahead-on-select="onSelectZone($item, $model, $label)"
+			            			 class="form-control" ng-change="zoneChange()"  ng-disabled="!draftaddress.countryObj || draftaddress.countryObj == '' " required >
+			            			 <small class="error" ng-show="deliveryAddress.zone.$error.required && (!deliveryAddress.zone.$pristine || (deliveryAddress.zone.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+							<div class="large-6 columns">
+								<input type="text" ng-model="draftaddress.cityObj" typeahead="city as city.name for city in cities | orderBy:'name' | filter:$viewValue " 
+			            			 typeahead-editable="true" placeholder="Citt&#224;*" name="city"
+			            			 typeahead-on-select="onSelectCity($item, $model, $label)"
+			            			 class="form-control" ng-change="cityChange()"  ng-disabled="!draftaddress.countryObj" required >
+			            			 <small class="error" ng-show="deliveryAddress.city.$error.required && (!deliveryAddress.city.$pristine || (deliveryAddress.city.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+							<div class="large-4 columns">
+								<input type="text" name="zipcode" placeholder="CAP *" ng-model="draftaddress.zipcode"  required />
+								<small class="error" ng-show="deliveryAddress.zipcode.$error.required && (!deliveryAddress.zipcode.$pristine || (deliveryAddress.zipcode.$error.required && deliveryAddress.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						</form>
+            	
+            </div>
+         
+           	 <div class="row" >
+           	 	<div class="large-12 small-12 columns" >
+            		<div class="row">
+            			<div class="large-9 small-6 subtotal_ec columns">
+            				<h5>TOTALE PRODOTTI:</h5>
+            			</div>
+            			<div class="large-3 small-6 subtotal_ec_amount columns">
+            				<h5>&#8364; {{formatCurrency(draft.amount)}} </h5>
+            			</div>
+            		</div>
+            	</div>
+            	<div class="large-12 small-12 columns" >
+            		<div class="row">
+            			
+            			<div class="large-9 small-6 subtotal_ec  columns">
+            				<h5 ng-show="transportCostCalculated">TRASPORTO :</h5>
+            				<h5 class="ec_warning" ng-hide="transportCostCalculated"> <i class="fi-alert"></i> Inserire l'indirizzo di consegna </h5>
+            			</div>
+            			<div class="large-3 small-6 subtotal_ec_amount columns">
+            				<h5 ng-show="transportCostCalculated">&#8364; {{formatCurrency(draft.delcost)}} </h5>
+            			</div>
+            		</div>
+            	</div>
+            	<div class="large-12 small-12 columns" >
+            		<div class="row">
+            			
+            			<div class="large-9 small-6  subtotal_ec  columns">
+            				<h5>TOTALE CARRELLO :</h5>
+            			</div>
+            			<div class="large-3 small-6 subtotal_ec_amount columns">
+            				<h5>&#8364; {{formatCurrency(draft.total)}} </h5>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+            <div class="row" >
+            	<div class="large-12 small-12 columns" >
+            		<div class="row">
+            			<div class="large-3 small-4 columns">
+            				<button class="button tiny round" ng-click="gotoPay(deliveryAddress)" ng-disabled="!draft.products || draft.products.length == 0 || !deliveryAddress  ">Paga</button>
+           				</div>
+           				<div class="large-3 small-4 columns">
+            				<button class="button tiny round" ng-click="$parent.step = 0">Prodotti</button>
+            			</div>
+            			
+            		</div>
+            	</div>
+            </div>

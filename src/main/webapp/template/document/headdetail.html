@@ -1,0 +1,372 @@
+<div class="row  header_reserved_area  show-for-small-only">
+	<div class="large-3 medium-3 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-9 medium-9  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h5 class="title" >Documento: {{head.document.description}} </h5>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-small-only draft_display btn_status"  >
+	<i class="fi-arrow-left" go-back></i>
+</div>
+<!-- SAVE -->
+<div class="row show-for-small-only draft_display_pos1 btn_status"  ng-if="auth.permission != conf_permission.Customer" >
+	<i class="fi-plus" ng-click="location.path('/head/0')"></i>
+</div>
+<div class="row show-for-small-only draft_display_pos1 btn_status"  ng-if="auth.permission == conf_permission.Customer" >
+	<i class="fi-plus" ng-click="location.path('/wizard_customer')"></i>
+</div>
+
+<div class="row show-for-small-only draft_display_pos2 btn_status"  ng-if="auth.permission != conf_permission.Customer"  >
+	<i class="fi-save" ng-click="saveHead()" ></i>
+</div>
+<div class="row show-for-small-only draft_display_pos4 btn_status"  >
+	<i class="fi-print" ng-click="printElements()" ></i>
+</div>
+<!--  div class="row show-for-small-only draft_display_pos3 btn_status"  >
+	<i class="fi-page-export" ng-click="exportHeads()" ></i>
+</div-->
+
+
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<!--  
+<div class="row show-for-medium-up">
+	<div class="large-4 medium-4 small-4 columns">
+		<h4 >Documento: {{head.document.description}}</h4>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="saveHead()" ng-hide="head.generateTo" class="button small progess_uppercase">Salva</a></li>
+		  	<li><a ng-click="mainPage()" class="button small progess_uppercase">Elenco</a></li>
+		  	<li><a  ng-click="newProduct()" class="button small progess_uppercase">Nuovo</a></li>
+		  	<li ng-show="head.idHead"><a  ng-click="printElements()" class="button small progess_uppercase">Stampa</a></li>
+		  	<li><a  ng-click="newProduct()"  ng-hide="head.generateTo" class="button small progess_uppercase" >Annulla/Elimina</a></li>
+		  	
+		</ul>
+	</div>
+</div>
+-->
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Dettaglio Documento</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+			<li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter"><a ng-click="saveHead()" ng-hide="head.generateTo" class="button"><i class="fi-save" ></i></a></li>
+		  	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" ><a ng-click="openNewDocument()" class="button"><i class="fi-plus"  ></i></a></li>
+		 	<li ng-show="head.idHead"><a  ng-click="printElements()" class="button"><i class="fi-print"  ></i></a></li>
+		 	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" ><a class="button"><i class="fi-x-circle"  ></i></a></li>
+		</ul>
+	</div>
+</div>
+<div class="row show-for-medium-up" ng-show="head.document.flows.length > 0 && !head.generateTo">
+	<div class="large-4 medium-4 small-4 columns">
+		<h4 >Esporta</h4>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group" >
+		  	<li ng-repeat="flow in head.document.flows" ><a  class="button tiny progess_uppercase" ng-click="generateDocument(flow.documentResult)" >{{flow.documentResult.description}}</a></li>
+		 </ul>
+	</div>
+</div>
+<div class="row ">
+	<form>
+		<fieldset>
+			<legend>Testata  <i ng-show="head.document" class="fi-small fi-button "  ng-class="{'fi-arrows-in ':headDetailsView,'fi-arrows-out':!headDetailsView}" ng-click="headDetailsView = !headDetailsView"></i></legend>
+			<div class="row ">
+			<div class="large-3 small-12 medium-6 columns">
+				<label>Tipologia
+					<select ng-model="head.document" ng-options="document.description for  document in documents"  ng-change="calculateNumber()">
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-3 small-12 medium-6 columns">
+				<label>Data<input type="text" ng-change="calculateNumber()"
+					 ng-model="head.date"
+					value="{{head.date"}}" capitalize f-datepicker />
+				</label>
+			</div>
+			<div class="large-3 small-12 medium-6 columns">
+				<label>Numero<input type="text"
+					 ng-model="head.number"
+					value="{{head.number}}" capitalize  />
+				</label>
+			</div>
+			<!-- TO DO <div class="large-3 small-12 medium-6 columns">
+				<label>Protocollo<input type="text"
+					 ng-model="list.startdate"
+					value="{{list.startdate}}" capitalize  />
+				</label>
+			</div>-->
+			<div class="large-3 small-12 medium-6 columns" ng-show="head.document.customer">
+				<label>Cliente
+					<select ng-model="head.customer" ng-options="customer.customername for  customer in customers" ng-change="changeCustomer()" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<!-- TO DO <div class="large-3 small-12 medium-6 columns">
+				<label>Destinazione
+					<select ng-model="currentDestination" ng-options="dest.destinationname for  dest in destinations" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>-->
+			<div class="large-3 small-12 medium-6 columns" ng-show="head.document.supplier  ">
+				<label>Fornitore
+					<select ng-model="currentRole" ng-options="role.name for  role in roles" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-3 small-12 medium-6 columns" ng-show="head.document.customer && headDetailsView">
+				<label>Rappresentante
+					<select ng-model="head.promoter" ng-options="promoter.surname for  promoter in promoters" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-3 small-12 medium-6 columns" ng-show="head.document.customer && headDetailsView">
+				<label>Listino
+					<select ng-model="head.list" ng-options="list.name for  list in lists" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<!-- TODO <div class="large-3 small-12 medium-6 columns" ng-show="head.document.customer && headDetailsView">
+				<label>Pagamento
+					<select ng-model="currentPayment" ng-options="payment.name for  payment in payments" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div> -->
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row ">
+	<form>
+		<fieldset>
+			<legend>Righe</legend>
+		
+		<div class="large-12 medium-12 small-12 columns">
+			<ul class="button-group"  ng-if="auth.permission != conf_permission.Customer" >
+			  	<li><a ng-click="addRowElement()" class="button progess_uppercase tiny">Aggiungi</a></li>
+			  	<li><a ng-click="addProduct = false; showRowDetail = false;" class="button progess_uppercase tiny">Chiudi</a></li>
+			</ul>
+			<fieldset ng-show="showRowDetail">
+				<div class="row">
+				   <div class="large-4 medium-3 small-12 columns">
+				   		<label>Codice<input type="text" id="prod_code" ng-model="currentRow.productcode" value="{{currentRow.productcode}}" ng-blur="getProduct(currentRow.productcode)"/></label>
+				   </div>
+				   <div class="large-8 medium-9 small-12 columns">
+				   		<label>Descrizione<input type="text"  ng-model="currentRow.productdescription" value="{{currentRow.productdescription}}" /></label>
+				   </div>
+				   
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>Quantit&#224;<input id="qta"  type="text" ng-model="currentRow.quantity" value="{{currentRow.quantity}}" ng-change="calculateRow(currentRow)" /></label>
+				   </div>
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>UM:  {{currentRow.productum}} &nbsp;</label>
+				   </div>
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>Prezzo: {{currentRow.price}} &nbsp;</label>
+				   </div>
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>IVA: {{currentRow.taxrate.value}} &nbsp;</label>
+				   </div>
+				    <div class="large-3 medium-3 small-12 columns">
+				   		<label>Imponibile: {{currentRow.amount}} &nbsp;</label>
+				   </div>
+				   
+				   
+				  
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>Imposta: {{currentRow.taxamount}}&nbsp;</label>
+				   </div>
+				   <div class="large-3 medium-3 small-12 columns">
+				   		<label>Totale: {{currentRow.total}}&nbsp;</label>
+				   </div>
+				</div>
+			</fieldset>
+		</div>
+		<table st-table="rowsToDisplay" class="table table-striped show-for-medium-up" st-safe-src="head.rows">
+		  <thead>
+		    <tr>
+		      <th  ng-if="auth.permission != conf_permission.Customer" width="50"></th>
+		      <th width="100"  st-sort="code" st-sort-default="reverse" st-skip-natural="true">Codice</th>
+		      <th width="150" st-sort="description"  st-skip-natural="true">Descrizione</th>
+		      <th width="50" >UM</th>
+		      <th width="100" >Qta</th>
+		      <th width="100" class="show-for-medium-up">Prezzo</th>
+		      <th width="100" class="show-for-medium-up">Imponibile</th>
+		      <th width="100" class="show-for-medium-up">Imposta</th>
+		      <th width="100" >Totale</th>
+		      <th  ng-if="auth.permission != conf_permission.Customer"  width="50"></th>
+		   </thead>
+		  <tbody>
+		    <tr ng-repeat="row in rowsToDisplay ">
+		      <td  ng-if="auth.permission != conf_permission.Customer" ><a  class="matita" ng-click="updateRow(row)" ng-show="head.document.expireday == 0 || row.idRow == 0 " ></a> </td>
+		      <td >{{row.productcode}}</td>
+		      <td>{{row.productdescription}}</td>
+		      <td >{{row.productum}}</td>
+		      <td >{{row.quantity}}</td>
+		      <td class="show-for-medium-up" >{{row.price}}</td>
+		      <td class="show-for-medium-up" >{{row.amount}}</td>
+		      <td class="show-for-medium-up" >{{row.taxamount}}</td>
+		      <td >{{row.total}}</td>
+		      <td  ng-if="auth.permission != conf_permission.Customer" ><a class="x" ng-click="deleteElement(list.idList)"></a></td>
+		
+		    </tr>
+		  
+		  
+		  </tbody>
+		</table>
+		<div class="row show-for-small-only" ng-repeat="row in head.rows">
+               		         <div class="small-12 columns">
+                   		          <div class="elements height-100">
+                      		            <div class="small-1 columns">
+                       		 	             <div class="smallwine"></div>
+                      	 	            </div>
+                       		            <div class="small-6 columns">
+                        	 	             <div class="voice height-100">
+			                                      <ul>
+			                                           <li><span>{{row.productcode}}</span> {{row.product.description}}</li>
+			                                           <li> Totale <span> {{row.total}}</span> {{row.um.name}} ({{row.um.conversion}})</li>
+			                          			  </ul>
+                       		                 </div>
+                                        </div>
+		                                <div class="small-2 columns">
+			                                 <div class="howmuch height-100">
+		                        	              <label>
+		                          		               {{row.quantity}} 
+		                         	              </label>
+		                                     </div>
+							            </div>
+		                                <div class="small-2 small-collapse btn_status_list columns ">
+		                                     <i ng-show="wiz.head.idHead == 0" class="fi-x-circle"   ng-click="wiz.deleteElement(row)" ></i>
+		                                </div>
+						           </div>
+                              </div>
+                         </div>
+		</fieldset>
+	</form>
+</div>
+<div class="row ">
+	<form>
+		<fieldset>
+			<legend>Totali <i class="fi-small fi-button"  ng-class="{'fi-arrows-in ':headTotalView,'fi-arrows-out':!headTotalView}" ng-click="headTotalView = !headTotalView"></i></legend>
+			<div class="large-4 medium-4 small-12 columns"  >
+				<table st-table="listsToDisplay" class="table table-striped" st-safe-src="test">
+				  <thead ng-show="headTotalView">
+				    <tr>
+				      <th width="150" >Imponibile</th>
+				      <th width="150" ></th>
+				    </thead>
+				  <tbody>
+				    <tr ng-show="headTotalView" >
+				      <td>Imponibile 4%</td>
+				      <td >{{head.amount4}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView" >
+				      <td>Imponibile 10%</td>
+				      <td >{{head.amount10}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView" >
+				      <td>Imponibile 22%</td>
+				      <td >{{head.amount20}}</td>
+				    </tr>
+				    <tr class="pr_total" >
+				      <td>Imponibile Tot.</td>
+				      <td >{{head.amount}}</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="large-4 medium-4 small-12 columns"  >
+				<table st-table="listsToDisplay" class="table table-striped" st-safe-src="test">
+				  <thead  ng-show="headTotalView"  >
+				    <tr>
+				      <th width="150"  st-sort="code" st-sort-default="reverse" st-skip-natural="true">Imposta</th>
+				      <th width="150" ></th>
+				    </thead>
+				  <tbody>
+				    <tr ng-show="headTotalView"  >
+				      <td>Imposta 4%</td>
+				      <td >{{head.taxamount4}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView"  >
+				      <td>Imposta 10%</td>
+				      <td >{{head.taxamount10}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView"  >
+				      <td>Imposta 22%</td>
+				      <td >{{head.taxamount20}}</td>
+				    </tr>
+				    <tr class="pr_total" >
+				      <td>Imposta Tot.</td>
+				      <td >{{head.taxamount}}</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="large-4 medium-4 small-12 columns"  >
+				<table st-table="listsToDisplay" class="table table-striped" st-safe-src="test">
+				  <thead ng-show="headTotalView" >
+				    <tr>
+				      <th width="150"  st-sort="code" st-sort-default="reverse" st-skip-natural="true">Totali</th>
+				      <th width="150" ></th>
+				    </thead>
+				  <tbody>
+				    <tr ng-show="headTotalView"  >
+				      <td>Totale 4%</td>
+				      <td >{{head.total4}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView"  >
+				      <td>Totale 10%</td>
+				      <td >{{head.total10}}</td>
+				    </tr>
+				    <tr ng-show="headTotalView"  >
+				      <td>Totale 22%</td>
+				      <td >{{head.total20}}</td>
+				    </tr>
+				    <tr class="pr_total" >
+				      <td>Totale</td>
+				      <td >{{head.total}}</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="large-12 medium-12 small-12 columns"  ng-show="headTotalView" >
+				Note:
+				<textarea rows="5" cols="10" ng-model="wiz.head.note">
+				
+				</textarea>
+			</div>
+		</fieldset>
+	</form>
+</div>	
+<div class="row show-for-small-only heads_list_item">
+
+</div>

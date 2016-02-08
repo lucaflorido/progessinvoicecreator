@@ -1,0 +1,197 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/customerliststyle.css" />
+	<link rel="stylesheet" href="css/larghezze.css" />
+	<link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-datepicker.css" />
+    <link rel="stylesheet"  href="css/btnUpload.css">
+
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <!--  <script src="lib/bower_components/angular/angular.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="lib/bower_components/angular-cookies/angular-cookies.js"></script>
+	<script src="lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="lib/bower_components/angular-upload/angular-upload.min.js"></script>
+	 <script src="lib/bower_components/angular-foundation/mm-foundation.js"></script>
+	<script src="lib/bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+	<script src="lib/bower_components/foundation-datepicker/js/foundation-datepicker.js"></script>
+	<script src="lib/bower_components/angular-bootstrap-typeahead/ui-bootstrap-custom-0.6.0.js"></script>
+	<script src="lib/bower_components/spin.js/spin.js"></script>
+	<script src="lib/bower_components/angular-spinner/angular-spinner.js"></script>
+	<script src="lib/bower_components/ngstorage/ngStorage.min.js"></script>
+	
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/control/controller.js"></script>
+	<script type="text/javascript" src="js/controller/customer/customer.js"></script>
+	<script type="text/javascript" src="js/controller/customer/group.js"></script>
+	<script type="text/javascript" src="js/controller/customer/category.js"></script>
+	<script type="text/javascript" src="js/controller/pricelist/publiclist.js"></script>
+	
+	<script type="text/javascript" src="js/controller/product/product.js"></script>
+	<script type="text/javascript" src="js/controller/product/group.js"></script>
+	<script type="text/javascript" src="js/controller/product/category.js"></script>
+	<script type="text/javascript" src="js/controller/product/unitmeasure.js"></script>
+	<script type="text/javascript" src="js/controller/product/region.js"></script>
+	<script type="text/javascript" src="js/controller/product/brand.js"></script>
+	<script type="text/javascript" src="js/controller/product/composition.js"></script>
+	<script type="text/javascript" src="js/controller/product/taxrate.js"></script>
+	
+	<script type="text/javascript" src="js/controller/list/list.js"></script>
+
+	<script type="text/javascript" src="js/controller/document/documentlist.js"></script>
+	<script type="text/javascript" src="js/controller/document/documentdetails.js"></script>
+	<script type="text/javascript" src="js/controller/document/wizard.js"></script>
+	<script type="text/javascript" src="js/controller/document/wizard_customer.js"></script>
+	<script type="text/javascript" src="js/controller/transporter/transporter.js"></script>
+	
+	<script type="text/javascript" src="js/controller/promoter/promoterlist.js"></script>
+	<script type="text/javascript" src="js/controller/promoter/promoterdetail.js"></script>
+	<script type="text/javascript" src="js/controller/ecommerce/ecommerce.js"></script>
+	
+	<script type="text/javascript" src="js/control/controllerBasic.js"></script>
+	<script type="text/javascript" src="js/control/controllerRegistry.js"></script>
+	<script type="text/javascript" src="js/control/controllerDocument.js"></script>
+	<script type="text/javascript" src="js/control/controllerStore.js"></script>
+	<script type="text/javascript" src="js/control/controllerAccounting.js"></script>
+	<script type="text/javascript" src="js/control/logusercontrol.js"></script>
+	<script type="text/javascript" src="js/controller/config/config.js"></script>
+	 <script src="js/common/shared.js"></script>
+	<script type="text/javascript" src="js/mail/email.js"></script>
+	<!-- UTIL -->
+	<script type="text/javascript" src="js/util/validator.js"></script>
+	<style type="text/css">
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+		  display: none !important;
+		}
+	</style>
+	
+  </head>
+  <body ng-app="gecoApp" >
+    <div class="loading" ng-class="{'active':loader.loader == true}" ng-controller="StartupCtrl">
+    	<span us-spinner></span>
+    </div>
+    <nav class="top-bar" data-topbar role="navigation" ng-controller="StartupCtrl"  > 
+		<ul class="title-area" > 
+			 <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+
+					<li class="toggle-topbar menu-icon"><a ><span>Menu</span></a></li>
+		</ul> 
+		<section class="top-bar-section" > <!-- Right Nav Section 
+			<!-- Left Nav Section --> 
+
+			<ul class="left" ng-show="viewheader == true"> 
+
+				<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" class="has-dropdown"><a >Anagrafica</a>
+					<ul class="dropdown"> 
+						<li class="has-dropdown" ><a >Clienti</a>
+							<ul class="dropdown"> 
+								<li><a href="#/customer">Elenco</a></li>
+								<li><a href="#/customer/0" >Nuovo</a></li>
+								<li ng-if="auth.permission != conf_permission.Promoter" ><a href="#/customercategory" >Categorie</a></li> 
+								<li ng-if="auth.permission != conf_permission.Promoter" ><a href="#/customergroup" >Gruppi</a></li>  
+							</ul> 
+						</li> 
+						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter" >
+						    <a >Listini</a>
+							<ul class="dropdown"> 
+								<li><a href="#/list">Elenco</a></li>
+								<li  ><a href="#/list/0" >Nuovo</a></li>
+							</ul> 
+						</li> 
+						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter" ><a >Prodotti</a>
+							<ul class="dropdown"> 
+								<li><a href="#/product">Elenco</a></li>
+								<li><a href="#/product/0" >Nuovo</a></li>
+								<li><a href="#/taxrate">Aliquote IVA</a></li> 
+								<li><a href="#/categoryproduct" >Categorie</a></li> 
+								<li><a href="#/groupproduct" >Gruppi</a></li>  
+								<li><a href="#/brand" >Marche</a></li> 
+								<li><a href="#/region" >Regioni</a></li>
+								<li><a href="#/unitmeasure" >Unità di Misura</a></li>  
+								<li><a href="#/composition">Uvaggio</a></li> 
+							</ul> 
+						</li> 
+						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter" ><a href="#">Rappresentanti</a>
+							<ul class="dropdown"> 
+								<li><a href="#/promoter">Elenco</a></li>
+								<li><a href="#/promoter/0" >Nuovo</a></li>
+								
+							</ul> 
+						</li>   
+						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter"><a href="#">Configurazioni</a>
+							<ul class="dropdown"> 
+								<li><a href="#/companymail">Mail aziendale</a></li>
+								<li><a href="#/companyec" >eCommerce</a></li>
+								<li><a href="#/documentflow" >Flussi documentali</a></li>
+								<li><a href="#/document" >Tipologia documenti</a></li>
+								<li><a href="#/counter" >Contatori documenti</a></li>
+							</ul> 
+						</li>    
+					</ul> 
+				</li> 
+				<!--  li class="has-dropdown"><a href="#">Listini</a>
+					<ul class="dropdown"> 
+						<li><a href="#">Aggiornamento listino</a></li> 
+						<li><a href="#">Excel aggiornmenti prodotti</a></li> 
+						<li><a href="#">Listino vini rappresentanti</a></li> 
+						<li><a href="#">Listino liquori rappresentanti</a></li> 
+						<li><a href="#">Listino altri prodotti rappresentanti</a></li> 
+					</ul> 
+				</li--> 
+				<li class="has-dropdown"  ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" > <a >Documenti</a> 
+					<ul class="dropdown"> 
+						<li class="has-dropdown" ><a>Ordini</a>
+							<ul class="dropdown"> 
+								<li><a href="#/head_wizard/0">Nuovo Ordine</a></li> 
+								<li><a href="#/wizard_customer/0">Nuovo Ordine Cliente</a></li>
+								<li><a href="#/headlist/1/1">Elenco Ordini</a></li> 
+								<!-- li><a >Riepilogo ordine e stampa</a></li> 
+								<li><a >Esportazione Ordini</a></li> 
+								<li><a >Annullamento ordini</a></li-->
+							</ul> 
+						</li>
+						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter" ><a>Documenti Generici</a>
+							<ul class="dropdown"> 
+								
+								<li><a href="#/head/0">Nuovo Documento</a></li> 
+								
+								<li><a >Elenco Ordini</a></li> 
+								<!-- li><a >Riepilogo ordine e stampa</a></li> 
+								<li><a >Esportazione Ordini</a></li> 
+								<li><a >Annullamento ordini</a></li-->
+							</ul> 
+						</li>
+						
+					</ul>
+				</li> 
+				
+			</ul> 
+			
+			<ul class="right" ng-hide="menu.ec" > 
+			    <li ng-show="viewheader == true" > <a ng-click="logout()">Logout</a> </li> 
+			</ul>
+			<ul class="right" ng-hide="menu.ec" > 
+			    <li ><a ng-click="openCompany()"  ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" > <i class="fi-torso" ng-show="viewheader == true"></i>{{auth.user.company.companyname}}</a></li>
+			</ul>
+		</section> 
+	</nav>
+
+   	<div class="maincontainer" ui-view>
+
+		 
+	</div>
+	
+	
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

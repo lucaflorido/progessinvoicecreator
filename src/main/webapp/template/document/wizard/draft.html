@@ -1,0 +1,74 @@
+<div class="row "><!-- main row  -->
+     <div class=" small-12 columns" ng-class="{'large-8 medium-6':showDraft,'large-12 medium-12':!showDraft}"> <!-- filter -->
+	        <div class="row "><!-- product list -->
+			       <div class="small-12 columns" >
+              	        <div class="row" ng-repeat="row in wiz.head.rows">
+               		         <div class="small-12 columns">
+                   		          <div class="elements height-100">
+                      		            <div class="small-1 columns">
+                       		 	             <div class="smallwine"></div>
+                      	 	            </div>
+                       		            <div class="small-6 columns">
+                        	 	             <div class="voice height-100">
+			                                      <ul>
+			                                           <li><span>{{row.productcode}}</span> {{row.product.description}}</li>
+			                                           <li> Totale <span> {{row.total}}</span> {{row.um.name}} ({{row.um.conversion}})</li>
+			                          			  </ul>
+                       		                 </div>
+                                        </div>
+		                                <div class="small-2 columns">
+			                                 <div class="howmuch height-100">
+		                        	              <label>
+		                          		               <input class="square" type="text" ng-model="row.quantity" ng-change="wiz.quantityRowChange(row)" select-on-click> 
+		                         	              </label>
+		                                     </div>
+							            </div>
+		                                <div class="small-2 small-collapse btn_status_list columns ">
+		                                     <i ng-show="wiz.head.idHead == 0" class="fi-x-circle"   ng-click="wiz.deleteElement(row)" ></i>
+		                                </div>
+						           </div>
+                              </div>
+                         </div>
+                    </div>
+               </div> <!-- product list -->
+
+          </div>  <!-- filter -->
+         
+    </div> 
+    <div class="row">	
+		              	<div class="small-12 columns">
+		              		Note:
+		              		<textarea rows="10" cols="10" ng-model="wiz.head.note"></textarea>
+		              	</div>
+		              	</div>
+				<div class="row">	
+		              	<div class="small-12 columns">
+		                    <div class="row">	
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text">Imponibile:</h4></div>	
+		              			</div>
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text" >{{wiz.head.amount}}</h4></div>	
+		              			</div>
+		              		</div>
+		                    <div class="row">	
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text">Imposta:</h4></div>	
+		              			</div>
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text">{{wiz.head.taxamount}}</h4></div>	
+		              			</div>
+		              		</div>
+		              		<div class="row">	
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text">Totale:</h4></div>	
+		              			</div>
+		              			<div class="small-3 columns">
+		              					<div class="total"><h4 class="menu_text">{{wiz.head.total}}</h4></div>	
+		              			</div>
+		              		</div>
+		              	</div>
+				</div>
+    <div class="row show-for-small-only heads_list_item">
+
+</div>

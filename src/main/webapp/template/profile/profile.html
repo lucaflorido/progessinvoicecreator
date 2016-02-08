@@ -1,0 +1,109 @@
+<div class="row  header_reserved_area  ">
+	<div class="large-3 medium-3 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-9 medium-9  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h5 class="title" >Profilo</h5>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		 </ul>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-4 medium-4 small-4 columns">
+		<h4 >PROFILO</h4>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="saveuser()" class="button small progess_uppercase">Salva</a></li>
+		  	<li><a  ng-click="changepassword()" class="button small progess_uppercase">Cambia Password</a></li>
+		 </ul>
+	</div>
+</div>
+-->
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Dati Personali  </legend>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Nome
+					<input type="text" ng-model="cuser.name" value="{{cuser.name}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Cognome
+					<input type="text" ng-model="cuser.surname" value="{{cuser.surname}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Data di nascita<input type="text" 
+					 ng-model="cuser.birthday"
+					value="{{cuser.birthday}}" capitalize f-datepicker />
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Email
+					{{cuser.email}}
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Telefono
+					<input type="text" ng-model="cuser.phone" value="{{cuser.phone}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Cellulare
+					<input type="text" ng-model="cuser.mobile" value="{{cuser.mobile}}" /> 
+				</label>
+			</div>
+			<div class="large-12 small-12 medium-12 btn_status_list columns">
+				<i class="fi-save" ng-click="saveuser()" ></i>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Account  </legend>
+			<div class="large-12 small-12 medium-12 columns">
+				<label>Userid
+					<input type="text" ng-model="cuser.username" value="{{cuser.username}}" /> 
+				</label>
+			</div>
+			<div class="large-12 small-12 medium-12 columns">
+				<label>Vecchia password 
+					<input type="password" ng-model="cuser.oldpassword" value="{{cuser.oldpassword}}"  /> 
+				</label>
+			</div>
+			<div class="large-12 small-12 medium-12 columns">
+				<label>Nuova password
+					<input type="password" ng-model="cuser.newpassword" value="{{cuser.newpassword}}" /> 
+				</label>
+			</div>
+			<div class="large-12 small-12 medium-12 columns">
+				<label>Conferma password
+					<input type="password" ng-model="cuser.confirmpassword" value="{{cuser.confirmpassword}}" /> 
+				</label>
+			</div>
+			<div class="large-12 small-12 medium-12  btn_status_list columns" ng-show="cuser.oldpassword != '' && cuser.newpassword != '' && cuser.confirmpassword != ''">
+				<i class="fi-check" ng-click="changepassword()" ></i>
+			</div>
+		</fieldset>
+	</form>
+</div>

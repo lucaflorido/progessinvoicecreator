@@ -1,0 +1,178 @@
+<div class="container userlist clearfix">
+	<div class="generaltable">
+		<div class="head_main_detail">	
+			<div class="info added_info" >
+				<div class="fields code">
+					<div class="label ">Da Data </div>
+					<div class="field ">
+					<input class="inputfield datepicker" type="text" id="endDate" ng-model="filter.dateFrom" value="{{filter.dateFrom}}"  create-datepicker/>
+					</div>
+				</div>
+				<div class="fields code">
+					<div class="label ">A Data </div>
+					<div class="field ">
+						<input class="inputfield datepicker" type="text" id="startDate" ng-model="filter.dateTo" value="{{filter.dateTo}}"  create-datepicker  />
+					</div>
+					
+				</div>
+					<div class="fields code" ng-show="isCustomer == true">
+						<div class="label ">Cliente</div>
+						<div class="field">
+							<select id="selgroup" class="inputfield" ng-model="currentCustomer"    ng-options="customer as customer.customername for customer in customers" ng-data-provider="customers" create-chosen on-finish-chosen-update  ng-change="changeCustomer(customer) " ></select>
+						</div>
+					</div>
+					<div class="fields code" ng-show="isSupplier == true">
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentSupplier"    ng-options="supplier as supplier.suppliername for supplier in suppliers" ng-data-provider="suppliers" create-chosen on-finish-chosen-update   ng-change="filter.supplier = currentSupplier;" ></select>
+								</div>
+							</div>
+				<div class="category_group correction">
+					<div class="fields code">
+						<div class="label ">Da Pagare </div>
+						<div class="field ">
+							<input class="inputfield " type="checkbox"  ng-model="filter.nopaid" value="{{filter.nopaid}}"   />
+						</div>
+					</div>
+					<div class="fields code">
+						<div class="label ">Pagati </div>
+						<div class="field ">
+							<input class="inputfield " type="checkbox"  ng-model="filter.paid" value="{{filter.paid}}"   />
+						</div>
+					</div>
+					<div class="PRODUCT_field code " ng-show="filter.dateFrom != '' && filter.dateFrom != null ">
+								<div class="filterbutton" ng-click="getSuspended()">
+									<div class="filterlabel">
+										Seleziona
+									</div>
+								</div>
+								
+							</div>
+					
+				</div>	
+			</div>
+			
+		</div>
+	</div>	
+	<div class="ACC_maincontainer">
+		<div class="ACC_tablecontainer">
+			<table class="GECO_table seven_two clearfix">
+				<thead>
+					<tr>
+							<td class="header_table row_table first half">&nbsp;</td>
+							<td class="header_table row_table name threequarter">Numero</td>
+							<td class="header_table row_table cognome">Data</td>
+							<td class="header_table row_table cognome" ng-show="isCustomer == true">Cliente</td>
+							<td class="header_table row_table cognome" ng-show="isSupplier == true">Fornitore</td>
+							<td class="header_table row_table cognome">Chiuso</td>
+							<td class="header_table row_table cognome">Importo</td>
+							<td class="header_table row_table cognome">Pagato</td>
+							<td class="header_table row_table cognome">Saldo</td>
+							<td class="header_table row_table half modify">&nbsp;</td>
+					</tr>
+				</thead>	
+			</table>
+			<div class="ACC_suspended_details"  ng-repeat="suspended in suspendeds | filter:query | orderBy:orderProp"  >
+			<table class="GECO_table seven_two clearfix">
+				<tbody>
+					<tr >
+						
+							<td class="row_table first half username"  ><div><input type="checkbox" ng-click="suspendedClicked(suspended)" /></div></td>
+							<td class="row_table  username threequarter"  ><div>&nbsp;{{suspended.head.number}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{suspended.head.date}}</div></td>
+							<td class="row_table  username" ng-show="isCustomer == true" ><div>&nbsp;{{suspended.head.customer.customername}}</div></td>
+							<td class="row_table  username" ng-show="isSupplier == true" ><div>&nbsp;{{suspended.head.supplier.suppliername}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{suspended.paid}}</div></td>
+							<td class="row_table  username"  ><div ng-show="suspended.head.document.debit == true">&nbsp;{{suspended.head.total}}</div><div ng-show="suspended.head.document.credit == true">&nbsp;-{{suspended.head.total}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{suspended.amount}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{suspended.openamount}}</div></td>
+							<td class="row_table half username"  >
+								<div class="  icon detail">
+									<div class="detailicon open" ng-click="detailView(suspended.idSuspended)" id="detail{{suspended.idSuspended}}" ></div>
+								</div>
+							</td>
+						
+					</tr>
+				</tbody>
+			</table>
+			<div class="detailview ACC_details" id="detailview{{suspended.idSuspended}}" >
+				<div class="ACC_details_suspended">
+					<div class="ACC_details_suspended_table"> 
+						<table class="GECO_table three_two  font_two clearfix">
+							<thead>
+								<tr>
+										<td class="header_table row_table first half">&nbsp;</td>
+										<td class="header_table row_table cognome">Data</td>
+										<td class="header_table row_table cognome">Chiuso</td>
+										<td class="header_table row_table cognome">Importo</td>
+										<td class="header_table row_table cognome">Pagato</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="deadline in suspended.deadlines | orderBy:sortDeadline" on-finish-render>
+										<td class="row_table first half username"  ><div>&nbsp;<input type="checkbox" /></div></td>
+										<td class="row_table  username"  ><div>&nbsp;{{deadline.expiredDate}}</div></td>
+										<td class="row_table  username"  ><div>&nbsp;{{deadline.paid}}</div></td>
+										<td class="row_table  username"  ><div>&nbsp;{{deadline.amount}}</div></td>
+										<td class="row_table  username"  ><div>&nbsp;{{deadline.amountpaid}}</div></td>
+										
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>		
+			</div>
+		</div>
+		<div class="ACC_container">
+			<div class="ACC_button_container">
+				<div class="ACC_button first" ng-click="normalPaymentShow()">
+					<div class="ACC_button_label">
+						Pagamento Complessivo
+					</div>
+				</div>
+				<div class="ACC_button"  ng-click="selectedPaymentShow()">
+					<div class="ACC_button_label">
+						Pagamento Selezione
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="ACC_payment_container payment_context" ng-show="iscall = true " >
+				
+				<div class="fields code" ng-show="isCustomer == true">
+						<div class="label ">Cliente:</div>
+						<div class="field">
+							<select id="selgroup" class="inputfield" ng-model="currentCustomer"    ng-options="customer as customer.customername for customer in customers" ng-change="changeCustomer(customer) " ></select>
+						</div>
+					</div>
+				<div class="fields code" ng-show="isSupplier == true">
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentSupplier"    ng-options="supplier as supplier.suppliername for supplier in suppliers"  ng-change="paymentSelected.supplier = currentSupplier;" ></select>
+								</div>
+							</div>
+				Data:
+				<input ng-if="isnormal == true" class="inputfield datepicker" type="text" id="data" ng-model="payment.date" value="{{payment.date}}"  create-datepicker/>
+				<input ng-if="isnormal == false" class="inputfield datepicker" type="text" id="data" ng-model="paymentSelected.date" value="{{paymentSelected.date}}"  create-datepicker/>
+				Importo:
+				<input  ng-if="isnormal == true" class="inputfield " value="{{payment.amount}}" ng-model="payment.amount"></input>
+				<input  ng-if="isnormal == false" class="inputfield " value="{{paymentSelected.amount}}" ng-model="paymentSelected.amount"></input>
+				<!--div ng-if="isnormal == false" class="inputfield ">{{payment.amount}}</div-->
+				Descrizione:
+				<textarea ng-if="isnormal == true" class="inputfield " ng-model="payment.description" >{{payment.description}}</textarea>
+				<textarea ng-if="isnormal == false" class="inputfield " ng-model="paymentSelected.description" >{{paymentSelected.description}}</textarea>
+				Note:
+				<textarea ng-if="isnormal == true" class="inputfield " ng-model="payment.note" >{{payment.note}}</textarea>
+				<textarea ng-if="isnormal == false" class="inputfield " ng-model="paymentSelected.note" >{{paymentSelected.note}}</textarea>
+				<button  ng-if="isnormal == true" ng-click="savePayment()">Registra</button>
+				<button ng-if="isnormal == false" ng-click="savePaymentSelected()">Registra</button>
+				
+				Sospeso:
+				<div  class="inputfield ">{{currentCustomer.suspended}}</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

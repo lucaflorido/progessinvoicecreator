@@ -1,0 +1,45 @@
+
+    <div><h6>CLIENTE:<strong>{{wiz.head.customer.customername}}</strong> (codice <strong>{{wiz.head.customer.customercode}}</strong>)</h6>
+            </div>
+
+ 
+        
+  <table class="table">
+  <thead>
+    <tr>
+     
+      <th width="150">Codice</th>
+      <th width="150">Vino</th>
+      <th width="150">Quantita'</th>
+      <th width="150">Prezzo Unitario</th>
+      <th width="150">Elimina</th>
+      <th width="150">Totale ordine</th>
+      
+    </tr>
+     
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in wiz.head.rows">
+      
+      <td><strong>{{row.productcode}}</strong></td>
+      <td>{{row.productdescription}}</td>
+      <td><input type="text" ng-model="row.quantity" value="{{row.quantity}}"></td>
+      <td>{{row.price}}</td>
+      <td><input type="checkbox"></td>
+      <td>{{row.total}}</td>
+  
+
+    </tr>
+  
+  
+  </tbody>
+</table>
+
+   <ul class="button-group">
+          <li><a  class="button" ng-click="wiz.saveHead()">Conferma Ordine</a></li>
+           
+   </ul>
+   
+<div class="row">
+	
+</div>

@@ -1,0 +1,131 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Dettaglio promoter</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><button  ng-click="savePromoter()" class="button"><i class="fi-save" ></i></button></li>
+		  	<li ng-hide="promoter.hasuser || promoter.idPromoter == 0 " ><button ng-click="showuser = !showuser" class="button"><i class="fi-torso" ></i></button></li>
+		   <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	<!-- <li ng-if="auth.permission != conf_permission.Promoter"><a ng-click="filterMenu('import')" class="button"><i class="fi-arrow-left"  ></i></a></li>-->
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!-- <div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3>PROMOTER: {{promoter.name}} {{promoter.surname}}</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="savePromoter()" class="button">Salva</a></li>
+		  	<li ng-hide="promoter.hasuser || promoter.idPromoter == 0 " ><a  class="button" ng-click="showuser = !showuser">Crea Utente</a></li>
+		</ul>
+	</div>
+</div> -->
+<div class="row" ng-show="showuser">
+	<form>
+		<fieldset>
+			<legend>Crea Utente</legend>
+			<div class="large-4 columns">
+				<label>Ruolo
+					<select ng-model="currentRole" ng-options="role.name for  role in roles" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<button class="button" ng-click="userPromoter()">Crea</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row">
+<form>
+	<fieldset>
+		<legend>Anagrafica</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Codice<input type="text"
+					 ng-model="promoter.code"
+					value="{{promoter.code}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Nome <input type="text"
+					 ng-model="promoter.name"
+					value="{{promoter.name}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Cognome <input type="text"
+					 ng-model="promoter.surname"
+					value="{{promoter.surname}}" capitalize />
+				</label>
+			</div>
+		</div>
+		
+	</fieldset>
+	<fieldset>
+		<legend>Contatti</legend>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>Telefono <input type="text"
+					 ng-model="promoter.contact.phone1" value="{{promoter.contact.phone1}}"  />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Telefono Aggiuntivo <input type="text"
+					ng-model="promoter.contact.phone2" value="{{promoter.contact.phone2}}" />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>Cellulare <input type="text"
+					 ng-model="promoter.contact.mobile1" value="{{promoter.contact.mobile1}}"  />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Cellulare Aggiuntivo <input type="text"
+					ng-model="promoter.contact.mobile2" value="{{promoter.contact.mobile2}}" />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns" ng-if="!promoter.hasuser">
+				<label>Email <input type="text"
+					 ng-model="promoter.contact.email1" value="{{promoter.contact.email1}}"  />
+				</label>
+			</div>
+			<div class="large-6 columns" ng-if="promoter.hasuser">
+				<label>Email <br >{{promoter.contact.email1}}
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Email Aggiuntiva <input type="text"
+					ng-model="promoter.contact.email2" value="{{promoter.contact.email2}}" />
+				</label>
+			</div>
+		</div>
+	</fieldset>
+	
+</form>
+</div>
+

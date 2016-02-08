@@ -1,0 +1,58 @@
+<div class="container_menu userlist clearfix">
+	<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td class="title_td">
+					ELENCO DOCUMENTI
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="buttontd">
+					<a  href="#">
+						<div class=" addbutton admin_grant" >
+							
+								<div class="printlabel">
+									Aggiungi Documento </div>
+							
+						</div>
+					</a></td >
+				<td>
+					<div>
+						
+					</div>
+				</td>
+				<td> 
+					<div>
+						
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="tablecontainer" >
+		<table class="GECO_table  clearfix">
+			<thead>
+				<tr class="header_table">
+					
+					
+					<td class=" row_table double td_twenty"  >Descrizione</td>
+					
+					<td class=" row_table double td_thirty" >Valore</td>
+					
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="tr_table" ng-repeat="customer in customers | filter:query | orderBy:orderArray">
+					<td class="row_table half td_five"><div class="td_div first"><a href="#/customer/{{customer.idCustomer}}"><div class=" modify "><div class="modifyicon"></div></div></a></div></td>
+					<td class="row_table  td_ten"   ><div class="td_div">&nbsp;{{customer.customercode}}</div></td>
+					
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</div>

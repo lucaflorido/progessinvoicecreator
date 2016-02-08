@@ -1,0 +1,101 @@
+<div class="container userlist clearfix" ngKeydown="checkKeyCode()">
+	<div class="toolbar_detail">
+		<h3>Crea Ordini Giornalieri:</h3>
+		
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="head_main_detail">	
+				<div class="info added_info" >
+					<div class="fields code">
+						<div class="label ">Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text"  ng-model="generateobj.date" value="{{generateobj.date}}" create-datepicker   />
+						</div>
+						
+					</div>
+					
+						<div class="fields code">
+							<div class="label ">Documento Da Generare </div>
+							<div class="field">
+								<select  class="inputfield" ng-model="currentDocumentGenerate"    ng-options="document as document.description for document in documentsTo"  ng-data-provider="documentsTo" create-chosen on-finish-chosen-update ng-change="generateobj.document = currentDocumentGenerate" ><option value=""></option></select>
+							</div>
+						</div>
+						<div class="fields code">
+							<div class="label ">Gruppo Clienti</div>
+							<div class="field">
+								<select  class="inputfield" ng-model="currentCustomerGroup"    ng-options="group as group.code for group in groups"  ng-data-provider="groups" create-chosen on-finish-chosen-update ng-change="generateobj.group = currentCustomerGroup" ></select>
+							</div>
+						</div>
+					
+					<div class="category_group correction">
+						<div class="fields code">
+							<div class="label ">Data Riferimento</div>
+							<div class="field ">
+							<input class="inputfield datepicker" type="text"  ng-model="generateobj.historyDate" value="{{generateobj.historyDate}}" create-datepicker   />
+							</div>
+						</div>
+						<div class="fields code">
+								<div class="label ">&nbsp; </div>
+								<div class="field">
+									&nbsp;
+								</div>
+							</div>
+							<div class="PRODUCT_field code">
+							
+								
+								<div class="filterbutton" ng-click="generateDocs()">
+									<div class="filterlabel">
+										Genera
+									</div>
+								</div>
+								
+							</div>
+						
+					</div>
+						
+				</div>
+				
+					
+					
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	<table class="GECO_table eight_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first half">&nbsp;</td>
+					<td class="header_table row_table  half">N.</td>
+					<td class="header_table row_table ">Data</td>
+					<td class="header_table row_table ">Tipologia</td>
+					<td class="header_table row_table double">Fornitore</td>
+					<td class="header_table row_table double">Cliente</td>
+					<td class="header_table row_table double">Destinazione</td>
+					<td class="header_table row_table half modify">&nbsp;</td>
+					<td class="header_table row_table half delete">&nbsp;</td>
+				</tr>
+			<thead>
+			<tfoot>
+				<tr>
+				
+				</tr>				
+			<tfoot>
+			<tbody>
+				<tr ng-repeat="head in heads ">
+					<td class="row_table first half"><input type="checkbox" ng-click="addRemoveHeadId(head.idHead)" /></td>
+					<td class="row_table  half">&nbsp;{{head.number}}</td>
+					<td class="row_table single">&nbsp;{{head.date}} </td>
+					<td class="row_table single">&nbsp;{{head.document.code}}</td>
+					<td class="row_table double">&nbsp;{{head.supplier.suppliername}}</td>
+					<td class="row_table double">&nbsp;{{head.customer.customername}}</td>
+					<td class="row_table double">&nbsp;{{head.destination.destinationname}}</td>
+					<td class="row_table half"><a href="#/head/{{head.idHead}}"><div class=" modify"><div class="modifyicon"></div></div></a></td>
+				    <td class="row_table half"><div class="deleteicon" id="del{{head.idHead}}" ng-click="deleteElement(head)"></div></td>
+				</tr>
+			<tbody>
+			
+	</table>
+</div>

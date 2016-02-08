@@ -1,0 +1,34 @@
+  <div class="large-4 small-6 columns " ng-repeat="element in $parent.prodlist" >
+	                <div class="row">
+	                	<div class="large-12  small-12 columns" >
+	                		<img class="ec_image" ng-src="{{element.product.photo}}">
+	                	</div>
+	                </div>
+	                <div class="row">
+	                	  <div class="large-12 small-12 columns" >
+	                		<div class="ec_title" ng-bind="element.product.shortdescription"></div>
+	                	</div>
+	               	 	<div class="large-12 small-12 ec_price columns" >
+	                			<h7 ng-bind="'&#8364;' +$parent.formatCurrency(element.endprice)"></h7>
+	                		</div>
+	                		<div class="row">
+	                		</div>
+	                		<div class="row">
+	                			<div class="large-12 ec_btn  small-12 columns">
+			                    	<button ng-if="!element.added" class="button round tiny " ng-click="$parent.addToChart(element)" ><i class="fi-shopping-cart" ></i> </button>
+			                    	<button class="button round tiny alert " ng-if="element.added" ng-click="$parent.removeChart(element)"><i class="fi-x" ></i></button>
+			                    	<button class="button round tiny  "  ng-click="$parent.productDetails(element)"><i class="fi-zoom-in" ></i></button>
+			                    	
+	                    		</div>
+	                		</div>
+	                	
+	                </div> 
+             
+     			</div>
+     		
+	           
+	            	<div class="small-8 columns ">
+							<pagination total-items="$parent.totalitems" items-per-page="$parent.pagesize_confirmed" page="$parent.page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="$parent.pages" ng-click="$parent.getProducts($parent.page)"></pagination>
+						</div>
+	           
+         

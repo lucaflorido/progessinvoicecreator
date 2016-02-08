@@ -1,0 +1,65 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Banche</h3>
+		<div class=" buttonmenu addbutton admin_grant" >
+			<a href="#/bank/0">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Banche 
+				</div>
+			</a>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+		<div class="filter">
+		<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+			
+			
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+			
+		</div>
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div class="tableheader  banks clearfix">
+				<div class="header_table row_table first username">Banca</div>
+				<div class="header_table row_table cognome">Indirizzo</div>
+				<div class="header_table row_table ruolo">Comune</div>
+				<div class="header_table row_table telefono">Provincia</div>
+				<div class="header_table row_table email">Cap</div>
+				<div class="header_table row_table cellulare">Telefono</div>
+				<div class="header_table row_table cellulare">Cellulare</div>
+				<div class="header_table row_table cellulare">Email</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="bank in banks | filter:query | orderBy:orderProp">
+				<div class="row banks">
+					<div class="row_table first username">&nbsp;{{bank.bankname}}</div>
+					<div class="row_table cognome">&nbsp;{{bank.address.address}} {{bank.address.number}}</div>
+					<div class="row_table ruolo">&nbsp;{{bank.address.city}}</div>
+					<div class="row_table telefono">&nbsp;{{bank.address.zone}}</div>
+					<div class="row_table email">&nbsp;{{bank.address.zipcode}}</div>
+					<div class="row_table cellulare">&nbsp;{{bank.contact.phone1}}</div>
+					<div class="row_table cellulare">&nbsp;{{bank.contact.mobile1}}</div>
+					<div class="row_table cellulare">&nbsp;{{bank.contact.email1}}</div>
+					<a href="#/bank/{{bank.idBank}}"><div class="row_table modify"><div class="modifyicon"></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{bank.idBank}}" ng-click="deleteElement(bank.idBank)"></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

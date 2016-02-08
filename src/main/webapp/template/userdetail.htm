@@ -1,0 +1,178 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_detail">
+		<h3>Utente:</h3>
+		<div class="buttonmenu savebutton admin">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="buttonmenu redobutton ">
+			<div class="redo buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Ricarica
+			</div>
+		</div>
+		
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="column_1_2 user">	
+				<div class="info">
+					<div class="fields">
+						<div class="label name">Nome *</div>
+						<div class="field name"><input class="inputfield" id="ifname" ng-model="user.name" value="{{user.name}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields">
+						<div class="label surname">Cognome *</div>
+						<div class="field surnname"><input class="inputfield" id="ifsurname" ng-model="user.surname" value="{{user.surname}}"  /></div>
+						<div class="error" id="val_ifsurname" >Campo obbligatorio</div> 
+					</div>
+				</div>
+			</div>
+			<div class="column_2_2 user">
+				<div class="contact">
+					<div class="fields">
+						<div class="label phone">Telefono</div>
+						<div class="field phone"><input class="inputfield" ng-model="user.phone" value="{{user.phone}}" /></div>
+					</div>
+					<div class="fields">
+						<div class="label mobile">Cellulare</div>
+						<div class="field mobile"><input class="inputfield" ng-model="user.mobile" value="{{user.mobile}}" /></div>
+					</div>
+					<div class="fields">
+						<div class="label email">Email *</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.email" value="{{user.email}}" /></div>
+						<div class="error" id="val_ifemail" >Campo obbligatorio</div>
+						<div class="errormail" id="valmail_ifemail" >Email non valida</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="credentials">
+			<div class="credential">
+				<div class="fields left">
+					<div class="label username">Username *</div>
+					<div class="field username"  >
+						<input ng-if="user.iduser == 0 " id="ifinput" class="inputfield" ng-model="user.username"  />
+						<div ng-if="user.iduser != 0"  >{{user.username}}</div>
+						
+					</div>
+					<div  ng-if="user.iduser == 0 " class="error" id="val_ifinput" >Campo obbligatorio</div> 
+				</div>
+				<div class="fields right">
+					<div class="label role">Ruolo *</div>
+					<div class="field role">
+						<select id="selrole" class="inputfield" ng-model="currentRole"    ng-options="role as role.name for role in roles" ></select>
+					</div>
+					<div class="error" id="val_selrole" >Campo obbligatorio</div> 		
+				</div>
+			</div>
+		<div>
+	</div>
+	
+</div>
+<div class="details">
+		<div class="generaltable">
+			<div class="column_1_2 user">	
+				<div class="info">
+					<div class="fields">
+						<div class="label name">Ragione Sociale *</div>
+						<div class="field name"><input class="inputfield" id="ifname" ng-model="user.company.companyname" value="{{user.company.companyname}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields ">
+						<div class="label surname">Partita Iva *</div>
+						<div class="field surnname"><input class="inputfield" id="ifsurname" ng-model="user.company.companynumber" value="{{user.company.companynumber}}"  /></div>
+						<div class="error" id="val_ifsurname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields ">
+						<div class="label surname">Codice Fiscale *</div>
+						<div class="field surnname"><input class="inputfield" id="ifsurname" ng-model="user.company.taxcode" value="{{user.company.taxcode}}"  /></div>
+						<div class="error" id="val_ifsurname" >Campo obbligatorio</div> 
+					</div>
+				</div>
+			</div>
+			<div class="column_2_2 user">
+				<div class="contact">
+					<div class="fields">
+						<div class="label phone">Indirizzo</div>
+						<div class="field phone street"><input class="inputfield street_field " ng-model="user.company.address.address" value="{{user.company.address.address}}" /></div>
+						<div class="field number"><input class="inputfield " ng-model="user.company.address.number" value="{{user.company.address.number}}" /></div>
+					</div>
+					<div class="fields">
+						<div class="label mobile">Città</div>
+						<div class="field mobile"><input class="inputfield" ng-model="user.company.address.city" value="{{user.company.address.city}}" /></div>
+					</div>
+					<div class="fields">
+						<div class="label email">Provincia</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.address.zone" value="{{user.company.address.zone}}" /></div>
+					</div>
+					<div class="fields correction">
+						<div class="label email">CAP</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.address.zipcode" value="{{user.company.address.zipcode}}" /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="credentials">
+			<div class="credential">
+				<div class="fields">
+					<div class="label phone">Telefono 1</div>
+					<div class="field phone"><input class="inputfield" ng-model="user.company.contact.phone1" value="{{user.company.contact.phone1}}" /></div>
+				</div>
+				<div class="fields">
+					<div class="label phone">Telefono 2</div>
+					<div class="field phone"><input class="inputfield" ng-model="user.company.contact.phone2" value="{{user.company.contact.phone2}}" /></div>
+				</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+						<div class="label mobile">Cellulare 1</div>
+						<div class="field mobile"><input class="inputfield" ng-model="user.company.contact.mobile1" value="{{user.company.contact.mobile1}}" /></div>
+					</div>
+				<div class="fields">
+						<div class="label mobile">Cellulare 2</div>
+						<div class="field mobile"><input class="inputfield" ng-model="user.company.contact.mobile2" value="{{user.company.contact.mobile2}}" /></div>
+					</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+						<div class="label email">Email 1</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.contact.email1" value="{{user.company.contact.email1}}" /></div>
+						<div class="error" id="val_ifemail" >Campo obbligatorio</div>
+						<div class="errormail" id="valmail_ifemail" >Email non valida</div>						
+					</div>
+				<div class="fields">
+						<div class="label email">Email 2</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.contact.email2" value="{{user.company.contact.email2}}" /></div>
+						<div class="error" id="val_ifemail" >Campo obbligatorio</div>
+						<div class="errormail" id="valmail_ifemail" >Email non valida</div>						
+					</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+						<div class="label email">Fax</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.contact.fax" value="{{user.company.contact.fax}}" /></div>
+					</div>
+				<div class="fields">
+						<div class="label email">Contatto</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="user.company.contact.reference" value="{{user.company.contact.reference}}" /></div>
+					</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+					<div class="label phone">Iban</div>
+					<div class="field phone"><input class="inputfield" ng-model="user.company.bankcontact.iban" value="{{user.company.bankcontact.iban}}" /></div>
+				</div>
+				<div class="fields">
+					<div class="label phone">Bic Swift</div>
+					<div class="field phone"><input class="inputfield" ng-model="user.company.bankcontact.bicswift" value="{{user.company.bankcontact.bicswift}}" /></div>
+				</div>
+			</div>
+		<div>
+		
+	</div>

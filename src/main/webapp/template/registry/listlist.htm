@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco Listini</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  href="#/list/0" class="button"><i class="fi-plus" ></i></a></li>
+		  	
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!-- 
+<div class="row">
+	<div class="large-3 medium-3 small-3 columns">
+		<h3>ELENCO LISTINI</h3>
+	</div>
+	<div class="large-9 medium-9 small-9 columns">
+		<ul class="button-group">
+		  	<li><a href="#/list/0" class="button">Aggiungi Listino</a></li>
+		 	<li><a href="#" class="button">Stampa elenco </a></li>
+		  	
+		</ul>
+	</div>
+</div>
+-->
+<div class="large-12 ">
+	<div class="row collapse">
+ 	
+ 	<table st-table="listsToDisplay" class="table table-striped" st-safe-src="lists">
+  <thead>
+    <tr>
+      <th width="50"></th>
+      <th width="150"  st-sort="code" st-sort-default="reverse" st-skip-natural="true">Codice</th>
+      <th width="150" st-sort="description"  st-skip-natural="true">Descrizione</th>
+      <th width="150" class="hidden_cell">Validit&agrave;</th>
+      <th width="150" class="hidden_cell">Ecommerce</th>
+      <th width="50"></th>
+    </tr>
+        <tr>
+          <th colspan="8"><input st-search="" class="form-control" placeholder="Ricerca Globale ..." type="text"/></th> 
+        </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="list in listsToDisplay ">
+      <td><a href="#/list/{{list.idList}}"><i class="icon_setup fi-pencil"  ></i></a> </td>
+      <td >{{list.code}}</td>
+      <td>{{list.description}}</td>
+      <td class="hidden_cell">{{list.startdate}}</td>
+      <td class="hidden_cell">{{list.publish}}</td>
+      <td><i class="icon_setup fi-x-circle"  ng-click="deleteElement(list.idList)"></i></td>
+
+    </tr>
+  
+  
+  </tbody>
+</table>
+             
+     
+   </div>
+</div>
+	  

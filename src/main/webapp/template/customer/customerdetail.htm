@@ -1,0 +1,278 @@
+<div class="row  header_reserved_area  show-for-small-only">
+	<div class="large-3 medium-3 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-9 medium-9  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h5 class="title" >Cliente: {{customer.customername}} </h5>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+
+<div class="row show-for-small-only draft_display btn_status"  >
+	<i class="fi-arrow-left" go-back></i>
+</div>
+
+
+<div class="row show-for-small-only draft_display_pos2 btn_status"   >
+	<i class="fi-save" ng-click="saveCustomer()" ></i>
+</div>
+
+<div class="row show-for-small-only draft_display_pos2 btn_status" ng-show="!customer.hasuser    &&  perm.permission != perm_value.Promoter "  >
+	<i class="fi-torso" ng-click="showuser = !showuser"   ng-disabled="customer_form.email.$invalid || !customer.contact.email1" ></i>
+</div>
+
+
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Cliente: {{customer.customername}}</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+			<li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a ng-click="saveCustomer()"  class="button"><i class="fi-save" ></i></a></li>
+		  	<li ng-show="!customer.hasuser    &&  perm.permission != perm_value.Promoter " ><a ng-click="showuser = !showuser"     class="button"><i class="fi-torso"  ></i></a></li>
+		 	</ul>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-5 medium-12 small-12 columns">
+		<h3>{{customer.customername}}</h3>
+	</div>
+	<div class="large-7 medium-12 small-12 columns">
+		<ul class="button-group">
+		  	<li><button ng-disabled="customer_form.$invalid" ng-click="saveCustomer()" class="button">Salva</button></li>
+		  	<li ng-hide="customer.hasuser || customer.idCustomer == 0 || perm.permission != perm_value.Admin"   ><button  ng-disabled="customer_form.email.$invalid || !customer.contact.email1" class="button" ng-click="showuser = !showuser">Crea Utente</button></li>
+		</ul>
+	</div>
+</div>
+-->
+<div class="row" ng-show="showuser">
+	<form >
+		<fieldset>
+			<legend>Crea Utente</legend>
+			<div class="large-3 columns">
+				<label>Nome<input type="text"
+					 ng-model="customer.nameUser"
+					value="{{customer.nameUser}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Cognome<input type="text"
+					 ng-model="customer.surnameUser"
+					value="{{customer.surnameUser}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Ruolo
+					<select ng-model="currentRole" ng-options="role.name for  role in roles" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<button class="button" ng-click="userCustomer()">Crea</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row">
+<form name="customer_form" validate>
+	<fieldset>
+		<legend>Anagrafica</legend>
+		<div class="row">
+			<div class="large-4 columns" ng-class="{'has-error':customer_form.code.$invalid}">
+				<label>Codice *<input type="text"  name="code"
+					 ng-model="customer.customercode"
+					value="{{customer.customercode}}" capitalize required />
+				</label>
+			</div>
+			<div class="large-4 columns" ng-if="perm.permission == perm_value.Admin">
+				<label>Codice Alternativo 1<input type="text"
+					 ng-model="customer.alternativecode1"
+					value="{{customer.alternativecode1}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns" ng-if="perm.permission == perm_value.Admin">
+				<label>Codice Alternativo 2<input type="text"
+					 ng-model="customer.alternativecode2"
+					value="{{customer.alternativecode2}}" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns"  ng-class="{'has-error':customer_form.customer_name.$invalid}">
+				<label>Ragione Sociale * <input type="text"
+					 ng-model="customer.customername" name="customer_name"
+					value="{{customer.customername}}" required />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns"  ng-class="{'has-error':customer_form.cf.$invalid || (!customer.serialnumber && !customer.taxcode )}">
+				<label>Codice Fiscale * <input type="text"
+					 ng-model="customer.taxcode" name="cf" minlength="16"
+					value="{{customer.taxcode}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns"  ng-class="{'has-error':customer_form.pi.$invalid || (!customer.serialnumber && !customer.taxcode )}">
+				<label>Partita Iva * <input type="text"
+					 ng-model="customer.serialnumber" minlength="11" name="pi"
+					value="{{customer.serialnumber}}" />
+				</label>
+			</div>
+			
+		</div>
+		</fieldset>
+	
+	
+	
+	<fieldset>
+		<legend>Indirizzo</legend>
+		<div class="row">
+			<div class="large-8 columns"  ng-class="{'has-error':customer_form.address.$invalid}" >
+				<label>Via * <input type="text" name="address"
+					 ng-model="customer.address.address" value="{{customer.address.address}}"  capitalize required/>
+				</label>
+			</div>
+			<div class="large-4 columns" ng-class="{'has-error':customer_form.number.$invalid}">
+				<label>Civico * <input type="text" name="number"
+					ng-model="customer.address.number" value="{{customer.address.number}}"  required/>
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns" ng-class="{'has-error':customer_form.city.$invalid}" >
+				<label>Città *<input type="text" name="city"
+					ng-model="customer.address.city" value="{{customer.address.city}}"  capitalize required/>
+				</label>
+			</div>
+			<div class="large-4 columns" ng-class="{'has-error':customer_form.zipcode.$invalid}">
+				<label>CAP * <input type="text" name="zipcode"
+					ng-model="customer.address.zipcode" value="{{customer.address.zipcode}}" required/>
+				</label>
+			</div>
+			<div class="large-2 columns" ng-class="{'has-error':customer_form.zone.$invalid}">
+				<label>Provincia *<input type="text" name="zone"
+					ng-model="customer.address.zone" value="{{customer.address.zone}}" required />
+				</label>
+			</div>
+		</div>
+		
+	</fieldset>
+	
+	<fieldset>
+		<legend>Contatti</legend>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>Telefono <input type="text"
+					 ng-model="customer.contact.phone1" value="{{customer.contact.phone1}}" capitalize />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Telefono Aggiuntivo <input type="text"
+					ng-model="customer.contact.phone2" value="{{customer.contact.phone2}}" />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>Cellulare <input type="text"
+					 ng-model="customer.contact.mobile1" value="{{customer.contact.mobile1}}" capitalize />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Cellulare Aggiuntivo <input type="text"
+					ng-model="customer.contact.mobile2" value="{{customer.contact.mobile2}}" />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns" ng-class="{'has-error':customer_form.email.$invalid}" ng-if="!customer.hasuser">
+				<label>Email 
+					<input type="email" ng-model="customer.contact.email1" value="{{customer.contact.email1}}" name="email" />
+				</label>
+				<span ng-show="customer_form.email.$invalid" >valore non valido</span>
+			</div>
+			<div class="large-6 columns" ng-class="{'has-error':customer_form.email.$invalid}" ng-if="customer.hasuser">
+				<label>Email <br> {{customer.contact.email1}}
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>Email Aggiuntiva <input type="text"
+					ng-model="customer.contact.email2" value="{{customer.contact.email2}}" />
+				</label>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset ng-if="perm.permission == perm_value.Admin">
+		<legend>Informazioni aggiuntive</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Gruppo 
+					<select ng-model="$parent.currentGroup" ng-options="group.name for  group in groups" >
+					    <option value=""></option>
+					    
+					</select>
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Categoria 
+					<select ng-model="$parent.currentCategory" ng-options="category.name for  category in categorys" >
+					    <option value=""></option>
+					    
+					</select>
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Listino 
+					<select ng-model="$parent.currentList" ng-options="list.name for  list in lists"  >
+					    <option value=""></option>
+					    
+					</select>
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Rappresentante 
+					<select ng-model="$parent.currentPromoter" ng-options="promoter.code for  promoter in promoters" >
+					    <option value=""></option>
+					    
+					</select>
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Provviggione <input type="text"
+					 ng-model="customer.commission"
+					value="{{customer.commission}}" />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Attivo <input type="checkbox"  ng-model="customer.active" value="{{customer.active}}"/>
+				</label>
+			</div>
+		</div>
+	</fieldset>
+</form>
+</div>
+

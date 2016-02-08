@@ -1,0 +1,190 @@
+<div class="row  header_reserved_area  show-for-small-only">
+	<div class="large-3 medium-3 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-9 medium-9  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h5 class="title" >Elenco Documenti</h5>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-small-only draft_display btn_status"  >
+	<i class="fi-arrow-left" go-back></i>
+</div>
+<!-- DRAFT -->
+<div class="row show-for-small-only draft_display_pos1 btn_status"  ng-if="auth.permission != conf_permission.Customer" >
+	<i class="fi-plus" ng-click="location.path('/head/0')"></i>
+</div>
+<div class="row show-for-small-only draft_display_pos1 btn_status"  ng-if="auth.permission == conf_permission.Customer" >
+	<i class="fi-plus" ng-click="location.path('/wizard_customer')"></i>
+</div>
+<div class="row show-for-small-only draft_display_pos2 btn_status"  >
+	<i class="fi-magnifying-glass" ng-click="showfilter = !showfilter" ></i>
+</div>
+<div class="row show-for-small-only draft_display_pos3 btn_status" ng-if="auth.permission != conf_permission.Customer" >
+	<i class="fi-page-export" ng-click="exportHeads()" ></i>
+</div>
+<div class="row show-for-small-only draft_display_pos4 btn_status"  >
+	<i class="fi-print" ng-click="printMassElements()" ></i>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco Documenti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ng-if="auth.permission != conf_permission.Customer"><a  ng-click="location.path('/head/0')" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ng-if="auth.permission == conf_permission.Customer"><a ng-click="location.path('/wizard_customer')" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>
+		  	<li ng-if="auth.permission != conf_permission.Customer"><a ng-click="exportHeads()" class="button"><i class="fi-page-export"  ></i></a></li>
+		 	<li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li>
+		</ul>
+	</div>
+</div>
+<div class="large-12 " ng-show="showfilter">
+	<div class="row">
+		<div class="large-3 medium-6 small-12 columns">
+			<label>Da Data
+			  <input type="text"
+				 ng-model="headfilter.fromDate"
+				value="{{headfilter.fromDate}}" capitalize f-datepicker />
+			</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns">
+			<label>A Data
+			  <input type="text"
+				 ng-model="headfilter.toDate"
+				value="{{headfilter.toDate}}" capitalize f-datepicker />
+			</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns hidden_cell">
+			<label>Tipo Documenti <select  name="document" ng-options="doc.description for doc in documents" ng-model="headfilter.doc"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns hidden_cell">
+			<label>Cliente <select  name="customer" ng-options="customer.customername for customer in customers | orderBy:'customername'" ng-model="headfilter.customer"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns hidden_cell">
+			<label>Numero <input id="number" type="text"  ng-model="headfilter.number" value="{{headfilter.number}}" ></input>
+				</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns hidden_cell">
+			<label>Attivi <input  type="checkbox"  id="active"  ng-model="headfilter.active" value="{{headfilter.active}}" ></input>
+				</label>
+		</div>
+		<div class="large-3 medium-6 small-12 columns hidden_cell">
+			<label>Annullati <input  type="checkbox"  id="inactive"  ng-model="headfilter.inactive" value="{{headfilter.inactive}}" ></input>
+				</label>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="small-12 columns ">
+		<pagination total-items="totalitems" items-per-page="pagesize_confirmed" page="page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="pages" ng-click="getHeads(page)"  previous-text="<" next-text=">" first-text="<<" last-text=">>"></pagination>
+	</div>
+</div>
+<div class="row">
+	<div class="small-12 columns ">
+		Documenti totali: {{totalitems}}
+		<input ng-model="pagesize" value="{{pagesize}}">
+		<div class="button tiny"  ng-click="getHeadsNumber()">Applica </div>
+	</div>
+</div>
+
+	<div class="row collapse">
+ 	<div class="large-12 large-centered ">
+ 	<table st-table="headToDisplay" class="table expand_table table-striped show-for-medium-up" st-safe-src="heads">
+  <thead>
+    <tr>
+      <th width="50"></th>
+      <th width="50"></th>
+      <th   st-sort="number" st-sort-default="reverse" st-skip-natural="true">Numero</th>
+      <th  st-sort="date"  st-skip-natural="true">Data</th>
+      <th >Tipo</th>
+      <th   >Cliente</th>
+      <th  class="hidden_cell">Imponibile</th>
+      <th  class="hidden_cell">Imposta</th>
+      <th class="hidden_cell" >Totale</th>
+      <th width="50"></th>
+    </tr>
+        <tr>
+          <th colspan="8"><input st-search="" class="form-control" placeholder="Ricerca Globale ..." type="text"/></th> 
+        </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="head in headToDisplay ">
+      <td><input type="checkbox" ng-click="addRemoveHeadId(head.idHead)" class="checkbox_single" /></td>	
+      <td><i class="icon_setup fi-pencil"  ng-click= "location.path('/head/'+head.idHead)"></i> </td>
+      <td >{{head.number}}</td>
+      <td >{{head.date}}</td>
+      <td>{{head.document.code}}</td>
+      <td>{{head.customer.customername}}</td>
+      <td class="hidden_cell">{{head.amount}}</td>
+      <td class="hidden_cell">{{head.taxamount}}</td>
+      <td class="hidden_cell">{{head.total}}</td>
+      <td><i class="icon_setup fi-x-circle"  ng-click="confirmDelete(head)"></i></td>
+
+    </tr>
+  
+  
+  </tbody>
+</table>
+             
+     
+   </div>
+ </div>  
+  <div class="row elements show-for-small-only heads_list_item" ng-repeat="head in heads " >
+               		         <!-- --> 
+                   		
+                      		            <div class="small-2 small-collapse columns">
+                       		 	             <i class="icon_setup fi-pencil"  ng-click= "location.path('/head/'+head.idHead)"></i> 
+                      	 	            </div>
+                      	 	            <div class="small-2 small-collapse columns">
+                       		 	             <i class="icon_setup fi-print"  ng-click= "location.path('/head/'+head.idHead)"></i> 
+                      	 	            </div>
+                       		            <div class="small-4  small-collapse columns">
+                        	 	             <div class="voice height-100">
+			                                      <ul>
+			                                           <li><span>{{head.number}} {{head.date}} {{head.document.code}}</span> </li>
+			                                           <li><span> {{head.customer.customername}}</span> </li>
+			                          			  </ul>
+                       		                 </div>
+                                        </div>
+		                                <div class="small-2 small-collapse columns">
+			                                 <div class="howmuch height-100">
+		                        	              <label>
+		                          		               {{head.total}}
+		                         	              </label>
+		                                     </div>
+							            </div>
+							             
+		                                <div class="small-2 small-collapse  columns">
+		                                     <!-- <div ng-click="wiz.addProduct(prod)" class="cart height-50" ng-class="{'pr_warning':prod.status == 2,'pr_error':prod.status == 3,'pr_full':prod.status == 1}">
+		                                     </div>-->
+		                                     <i class="icon_setup fi-x-circle"  ng-click="confirmDelete(head)"></i> <!-- <button class="button tiny round" ng-class="{'warning':prod.status == 2,'error':prod.status == 3}"></button>-->
+		                                </div>
+						           </div>
+       
+<div class="row show-for-small-only heads_list_item">
+
+</div>

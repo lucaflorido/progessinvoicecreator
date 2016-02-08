@@ -1,0 +1,61 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Destinazioni</h3>
+		<div class=" buttonmenu addbutton admin_grant" >
+			<a href="#/destination/0">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Destinazione 
+				</div>
+			</a>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+		<div class="filter">
+		<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+			
+			
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+			
+		</div>
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div class="tableheader  destinations clearfix">
+				<div class="header_table row_table first single">Codice</div>
+				<div class="header_table row_table double">Ragione Sociale</div>
+				<div class="header_table row_table double">Indirizzo</div>
+				<div class="header_table row_table single">Telefono</div>
+				<div class="header_table row_table single">Cellulare</div>
+				<div class="header_table row_table single">Fax</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="destination in destinations | filter:query | orderBy:orderProp">
+				<div class="row destinations">
+					<div class="row_table first single">&nbsp;{{destination.destinationcode}}</div>
+					<div class="row_table double">&nbsp;{{destination.destinationname}} </div>
+					<div class="row_table double">&nbsp;{{destination.address.address}}</div>
+					<div class="row_table single">&nbsp;{{destination.contact.phone1}}</div>
+					<div class="row_table single">&nbsp;{{destination.contact.mobile1}}</div>
+					<div class="row_table single">&nbsp;{{destination.contact.fax}}</div>
+					<a href="#/destination/{{destination.idDestination}}"><div class="row_table modify"><div class="modifyicon"></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{destination.idDestination}}" ng-click="deleteElement(destination.idDestination)"></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

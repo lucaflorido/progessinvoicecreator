@@ -1,0 +1,110 @@
+<div class="container userlist clearfix">
+	<div class="generaltable">
+		<div class="head_main_detail">	
+			<div class="info added_info" >
+				<div class="fields code">
+					<div class="label ">Da Data </div>
+					<div class="field ">
+					<input class="inputfield datepicker" type="text" id="endDate" ng-model="filter.dateFrom" value="{{filter.dateFrom}}"  create-datepicker/>
+					</div>
+				</div>
+				<div class="fields code">
+					<div class="label ">A Data </div>
+					<div class="field ">
+						<input class="inputfield datepicker" type="text" id="startDate" ng-model="filter.dateTo" value="{{filter.dateTo}}"  create-datepicker  />
+					</div>
+					
+				</div>
+					<div class="fields code" >
+						<div class="label ">Cliente</div>
+						<div class="field">
+							<select id="selgroup" class="inputfield" ng-model="currentCustomer"    ng-options="customer as customer.customername for customer in customers" ng-data-provider="customers" create-chosen on-finish-chosen-update  ng-change="filter.singlecustomer = currentCustomer" ></select>
+						</div>
+					</div>
+					
+				<div class="category_group correction">
+					<div class="fields code" >
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentSupplier"    ng-options="supplier as supplier.suppliername for supplier in suppliers" ng-data-provider="suppliers" create-chosen on-finish-chosen-update   ng-change="filter.singlesupplier = currentSupplier;" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+									<div class="label ">&nbsp; </div>
+									<div class="field">
+										&nbsp;
+									</div>
+								</div>
+							<div class="PRODUCT_field code " ng-show="filter.dateFrom != '' && filter.dateFrom != null ">
+								<div class="filterbutton" ng-click="getSuspended()">
+									<div class="filterlabel">
+										Seleziona
+									</div>
+								</div>
+								
+							</div>
+					
+				</div>	
+			</div>
+			
+		</div>
+	</div>	
+	<div class="ACC_maincontainer">
+		
+			<table class="GECO_table nine_two clearfix">
+				<thead>
+					<tr>
+							
+							<td class="header_table row_table first cognome">Data</td>
+							<td class="header_table row_table cognome">Cliente</td>
+							<td class="header_table row_table cognome">Fornitore</td>
+							<td class="header_table row_table cognome">Descrizione</td>
+							<td class="header_table row_table cognome">Note</td>
+							<td class="header_table row_table cognome">Importo</td>
+							<td class="header_table row_table cognome">Saldo</td>
+							<td class="header_table row_table cognome">Dare</td>
+							<td class="header_table row_table cognome">Avere</td>
+							
+					</tr>
+				</thead>	
+			</table>
+			<div class="ACC_suspended_details"  ng-repeat="element in elements | filter:query | orderBy:orderProp"  >
+			<table class="GECO_table nine_two clearfix">
+				<tbody>
+					<tr >
+						
+							<td class="row_table  username first"  ><div>&nbsp;{{element.date}}</div></td>
+							<td class="row_table  username"  ><div ng-show="element.customer == true">&nbsp;{{element.name}}</div></td>
+							<td class="row_table  username"  ><div ng-show="element.supplier == true">&nbsp;{{element.name}}</div></td>
+							
+							<td class="row_table  username"  ><div>&nbsp;{{element.description}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{element.note}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{element.total}}</div></td>
+							<td class="row_table  username"  ><div>&nbsp;{{element.openamount}}</div></td>
+							<td class="row_table  username"  ><div ng-if="(element.customer == true && element.debit == true) ||  (element.supplier == true && element.credit == true)">&nbsp;{{element.amount}}</div></td>
+							<td class="row_table  username"  ><div ng-if="(element.customer == true && element.debit == false) ||  (element.supplier == true && element.credit == false)">&nbsp;{{element.amount}}</div></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div class="ACC_suspended_details"    >
+				<table class="GECO_table nine_two clearfix">
+					<tbody>
+						<tr >
+								<td class="row_table  username first"  ><div>&nbsp;</div></td>
+								<td class="row_table  username"  ><div ng-show="element.customer == true">&nbsp;</div></td>
+								<td class="row_table  username"  ><div ng-show="element.supplier == true">&nbsp;</div></td>
+								
+								<td class="row_table  username"  ><div>&nbsp;</div></td>
+								<td class="row_table  username"  ><div>&nbsp;</div></td>
+								<td class="row_table  username"  ><div>&nbsp;{{total}}</div></td>
+								<td class="row_table  username"  ><div>&nbsp;{{openamount}}</div></td>
+								<td class="row_table  username"  ><div>&nbsp;{{amountgive}}</div></td>
+								<td class="row_table  username"  ><div>&nbsp;{{amountget}}</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+	
+</div>

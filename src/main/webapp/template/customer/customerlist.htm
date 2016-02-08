@@ -1,0 +1,318 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()" ><div ng-repeat="mess in msg.message">{{mess}} <br></div></alert>
+	</div>
+</div>
+<div class="row  header_reserved_area  show-for-small-only">
+	<div class="large-3 medium-3 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-9 medium-9  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h5 class="title" >Elenco Clienti</h5>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-small-only draft_display btn_status"   >
+	<i class="fi-arrow-left" go-back ></i>
+</div>
+<div class="row show-for-small-only draft_display_pos1 btn_status"   >
+	<i class="fi-plus" ng-click="location.path('/customer/0')" ></i>
+</div>
+<!-- 
+<div class="row show-for-small-only draft_display_pos2 btn_status"  >
+	<i class="fi-magnifying-glass" ng-click="showfilter = !showfilter" ></i>
+</div>
+ -->
+
+<div class="row show-for-small-only draft_display_pos3 btn_status" ng-if="perm.permission != perm_value.Promoter" >
+	<i class="fi-page-add" ng-click="filterMenu('import')" ></i>
+</div>
+<!--  TODO
+<div class="row show-for-small-only draft_display_pos4 btn_status"  >
+	<i class="fi-print" ng-click="printMassElements()" ></i>
+</div>
+-->
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco Clienti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="location.path('/customer/0')" class="button"><i class="fi-plus" ></i></a></li>
+		  	
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	<li  ng-if="perm.permission != perm_value.Promoter"><a ng-click="filterMenu('import')" class="button"><i class="fi-page-add"  ></i></a></li>
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  
+
+<div class="row">
+	<div class="large-3 medium-3 small-3 columns">
+		<h3>ELENCO CLIENTI</h3>
+	</div>
+	<div class="large-9 medium-9 small-9 columns">
+		<ul class="button-group">
+		  	<li><a href="#/customer/0" class="button">Aggiungi Cliente</a></li>
+		 	<li><a href="#" class="button">Stampa elenco </a></li>
+		  	<li><div class="button" ng-click="filterMenu('import')">Importa </div></li>
+		</ul>
+	</div>
+</div>
+-->
+
+<div class="row" ng-show="menuselected == 'import'">
+	<form>
+	<fieldset>
+		<legend>IMPORTAZIONE</legend>
+		<div class="row">
+			<div class="large-3 columns">
+				<label>Colonna Codice
+				  <input type="text"
+					 ng-model="importobj.colCode"
+					value="{{importobj.colCode}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Ragione Sociale
+				  <input type="text"
+					 ng-model="importobj.colName"
+					value="{{importobj.colName}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Codice alternativo 1
+				  <input type="text"
+					 ng-model="importobj.colAlternativecode1"
+					value="{{importobj.colAlternativecode1}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Codice alternativo 2
+				  <input type="text"
+					 ng-model="importobj.colAlternativecode2"
+					value="{{importobj.colAlternativecode2}}" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-3 columns">
+				<label>Colonna Codice Fiscale
+				  <input type="text"
+					 ng-model="importobj.colTaxcode"
+					value="{{importobj.colTaxcode}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Partita IVA
+				  <input type="text"
+					 ng-model="importobj.colSerialnumber"
+					value="{{importobj.colSerialnumber}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Listino
+				  <input type="text"
+					 ng-model="importobj.colList"
+					value="{{importobj.colList}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Rappresentanti
+				  <input type="text"
+					 ng-model="importobj.colPromoter"
+					value="{{importobj.colPromoter}}" capitalize />
+				</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="large-3 columns">
+				<label>Colonna Provvigione
+				  <input type="text"
+					 ng-model="importobj.colCommission"
+					value="{{importobj.colCommission}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Email
+				  <input type="text"
+					 ng-model="importobj.colEmail"
+					value="{{importobj.colEmail}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Telefono
+				  <input type="text"
+					 ng-model="importobj.colPhone"
+					value="{{importobj.colPhone}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Celluare
+				  <input type="text"
+					 ng-model="importobj.colMobile"
+					value="{{importobj.colMobile}}" capitalize />
+				</label>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="large-3 columns">
+				<label>Colonna Indirizzo
+				  <input type="text"
+					 ng-model="importobj.colStreet"
+					value="{{importobj.colStreet}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Cap
+				  <input type="text"
+					 ng-model="importobj.colZipcode"
+					value="{{importobj.colZipcode}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Città
+				  <input type="text"
+					 ng-model="importobj.colCity"
+					value="{{importobj.colCity}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Colonna Provincia
+				  <input type="text"
+					 ng-model="importobj.colZone"
+					value="{{importobj.colZone}}" capitalize />
+				</label>
+			</div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Prima Riga
+				  <input type="text"
+					 ng-model="importobj.startIndex"
+					value="0" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Ultima Riga<input type="text"
+					 ng-model="importobj.endIndex"
+					value="0" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<div class="button import_report"  upload-button    url="{{url.Upload}}" param="file"	data="formData" 	multiple="false"   required="true"  on-upload="onUpload(files)"  on-success="onSuccess(response)" on-error="onError(response)" on-complete="onComplete(response)"> 
+				Importa
+				</div>
+				<div class="button" ng-show="novalid" ng-click="importCustomer()">Ripeti </div>
+			</div>
+			
+		</div>
+		</fieldset>
+	</form>
+	
+</div>
+
+	<div class="row">
+		<div class="small-12 columns ">
+			<!-- pagination total-items="totalitems" items-per-page="pagesize_confirmed" page="page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="pages" ng-click="getProducts(page)"></pagination-->
+		</div>
+		</div>
+		
+<div class="row">
+	<div class="small-12 columns ">
+			<input ng-model="pagesize" value="{{pagesize}}">
+			<div class="button  tiny"  ng-click="getCustomers()">Applica </div>
+		</div>
+	</div>
+<div class="row collapse">
+ 	<div class="large-12 ">
+ 	<table st-table="customersToDisplay" class="table table-striped expand_table show-for-medium-up" st-safe-src="customers">
+  <thead>
+    <tr>
+      <th width="50"></th>
+      <th width="50">Listino</th>
+      <th width="150" class="hidden_cell" st-sort="customercode" st-sort-default="reverse" st-skip-natural="true">Codice</th>
+      <th width="250" st-sort="customername"  st-skip-natural="true">Ragione sociale</th>
+      <th width="150" class="hidden_cell">Indirizzo</th>
+      <th width="50">Telefono</th>
+      <th width="50">email</th>
+      <th width="50" >Rapp.</th>
+      
+      <th width="50"></th>
+    </tr>
+        <tr>
+          <th colspan="8"><input st-search="" class="form-control" placeholder="Ricerca Globale ..." type="text"/></th> 
+        </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="customer in customersToDisplay ">
+      <td><i class="icon_setup fi-pencil"  ng-click="location.path('/customer/'+customer.idCustomer)" ></i> </td>
+      <td> <i ng-show="customer.hasList" class="icon_setup fi-print"  ng-click="printList(customer.code)"></i></td>
+      <td class="hidden_cell">{{customer.customercode}}</td>
+      <td>{{customer.customername}}</td>
+      <td class="hidden_cell">{{customer.address.address}}</td>
+      <td>{{customer.contact.phone1}}</td>
+      <td>{{customer.contact.email1}}</td>
+      <td >{{customer.promoter.code}}</td>
+      
+      <td><i class="icon_setup fi-x-circle"  ng-click="deleteElement(customer)"></i></td>
+	</tr>
+  
+  
+  </tbody>
+</table>
+             
+     
+   </div>
+</div>
+<div class="row elements show-for-small-only heads_list_item" ng-repeat="customer in customers " >
+               		         <!-- --> 
+                   		
+                      		            <div class="small-2 small-collapse columns">
+                       		 	             <i class="icon_setup fi-pencil"  ng-click= "location.path('/customer/'+customer.idCustomer)"></i> 
+                      	 	            </div>
+                      	 	            <div class="small-2 small-collapse columns">
+                       		 	             <i class="icon_setup fi-print"  ng-click="printList(customer.code)" ></i> 
+                      	 	            </div>
+                       		            <div class="small-6  small-collapse columns">
+                        	 	             <div class="voice height-100">
+			                                      <ul>
+			                                           <li><span>{{customer.customercode}} {{customer.customername}} </span> </li>
+			                                          <!--   <li><span> {{customer.address.address}} {{customer.address.number}} {{customer.address.zipcode}} {{customer.address.zone}}</span> </li>-->
+			                                           <li><span>Tel: {{customer.contact.phone1}} email: {{customer.contact.email1}} </span> </li>
+			                          			  </ul>
+                       		                 </div>
+                                        </div>
+		                                <div class="small-2 small-collapse  columns">
+		                                     <!-- <div ng-click="wiz.addProduct(prod)" class="cart height-50" ng-class="{'pr_warning':prod.status == 2,'pr_error':prod.status == 3,'pr_full':prod.status == 1}">
+		                                     </div>-->
+		                                     <i class="icon_setup fi-x-circle"  ng-click="deleteElement(customer)"></i> <!-- <button class="button tiny round" ng-class="{'warning':prod.status == 2,'error':prod.status == 3}"></button>-->
+		                                </div>
+						           </div>
+	<div class="row show-for-small-only heads_list_item">
+
+</div>	  

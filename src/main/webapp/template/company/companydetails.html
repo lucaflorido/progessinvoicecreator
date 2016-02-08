@@ -1,0 +1,129 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Azienda</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="savecompany()" class="button"><i class="fi-save" ></i></a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Denominazione  </legend>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Ragione Sociale
+					<input type="text" ng-model="company.companyname" value="{{company.companyname}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Partita Iva
+					<input type="text" ng-model="company.companynumber" value="{{company.companynumber}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Codice Fiscale
+					<input type="text" ng-model="company.taxcode" value="{{company.taxcode}}" /> 
+				</label>
+			</div>
+	</fieldset>
+	</form>
+	</div>
+<div class="row">
+	<form>
+	<fieldset>
+		<legend>Indirizzo</legend>
+			<div class="large-6 small-12 medium-6 columns">
+				<label>Indirizzo
+					<input type="text" ng-model="company.address.address" value="{{company.address.address}}" />
+				</label>
+			</div>
+			<div class="large-2 small-12 medium-6 columns">
+				<label>Civico
+					<input type="text" ng-model="company.address.number" value="{{company.address.number}}" />  
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Città
+					<input type="text" ng-model="company.address.city" value="{{company.address.city}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Provincia
+					<input type="text" ng-model="company.address.zone" value="{{company.address.zone}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>CAP
+					<input type="text" ng-model="company.address.zipcode" value="{{company.address.zipcode}}" /> 
+				</label>
+			</div>
+	</fieldset>
+	</form>
+</div>
+<div class="row">
+	<form>
+	<fieldset>
+		<legend>Contatti</legend>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Email
+					<input type="email" ng-model="company.contact.email1" value="{{company.contact.email1}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Telefono
+					<input type="text" ng-model="company.contact.phone1" value="{{company.contact.phone1}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Cellulare
+					<input type="text" ng-model="company.contact.mobile1" value="{{company.contact.mobile1}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Email aggiuntiva
+					<input type="email" ng-model="company.contact.email2" value="{{company.contact.email2}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Telefono aggiuntivo
+					<input type="text" ng-model="company.contact.phone2" value="{{company.contact.phone2}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Cellulare aggiuntivo
+					<input type="text" ng-model="company.contact.mobile2" value="{{company.contact.mobile2}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Fax
+					<input type="text" ng-model="company.contact.fax" value="{{company.contact.fax}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>Contatto
+					<input type="text" ng-model="company.contact.reference" value="{{company.contact.reference}}" /> 
+				</label>
+			</div>
+		</fieldset>
+	</form>
+</div>

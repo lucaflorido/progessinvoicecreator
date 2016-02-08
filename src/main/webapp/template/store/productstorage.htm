@@ -1,0 +1,163 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Prodotti</h3>
+		
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+		<div class="filter">
+		<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+			
+			
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+			
+		</div>
+	</div>
+	<div class="head_main_detail">	
+				
+				<div class="info" >
+					<div class="fields code">
+						<div class="label ">Da Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text" id="endDate" ng-model="filter.fromDate" value="{{filter.fromDate}}"  create-datepicker />
+						</div>
+					</div>
+					<div class="fields code">
+						<div class="label ">A Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text" id="startDate" ng-model="filter.toDate" value="{{filter.toDate}}"  create-datepicker />
+						</div>
+						
+					</div>
+					
+						<div class="fields code">
+							<div class="label ">Marca </div>
+							<div class="field">
+								<select id="selgroup" class="inputfield" ng-model="currentBrand"    ng-options="brand as brand.name for brand in brands" ng-data-provider="brands" create-chosen on-finish-chosen-update  ng-change="filter.brand = currentBrand" ></select>
+							</div>
+						</div>
+				</div>
+				<div class="info added_info">
+					<div class="category_group">
+							<div class="fields code">
+								<div class="label ">Gruppo </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentGroup"    ng-options="group as group.name for group in groups" ng-data-provider="groups" create-chosen on-finish-chosen-update  ng-change="filter.group = currentGroup" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+								<div class="label ">Categoria </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentCategory"    ng-options="category as category.name for category in categorys" ng-data-provider="categorys" create-chosen on-finish-chosen-update   ng-change="filter.category = currentCategory;changeCategory()" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+								<div class="label ">Sotto Categoria </div>
+								<div class="field">
+									<select id="subcategory" class="inputfield" ng-model="currentSubCategory"    ng-options="subcategory as subcategory.name for subcategory in subcategories" ng-data-provider="subcategories" create-chosen on-finish-chosen-update   ng-change="filter.subcategory = currentSubCategory" ></select>
+								</div>
+							</div>
+					</div>
+					<div class="category_group">
+							<div class="fields code">
+									<div class="label ">&nbsp; </div>
+									<div class="field">
+										&nbsp;
+									</div>
+								</div>
+							<div class="fields code">
+									<div class="label ">&nbsp; </div>
+									<div class="field">
+										&nbsp;
+									</div>
+								</div>
+							<div class="PRODUCT_field code ">
+								<div class="filterbutton" ng-click="filterProduct()">
+									<div class="filterlabel">
+										Seleziona
+									</div>
+								</div>
+								
+							</div>
+							
+							
+					</div>	
+					
+				</div>
+			</div>
+	<div class="tablecontainer" >
+		<table class="GECO_table four_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first threequarter"><div class="sorter" ng-click="sortFunction('product.code')"><div class="sorter_label">Codice</div><div class="sortericon product code"></div></div></div></td>
+					<td class="header_table row_table double"><div class="sorter" ng-click="sortFunction('product.description')"><div class="sorter_label">Descrizione</div><div class="sortericon product description"></div></div></div></td>
+					<td class="header_table row_table half">U.M.</td>
+					<td class="header_table row_table telefono"><div class="sorter" ng-click="sortFunction('product.load')"><div class="sorter_label">Carico</div><div class="sortericon product load"></div></div></div></td>
+					<td class="header_table row_table email"><div class="sorter" ng-click="sortFunction('product.unload')"><div class="sorter_label">Scarico</div><div class="sortericon product unload"></div></div></div></td>
+					<td class="header_table row_table cellulare"><div class="sorter" ng-click="sortFunction('product.stock')"><div class="sorter_label">Giacenza</div><div class="sortericon product stock"></div></div></div></td>
+					<td class="header_table row_table half modify">&nbsp;</td>
+				</tr>	
+			</thead>
+		</table>
+		<div ng-repeat="product in products | orderBy:orderArray">	
+			<table class="GECO_table store_table four_two clearfix">	
+				<tbody>
+					<tr >
+						<td class="row_table first threequarter">&nbsp;{{product.product.code}}</td>
+						<td class="row_table double">&nbsp;{{product.product.description}} </td>
+						<td class="row_table half">&nbsp;{{product.um.code}}</td>
+						<td class="row_table telefono">&nbsp;{{product.load}}</td>
+						<td class="row_table email">&nbsp;{{product.unload}}</td>
+						<td class="row_table cellulare">&nbsp;{{product.stock}}</td>
+						<td class="row_table half username"  ><a >
+							<a><div class="  icon detail">
+								<div class="detailicon open" ng-click="detailView(product.idStorage)" id="detail{{product.idStorage}}" ></div>
+							</div></a>
+						</a></td>
+						 
+					</tr>
+				</tbody>
+			</table>
+			<div class="detailview store_details" id="detailview{{product.idStorage}}">
+				<div class="store_details_table">
+					<table class="GECO_table four_two_detail clearfix  " ng-show="product.storagesc != null" >	
+						
+											<thead>
+												<tr>
+													<td class="header_table row_table first username">Lotto</td>
+													<td class="header_table row_table cognome">Scadenza</td>
+													<td class="header_table row_table telefono">Carico</td>
+													<td class="header_table row_table email">Scarico</td>
+													<td class="header_table row_table cellulare">Giacenza</td>
+													
+												</tr>	
+											</thead>
+											<tbody>
+												<tr ng-repeat="serial in product.storagesc" on-finish-render>
+													<td class="row_table first username">&nbsp;{{serial.serialcode}}</td>
+													<td class="row_table  username">&nbsp;{{serial.expiredate}}</td>
+													<td class="row_table telefono">&nbsp;{{serial.load}}</td>
+													<td class="row_table email">&nbsp;{{serial.unload}}</td>
+													<td class="row_table cellulare">&nbsp;{{serial.stock}}</td>
+												</tr>
+											</tbody>
+										
+							
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,64 @@
+<div class="container_menu userlist clearfix">
+<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td class="title_td">
+					Elenco Clienti Categorie
+				</td>
+			</tr>
+  </table>
+	
+		<table class="menutable"><tr>
+	<td class="buttontd"  >
+	<a ng-click="addcustomercategoryElement()" ng-if="customercategorysaved == true">
+	<div class="addlabel"> Aggiungi Categoria 
+		</div>
+		</a>
+	</td>
+	<td class="buttontd" >
+	<a ng-click="savecustomercategorys()">
+	<div class="addlabel">  Salva 
+		</div>
+		</a>
+	</td>
+	</tr>
+	</table>
+	
+	
+	<div class="toolbar_table">
+		
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer customercategory" >
+		<table class="GECO_table four_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first name">Codice</td>
+					<td class="header_table row_table cognome">Nome</td>
+					<td class="header_table row_table cognome">Descrizione</td>
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr bgcolor="#FFFFFF" ng-repeat="customercategory in customercategorys | filter:query | orderBy:orderProp">
+					<td class="row_table first username"  ><div ng-if="modifyid != customercategory.idCategoryCustomer">&nbsp;{{customercategory.code}}</div><div><input class="input_field"  ng-if="modifyid == customercategory.idCategoryCustomer" ng-model="customercategory.code"  value="{{customercategory.code}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != customercategory.idCategoryCustomer">&nbsp;{{customercategory.name}}</div><div><input class="input_field"  ng-if="modifyid == customercategory.idCategoryCustomer" ng-model="customercategory.name"  value="{{customercategory.name}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != customercategory.idCategoryCustomer">&nbsp;{{customercategory.description}}</div><div><input class="input_field"  ng-if="modifyid == customercategory.idCategoryCustomer" ng-model="customercategory.description"  value="{{customercategory.description}}" />  </div></td>
+					<td class="row_table half "><div class="modifyicon" ng-click="modifycustomercategoryElement(customercategory.idCategoryCustomer)" ></div></td>
+				    <td class="row_table half "><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletecustomercategoryElement(customercategory.idCategoryCustomer)" ></div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,270 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_detail">
+		<h3>Fornitore:</h3>
+		<div class="buttonmenu savebutton admin" ng-click="saveSupplier()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="buttonmenu redobutton ">
+			<div class="redo buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Ricarica
+			</div>
+		</div>
+		
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="supplier_main_detail">	
+				<div class="info">
+					<div class="fields code">
+						<div class="label ">Codice *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="supplier.suppliercode" value="{{supplier.suppliercode}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields name">
+						<div class="label ">Ragione Sociale *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="supplier.suppliername" value="{{supplier.suppliername}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Codice Fiscale *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="supplier.taxcode" value="{{supplier.taxcode}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Partita Iva *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="supplier.serialnumber" value="{{supplier.serialnumber}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="fields code">
+						<div class="label ">Attivo</div>
+						<div class="field "><input class="inputfield" type="checkbox" id="ifname" ng-model="supplier.active" value="{{supplier.active}}"  /></div>
+						<div class="error" id="val_ifname" >Campo obbligatorio</div> 
+					</div>
+					<div class="category_group">
+						<div class="fields code">
+							<div class="label ">Gruppo </div>
+							<div class="field">
+								<select id="selgroup" class="inputfield" ng-model="currentGroup"    ng-options="group as group.name for group in groups" ></select>
+							</div>
+						</div>
+						<div class="fields code">
+							<div class="label ">Categoria</div>
+							<div class="field ">
+								<select id="selcategory" class="inputfield" ng-model="currentCategory"    ng-options="category as category.name for category in categorys" ng-change="changeCategory()" ></select>
+							</div>
+						</div>
+						<div class="fields code">
+							<div class="label ">Pagamento</div>
+							<div class="field ">
+								<select id="selpayment" class="inputfield" ng-model="currentPayment"    ng-options="payment as payment.code for payment in payments" ng-change="supplier.payment = currentPayment" ></select>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			
+		</div>
+		<div class="generaltable" ng-if="selectedSection == listsections[0]">
+			<div class="supplier_address_detail">	
+				<div class="contact">
+					<div class="fields address">
+						<div class="label">Indirizzo</div>
+						<div class="field address"><input class="inputfield" ng-model="supplier.address.address" value="{{supplier.address.address}}" /></div>
+						<div class="field number"><input class="inputfield" ng-model="supplier.address.number" value="{{supplier.address.number}}" /></div>
+					</div>
+					<div class="fields seventy">
+						<div class="label mobile">Città</div>
+						<div class="field mobile"><input class="inputfield" ng-model="supplier.address.city" value="{{supplier.address.city}}" /></div>
+					</div>
+					<div class="fields tenth">
+						<div class="label email">Provincia</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.address.zone" value="{{supplier.address.zone}}" /></div>
+					</div>
+					<div class="fields fifteen_right">
+						<div class="label email">CAP</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.address.zipcode" value="{{supplier.address.zipcode}}" /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="credentials" ng-if="selectedSection == listsections[0]">
+			<div class="credential">
+				<div class="fields one_on_three_left">
+					<div class="label phone">Telefono 1</div>
+					<div class="field phone"><input class="inputfield" ng-model="supplier.contact.phone1" value="{{supplier.contact.phone1}}" /></div>
+				</div>
+				<div class="fields one_on_three_left">
+					<div class="label phone">Telefono 2</div>
+					<div class="field phone"><input class="inputfield" ng-model="supplier.contact.phone2" value="{{supplier.contact.phone2}}" /></div>
+				</div>
+				<div class="fields one_on_three_right">
+						<div class="label email">Fax</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.contact.fax" value="{{supplier.contact.fax}}" /></div>
+					</div>
+			</div>
+			<div class="credential">
+				<div class="fields one_on_three_left">
+						<div class="label mobile">Cellulare 1</div>
+						<div class="field mobile"><input class="inputfield" ng-model="supplier.contact.mobile1" value="{{supplier.contact.mobile1}}" /></div>
+					</div>
+				<div class="fields one_on_three_left">
+						<div class="label mobile">Cellulare 2</div>
+						<div class="field mobile"><input class="inputfield" ng-model="supplier.contact.mobile2" value="{{supplier.contact.mobile2}}" /></div>
+					</div>
+				<div class="fields one_on_three_right">
+					<div class="label email">Contatto</div>
+					<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.contact.reference" value="{{supplier.contact.reference}}" /></div>
+				</div>
+			</div>
+			<div class="credential">
+				<div class="fields">
+						<div class="label email">Email 1</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.contact.email1" value="{{supplier.contact.email1}}" /></div>
+					</div>
+				<div class="fields right">
+						<div class="label email">Email 2</div>
+						<div class="field email"><input id="ifemail" class="inputfield" ng-model="supplier.contact.email2" value="{{supplier.contact.email2}}" /></div>
+					</div>
+			</div>
+		</div>
+		<div class="credentials" ng-if="selectedSection == listsections[1]">
+			<div class="credential">
+				<div class="detailview"  >
+						<div class="add_container" ng-click="addListElement(supplier)">
+							<div class="addlabel">
+								Aggiungi Listino 
+							</div>
+							<div class="add buttonicon">
+							</div>
+						</div>
+						<div class="tabledetail">
+							<div class="tabledetail_content supplier_lists">
+								<div class="tabledetail_header">
+									<div class="tabledetail_header_element tabledetail_row first">Codice</div>
+									<div class="tabledetail_header_element tabledetail_row ">Descrizione</div>
+									<div class="tabledetail_header_element tabledetail_row ">Data Validità</div>
+									<div class="tabledetail_header_element tabledetail_row modify">&nbsp;</div>
+									<div class="tabledetail_header_element tabledetail_row delete">&nbsp;</div>
+								</div>
+								<div class="tabledetail_rows indetail" ng-repeat="list in supplier.lists | orderBy:orderYear" >
+									<div class="tabledetail_row first">
+										<div ng-if="listid != list.idListSupplier ">&nbsp;{{list.list.code}}</div>
+										<div><select ng-if="listid == list.idListSupplier" id="selcounter" class="inputfield" ng-model="currentList"    ng-options="list as getListName(list)  for list in lists" ng-change="list.list = currentList" ></select></div>
+									</div>
+									
+									<a ng-click="changeListElement(list)" ><div class="tabledetail_row modify"><div class="modifyicon"></div></div></a>
+									<div class="tabledetail_row delete"><div class="deleteicon" id="del{{supplier.idSupplier}}" ng-click="deleteElement(supplier.idSupplier)"></div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>	
+		<!--div class="column_2_2 user" ng-if="selectedSection == listsections[0]">
+				<div class="contact">
+					<div class="fields">
+						<div class="label name">Caratteri peso in Codice a Barre</div>
+						<div class="field name"><input class="inputfield" id="ifname" ng-model="supplier.weightbarcode" value="{{supplier.weightbarcode}}"  /></div>
+					</div>
+					<div class="fields">
+						<div class="label phone">Gestione Lotti</div>
+						<div class="field phone"><input class="inputfield" type="checkbox" ng-model="supplier.manageserialnumber" value="{{supplier.manageserialnumber}}" /></div>
+					</div>
+					
+				</div>
+			</div-->
+		<!--div class="generaltable">
+			<div class="column_1_2 user">	
+				<div class="info">
+					<div class="fields">
+						<div class="label name">Prezzo Acquisto </div>
+						<div class="field name"><input class="inputfield" id="ifname" ng-model="supplier.sellprice" value="{{supplier.sellprice}}"  /></div>
+					</div>
+					<div class="fields">
+						<div class="label name">Prezzo Vendita</div>
+						<div class="field name"><input class="inputfield" id="ifname" ng-model="supplier.purchaseprice" value="{{supplier.purchaseprice}}"  /></div>
+					</div>
+					<div class="fields">
+						<div class="label name">Aliquota</div>
+						<div class="field role">
+							<select id="seltaxrate" class="inputfield" ng-model="currentTaxRate"    ng-options="taxrate as taxrate.description for taxrate in taxrates" ></select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="column_2_2 user">
+				<div class="contact">
+					<div class="fields">
+						<div class="label name">Gruppo </div>
+						<div class="field role">
+							<select id="selgroup" class="inputfield" ng-model="currentGroup"    ng-options="group as group.name for group in groups" ></select>
+						</div>
+					</div>
+					<div class="fields">
+						<div class="label name">Categoria</div>
+						<div class="field role">
+							<select id="selcategory" class="inputfield" ng-model="currentCategory"    ng-options="category as category.name for category in categorys" ng-change="changeCategory()" ></select>
+						</div>
+					</div>
+					<div class="fields">
+						<div class="label name">Sottocategoria</div>
+						<div class="field role">
+							<select id="selsubcategory" class="inputfield" ng-model="currentSubCategory"    ng-options="subcategory as subcategory.name for subcategory in subcategories" ></select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div-->
+		<!--div class="credentials">
+			<div class="credential">
+				<div class="detailview"  >
+						<div class="add_container" ng-click="addUMElement(supplier)">
+							<div class="addlabel">
+								Aggiungi Unit Misura 
+							</div>
+							<div class="add buttonicon">
+							</div>
+						</div>
+						<div class="tabledetail">
+							<div class="tabledetail_content supplier_ums">
+								<div class="tabledetail_header">
+									<div class="tabledetail_header_element tabledetail_row first">Codice</div>
+									<div class="tabledetail_header_element tabledetail_row ">U.M</div>
+									<div class="tabledetail_header_element tabledetail_row ">Preferenziale</div>
+									<div class="tabledetail_header_element tabledetail_row">Conversione</div>
+									<div class="tabledetail_header_element tabledetail_row modify">&nbsp;</div>
+									<div class="tabledetail_header_element tabledetail_row delete">&nbsp;</div>
+								</div>
+								<div class="tabledetail_rows indetail" ng-repeat="list in supplier.ums | orderBy:orderYear" >
+									<div class="tabledetail_row first">
+										<div ng-if="listid != list.idUnitMeasureSupplier || list.code == supplier.code  ">&nbsp;{{list.code}}</div>
+										<div><input ng-if="listid == list.idUnitMeasureSupplier && list.code != supplier.code"  ng-model="list.code"  value="{{list.code}}" />  </div>
+									</div>
+									<div class="tabledetail_row ">
+										<div ng-if="listid != list.idUnitMeasureSupplier">&nbsp;{{list.um.code}}</div>
+										<div><select ng-if="listid == list.idUnitMeasureSupplier" id="selcounter" class="inputfield" ng-model="currentUMP"    ng-options="um as um.code for um in ums" ng-change="list.um = currentUMP" ></select></div>
+									</div>
+									<div class="tabledetail_row ">
+										<div ng-if="listid != list.idUnitMeasureSupplier">&nbsp;{{list.preference}}</div>
+										<div><input ng-if="listid == list.idUnitMeasureSupplier" type="checkbox" ng-model="list.preference"  value="{{list.preference}}" />  </div>
+									</div>
+									<div class="tabledetail_row ">
+										<div ng-if="listid != list.idUnitMeasureSupplier">&nbsp;{{list.conversion}}</div>
+										<div><input ng-if="listid == list.idUnitMeasureSupplier" ng-model="list.conversion"  value="{{list.conversion}}" />  </div>
+									</div>
+									<a ng-click="changeUMElement(list)" ><div class="tabledetail_row modify"><div class="modifyicon"></div></div></a>
+									<div class="tabledetail_row delete"><div class="deleteicon" id="del{{supplier.idSupplier}}" ng-click="deleteElement(supplier.idSupplier)"></div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div-->
+	</div>
+</div>

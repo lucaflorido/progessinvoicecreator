@@ -1,0 +1,50 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Aliquote</h3>
+		<div class=" buttonmenu addbutton "  >
+			<a ng-click="addTaxrateElement()" ng-if="taxratesaved == true">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Ruolo 
+				</div>
+			</a>
+		</div>
+		<div class="buttonmenu savebutton admin" ng-click="saveTaxrates()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div class="tableheader  roles clearfix">
+				<div class="header_table row_table first name">Descrizione</div>
+				<div class="header_table row_table cognome">Valore</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="taxrate in taxrates | filter:query | orderBy:orderProp">
+				<div class="row roles">
+					<div class="row_table first username"  ><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.description}}</div><div><input ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.description"  value="{{taxrate.description}}" />  </div></div>
+					<div class="row_table cognome"><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.value}}</div><div><input ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.value"  value="{{taxrate.value}}" />  </div></div>
+					<a href="#/taxrate"><div class="row_table modify"><div class="modifyicon" ng-click="modifyTaxrateElement(taxrate.idtaxrate)" ></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deleteTaxrateElement(taxrate.idtaxrate)" ></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

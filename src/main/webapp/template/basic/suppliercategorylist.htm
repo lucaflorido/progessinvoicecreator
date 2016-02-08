@@ -1,0 +1,76 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Fornitori Categorie</h3>
+		<div class=" buttonmenu addbutton "  >
+			<a ng-click="addsuppliercategoryElement()" ng-if="suppliercategorysaved == true">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Categoria 
+				</div>
+			</a>
+		</div>
+		<div class="buttonmenu savebutton admin" ng-click="savesuppliercategorys()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer suppliercategory" >
+		<!--div class="table">
+			<div class="tableheader   clearfix">
+				<div class="header_table row_table first name">Codice</div>
+				<div class="header_table row_table cognome">Nome</div>
+				<div class="header_table row_table cognome">Descrizione</div>
+				<div class="header_table row_table cognome">Note</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="suppliercategory in suppliercategorys | filter:query | orderBy:orderProp">
+				<div class="row ">
+					<div class="row_table first username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.code}}</div><div><input ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.code"  value="{{suppliercategory.code}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.name}}</div><div><input ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.name"  value="{{suppliercategory.name}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.description}}</div><div><input ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.description"  value="{{suppliercategory.description}}" />  </div></div>
+					<div class="row_table  usernote"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.note}}</div><div><input ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.note"  value="{{suppliercategory.note}}" />  </div></div>
+					<a href="#/suppliercategory"><div class="row_table modify"><div class="modifyicon" ng-click="modifysuppliercategoryElement(suppliercategory.idCategorySupplier)" ></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletesuppliercategoryElement(suppliercategory.idCategorySupplier)" ></div></div>
+				</div>
+			</div>
+		</div-->
+		<table class="GECO_table four_two clearfix">
+			<thead>
+				<tr>
+				<td class="header_table row_table first name">Codice</td>
+				<td class="header_table row_table cognome">Nome</td>
+				<td class="header_table row_table cognome">Descrizione</td>
+				<td class="header_table row_table cognome">Note</td>
+				<td class="header_table row_table half  modify">&nbsp;</td>
+				<td class="header_table row_table half delete">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="suppliercategory in suppliercategorys | filter:query | orderBy:orderProp">
+				<td class="row_table first username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.code}}</div><div><input class="input_field"   ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.code"  value="{{suppliercategory.code}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.name}}</div><div><input class="input_field"   ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.name"  value="{{suppliercategory.name}}" />  </div></td>
+					<td class="row_table  username"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.description}}</div><div><input class="input_field"   ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.description"  value="{{suppliercategory.description}}" />  </div></td>
+					<td class="row_table  usernote"  ><div ng-if="modifyid != suppliercategory.idCategorySupplier">&nbsp;{{suppliercategory.note}}</div><div><input class="input_field"   ng-if="modifyid == suppliercategory.idCategorySupplier" ng-model="suppliercategory.note"  value="{{suppliercategory.note}}" />  </div></td>
+					<td class="row_table half usernote" ><a href="#/suppliercategory"><div class=" modify"><div class="modifyicon" ng-click="modifysuppliercategoryElement(suppliercategory.idCategorySupplier)" ></div></div></a></td>
+				    <td class="row_table half delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletesuppliercategoryElement(suppliercategory.idCategorySupplier)" ></div></td>
+					</td>
+			</tbody>
+		</table>
+	</div>
+</div>

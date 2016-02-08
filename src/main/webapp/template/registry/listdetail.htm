@@ -1,0 +1,323 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Dettaglio listino</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><button ng-disabled="list_form.$invalid" ng-click="saveProduct()" class="button"><i class="fi-save" ></i></button></li>
+		  	<li ><button ng-disabled="list_form.$invalid && list.idList <=0" ng-click="printList(list.code)" class="button"><i class="fi-print" ></i></button></li>
+		   <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	<!-- <li ng-if="auth.permission != conf_permission.Promoter"><a ng-click="filterMenu('import')" class="button"><i class="fi-arrow-left"  ></i></a></li>-->
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3>{{list.name}}</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><button ng-disabled="list_form.$invalid" ng-click="saveProduct()" class="button">Salva</button></li>
+		  	<li><button ng-disabled="list_form.$invalid && list.idList <=0" ng-click="printList(list.code)" class="button">Stampa</button></li>
+		</ul>
+	</div>
+</div>-->
+<div class="row">
+<form name="list_form" validate>
+	<fieldset>
+		
+		<div class="row">
+			<div class="large-4 columns" ng-class="{'has-error':list_form.code.$invalid}">
+				<label>Codice *<input type="text"
+					 ng-model="list.code" name ="code"
+					value="{{list.code}}" capitalize  required/>
+				</label>
+			</div>
+			<div class="large-4 columns" ng-class="{'has-error':list_form.description.$invalid}">
+				<label>Name *<input type="text"
+					 ng-model="list.name" name="description"
+					value="{{list.name}}" capitalize required />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Validità <input type="text"
+					 ng-model="list.startdate"
+					value="{{list.startdate}}" capitalize f-datepicker />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 columns">
+				<label>Descrizione <input type="text"
+					 ng-model="list.description"
+					value="{{list.description}}" />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Pubblico<input type="checkbox"
+					 ng-model="list.publish"
+					value="{{list.publish}}" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns" ng-class="{'has-error':list_form.increment.$invalid || list.increment == 0}">
+				<label>Incremento<input type="number"
+					 ng-model="list.increment" name="increment"
+					value="{{list.increment}}"  required />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Incremeno Percentuale<input type="checkbox"
+					 ng-model="list.isPercentage"
+					value="{{list.isPercentage}}"  />
+				</label>
+			</div>
+			<div class="large-4 columns" ng-hide="list.idList > 0">
+				<label>Inserisci tutti i Prodotti<input type="checkbox"
+					 ng-model="list.fill"
+					value="{{list.fill}}"  />
+				</label>
+			</div>
+		</div>
+	</fieldset>
+</form>
+</div>	
+<div class="row show-for-medium-up" >
+	
+	<div class="large-12 medium-12  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco prodotti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		   
+		  	<li ><button  ng-click="filterMenu('filter')" class="button"><i class="fi-magnifying-glass" ></i></button></li>
+		  	<li ><button ng-click="filterMenu('increment')" class="button"><i class="fi-price-tag"  ></i><i class="fi-plus"  ></i></button></li>
+		  	<li ><button ng-click="filterMenu('addproducts')" class="button"><i class="fi-bookmark"  ></i><i class="fi-plus"  ></i></button></li>
+		 </ul>
+	</div>
+</div>
+<!-- 
+<div class="row" ng-show="list.idList > 0">
+	<div class="large-2 medium-2 small-2 columns">
+		<h3>PRODOTTI</h3>
+	</div>
+	<div class="large-10 medium-10 small-10 columns">
+		<ul class="button-group">
+			<li><div class="button" ng-click="filterMenu('filter')">Filtra </div></li>
+			<li><div class="button" ng-click="filterMenu('increment')">Incrementa Prezzi </div></li>
+			<li><div class="button" ng-click="filterMenu('addproducts')">Aggiungi Articoli </div></li>
+		</ul>
+	
+	</div>
+</div>-->
+<div class="row" ng-show="menuselected == 'filter' || menuselected == 'increment' ">
+	<form>
+	<fieldset>
+		<legend>FILTRAGGIO DATI</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Codice o Descrizione
+				  <input type="text"
+					 ng-model="filter.searchstring"
+					value="{{filter.searchstring}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Regione <select  name="region" ng-options="region.code for region in regions" ng-model="filter.region"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Gruppo <select  name="group" ng-options="group.code for group in groups" ng-model="filter.group"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Categoria <select  name="category" ng-options="category.code for category in categories" ng-model="filter.category" ng-change="changeCategory()" >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Sottocategoria <select  name="subcategory" ng-options="subcategory.code for subcategory in subcategories" ng-model="filter.subcategory"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Marca <select  name="brand" ng-options="brand.code for brand in brands" ng-model="filter.brand"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		
+	</fieldset>
+	</form>
+</div>
+<div class="row" ng-show=" menuselected == 'addproducts'">
+	<form>
+	<fieldset>
+		<legend>AGGIUNGI ARTICOLI</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Codice o Descrizione
+				  <input type="text"
+					 ng-model="filterToAdd.searchstring"
+					value="{{filterToAdd.searchstring}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Regione <select  name="region" ng-options="region.code for region in regions" ng-model="filterToAdd.region"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Gruppo <select  name="group" ng-options="group.code for group in groups" ng-model="filterToAdd.group"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Categoria <select  name="category" ng-options="category.code for category in categories" ng-model="filterToAdd.category" ng-change="changeCategory()" >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Sottocategoria <select  name="subcategory" ng-options="subcategory.code for subcategory in subcategories" ng-model="filterToAdd.subcategory"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Marca <select  name="brand" ng-options="brand.code for brand in brands" ng-model="filterToAdd.brand"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		<div class="row" >
+			<div class="large-3 columns">
+				<button class="button" ng-click="addProductsFiltered()"   >Aggiungi</button>
+			</div>
+		</div>
+	</fieldset>
+	</form>
+</div>
+<div class="row" ng-show="menuselected == 'increment'">
+	<form>
+		<fieldset>
+			<legend>INCREMENTO</legend>
+			<div class="row">
+
+			<div class="large-3 columns">
+				<label>Incremento
+				  <input type="text"
+					 ng-model="increment.increment"
+					value="{{increment.increment}}"  />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Percentuale
+				  <input type="checkbox"
+					 ng-model="increment.isPercentage"
+					value="{{increment.isPercentage}}"  />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Prezzo Finale
+				  <input type="checkbox"
+					 ng-model="increment.isEndPrice"
+					value="{{increment.isEndPrice}}"  />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<button class="button" ng-show="searched" ng-click="incrementPrices()" >Incrementa</button>
+				<button class="button" ng-hide="searched" ng-click="getProductsNumber();searched = true" >Filtra</button>
+
+			</div>
+		</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row" ng-show="list.idList > 0">
+	<div class="small-8 columns ">
+		<pagination total-items="totalitems" items-per-page="pagesize_confirmed" page="page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="pages" ng-click="getProducts(page)"></pagination>
+	</div>
+	<div class="small-4 columns ">
+		<input ng-model="pagesize" value="{{pagesize}}">
+		<div class="button"  ng-click="getProductsNumber()">Applica </div>
+		
+	</div>
+</div>
+<div	class="row" ng-show="list.idList > 0">
+<table st-table="prodsToDisplay" class="table table-striped" st-safe-src="list.listproduct">
+  <thead>
+    <tr>
+      <th width="50"></th>
+      <th width="20%"  st-sort="product.code" st-sort-default="anything" st-skip-natural="true">Codice</th>
+      <th width="50%"  st-sort="product.description"  st-skip-natural="true">Descrizione</th>
+      <th width="10%"    st-skip-natural="true">UM</th>
+      <th width="20%"    st-skip-natural="true">Prezzo Netto</th>
+      <th width="20%"   >%</th>
+      <th width="20%"   >Aliquota</th>
+      <th width="20%"    st-skip-natural="true">Prezzo</th>
+      <th width="50"></th>
+    </tr>
+    <tr>
+      <th colspan="8"><input st-search="" class="form-control" placeholder="Ricerca Globale ..." type="text"/></th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="prod in prodsToDisplay ">
+      <td><i  class="icon_setup fi-pencil" ng-click="changeProdElement(prod)"></i> </td>
+      <td class="hidden_cell">{{prod.product.code}}</td>
+      <td >{{prod.product.description}}</td>
+      <td >{{prod.product.umselected.code}}</td>
+      <td ><div ng-if="prodid != prod.idListProduct">&nbsp;{{prod.price}}</div><input ng-if="prodid == prod.idListProduct"  ng-model="prod.price"  value="{{prod.price}}" ng-blur="calculatePercentage(prod)" /> </td>
+      <td ><div ng-if="prodid != prod.idListProduct">&nbsp;{{prod.percentage}}</div><input ng-if="prodid == prod.idListProduct"  ng-model="prod.percentage"  value="{{prod.percentage}}" ng-blur="calculateSellPrice(prod)" /> </td>
+      <td >{{prod.product.taxrate.value}}</td>
+      <td ><div ng-if="prodid != prod.idListProduct">&nbsp;{{prod.endprice}}</div><input ng-if="prodid == prod.idListProduct"  ng-model="prod.endprice"  value="{{prod.endprice}}" ng-blur="calculateEndPrice(prod)" /> </td>
+      <td><i class="icon_setup fi-x-circle" ng-click="deleteElement(prod)" ></i></td>
+
+    </tr>
+  
+  
+  </tbody>
+</table>
+</div>		

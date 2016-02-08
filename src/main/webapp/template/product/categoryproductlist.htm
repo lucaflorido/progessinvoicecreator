@@ -1,0 +1,112 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Categorie Prodotti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addcategoryproductElement()" ng-if="categoryproductsaved == true" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ><a  ng-click="savecategoryproducts()" class="button"><i class="fi-save" ></i></a></li>
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3>CATEGORIE PRODOTTI</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="addcategoryproductElement()" ng-if="categoryproductsaved == true" class="button">Aggiungi</a></li>
+		  	<li><a ng-click="savecategoryproducts()" class="button">Salva</a></li>
+		</ul>
+	</div>
+	
+</div>
+-->
+<div class="row">
+	<div class="large-8 medium-8 small-8 columns">
+	
+		<table st-table="categoryproductsToDisplay" class="table table-striped" st-safe-src="categoryproducts" >
+			<thead>
+				<tr>
+					<th  >&nbsp;</th>
+					<th st-sort="code"  st-sort-default="anything" st-skip-natural="true" >Codice</th>
+					<th  st-sort="name"  st-skip-natural="true"  >Nome</th>
+					<th >Descrizione</th>
+					<th >&nbsp;</th>
+					<th >&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr st-select-row="categoryproduct" ng-repeat="categoryproduct in categoryproductsToDisplay" class="row_selected">
+					<td  ><i class="icon_setup fi-pencil" ng-click= "modifycategoryproductElement(categoryproduct)"></i></td>
+					<td   ><div ng-if="modifyid != categoryproduct.idCategoryProduct">&nbsp;{{categoryproduct.code}}</div><div><input   ng-if="modifyid == categoryproduct.idCategoryProduct" ng-model="categoryproduct.code"  value="{{categoryproduct.code}}" />  </div></td>
+					<td  ><div ng-if="modifyid != categoryproduct.idCategoryProduct">&nbsp;{{categoryproduct.name}}</div><div><input   ng-if="modifyid == categoryproduct.idCategoryProduct" ng-model="categoryproduct.name"  value="{{categoryproduct.name}}" />  </div></td>
+					<td   ><div ng-if="modifyid != categoryproduct.idCategoryProduct">&nbsp;{{categoryproduct.description}}</div><div><input   ng-if="modifyid == categoryproduct.idCategoryProduct" ng-model="categoryproduct.description"  value="{{categoryproduct.description}}" />  </div></td>
+					<td ><i class="icon_setup fi-x-circle" ng-click="deleteElement(categoryproduct)"></i></td>
+					<td>
+					    <i class="icon_setup fi-zoom-in" ng-click="enableSubCategory(categoryproduct)" ng-hide="selectedcategory == categoryproduct || categoryproduct.idCategoryProduct == 0"></i>
+						<i class="icon_setup fi-zoom-out" ng-click="disableSubCategory()" ng-show="selectedcategory == categoryproduct && categoryproduct.idCategoryProduct > 0"></i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="large-4 medium-4 small-4 columns" ng-show="selectedcategory">
+		<div class="row">
+			<div class="large-8 columns">
+				<h4>SOTTOCATEGORIE</h4>
+			</div>
+			<div class="large-4 columns">
+				<button ng-click="addSubCategoryElement()" ng-if="categoryproductsaved == true">Aggiungi </button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<table st-table="subcategoryproductsToDisplay" class="table table-striped" st-safe-src="selectedcategory.subcategories" >
+					<thead>
+						<tr>
+							<th >&nbsp;</th>
+							<th st-sort="code"  st-sort-default="anything" st-skip-natural="true" >Codice</th>
+							<th  st-sort="name"  st-skip-natural="true">Nome</th>
+							<th >Descrizione</th>
+							
+							<th >&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr st-select-row="subcategory" ng-repeat="subcategory in subcategoryproductsToDisplay" >
+							<td  ><i class="icon_setup fi-pencil" ng-click= "modifysubcategoryproductElement(subcategory)"></i></td>
+							<td   ><div ng-if="modifyscid != subcategory.idSubCategoryProduct">&nbsp;{{subcategory.code}}</div><div><input class="input_field"  ng-if="modifyscid == subcategory.idSubCategoryProduct" ng-model="subcategory.code"  value="{{subcategory.code}}" />  </div></td>
+							<td  ><div ng-if="modifyscid != subcategory.idSubCategoryProduct">&nbsp;{{subcategory.name}}</div><div><input class="input_field"  ng-if="modifyscid == subcategory.idSubCategoryProduct" ng-model="subcategory.name"  value="{{subcategory.name}}" />  </div></td>
+							<td   ><div ng-if="modifyscid != subcategory.idSubCategoryProduct">&nbsp;{{subcategory.description}}</div><div><input class="input_field"  ng-if="modifyscid == subcategory.idSubCategoryProduct" ng-model="subcategory.description"  value="{{subcategory.description}}" />  </div></td>
+							<td ><i class="icon_setup fi-x-circle" ng-click="deleteSubElement(subcategory)"></i></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+

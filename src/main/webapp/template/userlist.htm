@@ -1,0 +1,63 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Utenti</h3>
+		<div class=" buttonmenu addbutton admin_grant" >
+			<a href="#/userlist/0">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Utente 
+				</div>
+			</a>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+		<div class="filter">
+		<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+			
+			
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+			
+		</div>
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div class="tableheader  users clearfix">
+				<div class="header_table row_table first username">Username</div>
+				<div class="header_table row_table cognome">Cognome</div>
+				<div class="header_table row_table nome">Nome</div>
+				<div class="header_table row_table ruolo">Ruolo</div>
+				<div class="header_table row_table telefono">Telefono</div>
+				<div class="header_table row_table email">Email</div>
+				<div class="header_table row_table cellulare">Cellulare</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="user in users | filter:query | orderBy:orderProp">
+				<div class="row users">
+					<div class="row_table first username">&nbsp;{{user.username}}</div>
+					<div class="row_table cognome">&nbsp;{{user.surname}}</div>
+					<div class="row_table nome">&nbsp;{{user.name}}</div>
+					<div class="row_table ruolo">&nbsp;{{user.role.name}}</div>
+					<div class="row_table telefono">&nbsp;{{user.phone}}</div>
+					<div class="row_table email">&nbsp;{{user.email}}</div>
+					<div class="row_table cellulare">&nbsp;{{user.mobile}}</div>
+					<a href="#/userlist/{{user.iduser}}"><div class="row_table modify"><div class="modifyicon"></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{user.iduser}}" ng-click="deleteElement(user.iduser)"></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

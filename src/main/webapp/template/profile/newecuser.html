@@ -1,0 +1,137 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row">
+	<div class="row pro_container">
+     	<div class="large-4 small-12 columns">
+     
+              <img  src="assets/rocchilogo.png">
+        </div>
+        <div class="large-8 small-12 columns">
+        	<form >
+        				<div class="row">
+							<div class="large-12 columns">
+								<h3>REGISTRAZIONE NUOVO UTENTE</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="name" placeholder="Nome *" ng-model="newUser.name" class="input-text small" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="surname" placeholder="Cognome *" ng-model="newUser.surname" class="input-text small"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="dateofbirth" placeholder="Data di nascita *" ng-model="newUser.birthdate" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="taxcode" placeholder="Codice fiscale *" ng-model="newUser.taxcode" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="phone" placeholder="Telefono" ng-model="newUser.phone" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="email" placeholder="Email *" ng-model="newUser.email" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password" placeholder="Password" ng-model="newUser.password" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password" placeholder="Conferma Password" ng-model="newUser.confirmpassword" />
+							</div>
+						</div>
+					    <div class="row">
+							<div class="large-8 columns">
+								<input type="text" name="street" placeholder="Indirizzo *" ng-model="newUser.deliveryaddress.address" />
+							</div>
+							<div class="large-4 columns">
+								<input type="text" name="number" placeholder="Civico *" ng-model="newUser.deliveryaddress.number" />
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" ng-model="newUser.deliveryaddress.countryObj" typeahead="state as state.name for state in countries | orderBy:'name' | filter:$viewValue " 
+			            			 typeahead-editable="true" placeholder="Nazione *"
+			            			 typeahead-on-select="onSelect($item, $model, $label)"
+			            			 class="form-control" ng-change="calculateTransportPrice()">
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" ng-model="newUser.deliveryaddress.zoneObj" typeahead="zone as zone.name for zone in zones | orderBy:'name' | filter:$viewValue " 
+            			 typeahead-editable="true" placeholder="Provincia*"
+            			 typeahead-on-select="onSelectZone($item, $model, $label)"
+            			 class="form-control" ng-change="zoneChange()"  ng-disabled="!newUser.deliveryaddress.countryObj || newUser.deliveryaddress.countryObj == '' ">
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" ng-model="newUser.deliveryaddress.cityObj" typeahead="city as city.name for city in cities | orderBy:'name' | filter:$viewValue " 
+			            			 typeahead-editable="true" placeholder="Città*"
+			            			 typeahead-on-select="onSelectCity($item, $model, $label)"
+			            			 class="form-control" ng-change="cityChange()"  ng-disabled="!newUser.deliveryaddress.countryObj">
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="zipcode" placeholder="CAP *" ng-model="newUser.deliveryaddress.zipcode" />
+							</div>
+						</div>
+						
+						
+						 <div class="row"  >
+							<div class="large-12 large-centered columns">
+								Per inserire un diverso indirizzo di fatturazione clicca <a ng-click="showDeliveryAddress = !showDeliveryAddress">qui</a>
+								
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-8 columns">
+								<input type="text" name="street" placeholder="Indirizzo *" ng-model="newUser.address.address" />
+							</div>
+							<div class="large-4 columns">
+								<input type="text" name="number" placeholder="Civico *" ng-model="newUser.address.number" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="city" placeholder="Città *" ng-model="newUser.address.city" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="zipcode" placeholder="CAP *" ng-model="newUser.address.zipcode" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="zone" placeholder="Provincia *" ng-model="newUser.address.zone" />
+							</div>
+						</div>
+						<div class="row"  >
+							<div class="large-12 large-centered columns">
+								<button  class="button expand"  ng-click="registry()" >Registrati</button>
+								<button  class="button expand"  >Pagina Iniziale</button>
+							</div>
+						</div>
+					</form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Flussi Documentali</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addFlow()" class="button"><i class="fi-plus" ></i></a></li>
+		  	
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-6 medium-6 small-12 columns">
+		<h4 >FLUSSI DOCUMENTALI</h4>
+	</div>
+	<div class="large-6 medium-6 small-12 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="addFlow()" class="button small progess_uppercase">Nuovo</a></li>
+		 </ul>
+	</div>
+</div>
+-->
+<div class="row" ng-repeat="flow in flows">
+	<div class="large-2 medium-2 columns">
+		<button class="button tiny"  ng-click="updateFlow(flow)" ng-disabled="flow.update" >Modifica</button>&nbsp;
+		
+	</div>
+	<div class="large-3 medium-3 columns" ng-hide="flow.update">
+		{{flow.documentSource.description}}
+	</div>
+	<div class="large-3 medium-3 columns" ng-show="flow.update">
+		<select  name="document" ng-options="doc.description for doc in documents" ng-model="flow.documentSource"  >
+        </select> 
+       
+	</div>
+	<div class="large-3 medium-3 columns" ng-hide="flow.update">
+		{{flow.documentResult.description}}
+	</div>
+	<div class="large-3 medium-3 columns" ng-show="flow.update">
+		<select  name="document" ng-options="doc.description for doc in documents" ng-model="flow.documentResult"  >
+        </select> 
+        
+	</div>
+	<div class="large-2 medium-2 columns">
+		<button class="button tiny" ng-click="saveFlow(flow)" ng-disabled="!flow.update" >Registra</button>
+	</div>
+	<div class="large-2 medium-2 columns">
+		<button class="button alert tiny" ng-click="deleteElement(flow)" >Cancella</button>
+	</div>
+</div>

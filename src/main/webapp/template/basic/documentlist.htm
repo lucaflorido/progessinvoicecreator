@@ -1,0 +1,83 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Tipologia Documenti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a ng-click="adddocumentElement()" ng-if="documentsaved == true" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ><a ng-click="savedocuments()" class="button"><i class="fi-save" ></i></a></li>
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+
+
+	<div class="row">
+	<div class="large-12 medium-12 small-12 columns" >
+	<div class="tablecontainer document" >
+		<table class="GECO_table thirteen_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table first cognome">Codice</td>
+					<td class="header_table row_table double name">Descrizione</td>
+					<td class="header_table row_table  name">Contatore</td>
+					<td class="header_table row_table  name">Mov. Mag.</td>
+					<td class="header_table row_table  name">Cliente</td>
+					<td class="header_table row_table  name">Fornitore</td>
+					<td class="header_table row_table  name">Interno</td>
+					<td class="header_table row_table  name">Credito</td>
+					<td class="header_table row_table  name">Debito</td>
+					<td class="header_table row_table  name">Ordine</td>
+					<td class="header_table row_table  name">Fattura</td>
+					<td class="header_table row_table  name">DDT</td>
+					<td class="header_table row_table  name">Online</td>
+					<td class="header_table row_table  name">Validità</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr  ng-repeat="document in documents | filter:query | orderBy:orderProp">
+					<td class="row_table half"><a href="#/document"><i class="icon_setup fi-pencil"  ng-click="modifydocumentElement(document)" ></i></a></td>
+					<td class="row_table first cognome"><div ng-if="modifyid != document.idDocument">&nbsp;{{document.code}}</div><div><input class="input_field"  ng-if="modifyid == document.idDocument" ng-model="document.code"  value="{{document.code}}" />  </div></td>
+					<td class="row_table double"  ><div ng-if="modifyid != document.idDocument">&nbsp;{{document.description}}</div><div><input class="input_field"  ng-if="modifyid == document.idDocument" ng-model="document.description"  value="{{document.description}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument">&nbsp;{{document.counter.name}}</div><div><select class="input_field"  ng-if="modifyid == document.idDocument" id="selcounter" class="inputfield" ng-model="currentCounter"    ng-options="counter as counter.name for counter in counters" ng-change="document.counter = currentCounter" ></select>  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument">&nbsp;{{document.storemovement.name}}</div><div><select class="input_field"  ng-if="modifyid == document.idDocument" id="selstore" class="inputfield" ng-model="currentStore"    ng-options="storemovement as storemovement.name for storemovement in storemovements" ng-change="document.storemovement = currentStore" ></select>  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.customer == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.customer" type="checkbox"  value="{{document.customer}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.supplier == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.supplier" type="checkbox" value="{{document.supplier}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.internal == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.internal" type="checkbox" value="{{document.internal}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.credit == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.credit" type="checkbox" value="{{document.credit}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.debit == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.debit" type="checkbox" value="{{document.debit}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.order == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.order" type="checkbox" value="{{document.order}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.invoice == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.invoice" type="checkbox" value="{{document.invoice}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.transport == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.transport" type="checkbox" value="{{document.transport}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div class="fi-check" ng-if="document.online == true"></div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.online" type="checkbox" value="{{document.online}}" />  </div></td>
+					<td class="row_table username"  ><div ng-if="modifyid != document.idDocument"><div >{{document.expireday}}</div></div><div><input ng-if="modifyid == document.idDocument" ng-model="document.expireday" type="number" value="{{document.expireday}}" />  </div></td>
+				    <td class="row_table half"><i class="icon_setup fi-x-circle"  id="del{{role.idrole}}" ng-click="deleteElement(document.idDocument)" ></i></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	</div>
+	</div>
+<!--  </div>-->

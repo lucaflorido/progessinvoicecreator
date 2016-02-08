@@ -1,0 +1,215 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Configurazione eCommerce</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="savecompany()" class="button"><i class="fi-save" ></i></a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Configurazione pagamenti  </legend>
+			<div class="large-6  small-12 medium-12 columns" >
+						<div class="row">
+							<div class="large-6 small-12 medium-6 columns">
+								<label>PAGAMENTI
+									<select ng-model="paysolSelected"  ng-options=" paymentsol.name for  paymentsol in paymentsols" >
+									    <option value=""></option>
+									</select>
+								</label>
+							</div>
+							<div class="large-3 small-12 medium-6 columns">
+								<button class="button small primary" ng-click="addPaymentConfig(paysolSelected)" >Aggiungi  </button>
+							</div>
+						</div>
+			</div>
+			<div class="large-6  small-12 medium-12 columns" >
+						<div class="row">
+							<div class="large-6 small-12 medium-6 columns">
+								<label>Moneta
+									<select ng-model="company.currency"  ng-options=" currency.name for  currency in currencies" >
+									    <option value=""></option>
+									</select>
+								</label>
+							</div>
+							
+						</div>
+			</div>
+			<div class="large-12  small-12 medium-12 columns" >
+				<div class="row" >
+					<div class="large-3 small-12 medium-4 columns">
+						TIPOLOGIA PAGAMENTO
+					</div>
+					
+					<div class="large-2 small-12 medium-4 columns">
+						UTENTE REGISTRATO
+					</div>
+					<div class="large-2 small-12 medium-4 columns">
+						UTENTE NON REGISTRATO
+					</div>
+					<div class="large-2 small-12 medium-4 columns">
+						% COMMISSIONE
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						ACCOUNT ID
+					</div>
+				</div>
+				<div class="row" ng-repeat="ecpayment in company.ecpayments" >
+					<div class="large-3 small-12 medium-4 columns">
+						{{ecpayment.ecpayment.paysolution.name}}
+					</div>
+					
+					<div class="large-2 small-12 medium-4 columns">
+						<input type="checkbox"  ng-model="ecpayment.ecpayment.loggeduser" value="{{ecpayment.ecpayment.loggeduser}}"/>
+					</div>
+					<div class="large-2 small-12 medium-4 columns">
+						<input type="checkbox"  ng-model="ecpayment.ecpayment.nologgeduser" value="{{ecpayment.ecpayment.nologgeduser}}"/>
+					</div>
+					<div class="large-2 small-12 medium-4 columns">
+						<input type="text"  ng-model="ecpayment.ecpayment.commission" value="{{ecpayment.ecpayment.commission}}"/>
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						<input type="text"  ng-model="ecpayment.ecpayment.accountID" value="{{ecpayment.ecpayment.accountID}}"/>
+					</div>
+				</div>	
+				</div>	
+		</fieldset>
+	
+	</form>
+</div>
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Configurazione trasporti  </legend>
+			<div class="large-6 small-12 medium-6 columns">
+				<label>Prezzo di default
+					<input type="text" ng-model="company.ecdelivery.default_country" value="{{company.ecdelivery.default_country}}" /> 
+				</label>
+			</div>
+			<div class="large-6 small-12 medium-6 columns">
+				<label>Limite spedizione gratuita
+					<input type="text" ng-model="company.ecdelivery.bound_country" value="{{company.ecdelivery.bound_country}}" /> 
+				</label>
+			</div>
+			<div class="large-6 small-12 medium-6 columns">
+				<label>Paesi 
+					<select ng-model="countrySelected" ng-options="country.name for  country in countries" >
+					    <option value=""></option>
+					</select>
+				</label>
+			</div>
+			<div class="large-6 small-12 medium-6 columns">
+				<label>
+					<button class="button small primary" ng-click="addRule()">Aggiungi Regola</button>
+				</label>
+			</div>
+			
+	</fieldset>
+	</form>
+</div>
+<div class="row">
+	<form>
+		<fieldset>
+			<legend>Configurazione trasporti  </legend>
+				<div class="row" >
+					<div class="large-3 small-12 medium-4 columns">
+						PAESE
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						PREZZO TRASPORTO
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						TRASPORTO GRATUITO
+					</div>
+				</div>
+				<div class="row" ng-repeat="dc in company.ecdelivery.deliverycountry">
+					<div class="large-3 small-12 medium-4 columns">
+						{{dc.deliverycountry.country.name}}
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						<input value="{{dc.deliverycountry.price}}" ng-model="dc.deliverycountry.price" />
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						<input value="{{dc.deliverycountry.bound}}" ng-model="dc.deliverycountry.bound" />
+					</div>
+					<div class="large-3 small-12 medium-4 columns">
+						<button class="button small extend" ng-click="showZones(dc)" ng-hide="dc.deliveryzones.length > 0">Regola per provincia</button>
+						<button class="button small extend" ng-click="showCities(dc)" ng-hide="dc.deliverycities.length > 0" >Regola per città</button>
+					</div>
+					<div class="large-6  small-12 medium-12 columns" ng-show="dc.showZoneRule">
+						<div class="row">
+							<div class="large-6 small-12 medium-6 columns">
+								<label>PROVINCE
+									<select ng-model="dc.zoneSelected" ng-options="zone.name for  zone in dc.zones" >
+									    <option value=""></option>
+									</select>
+								</label>
+							</div>
+							<div class="large-3 small-12 medium-6 columns">
+								<button class="button small primary" ng-click="addZoneRule(dc)">Aggiungi </button>
+							</div>
+						</div>
+						<div class="row" ng-repeat="dzones in dc.deliveryzones">
+							<div class="large-3 small-12 medium-4 columns">
+								{{dzones.zone.name}}
+							</div>
+							<div class="large-3 small-12 medium-4 columns">
+								<input value="{{dzones.price}}" ng-model="dzones.price" />
+							</div>
+							<div class="large-3 small-12 medium-4 columns">
+								<input value="{{dzones.bound}}" ng-model="dzones.bound" />
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="large-6  small-12 medium-12 columns" ng-show="dc.showCityRule">
+						<div class="row">
+							<div class="large-6 small-12 medium-6 columns">
+								<label>CITTA'
+									<select ng-model="dc.citySelected" ng-options="city.name for  city in dc.cities" >
+									    <option value=""></option>
+									</select>
+								</label>
+							</div>
+							<div class="large-3 small-12 medium-6 columns">
+								<button class="button small primary" ng-click="addCityRule(dc)">Aggiungi </button>
+							</div>
+						</div>
+						<div class="row" ng-repeat="dcities in dc.deliverycities">
+							<div class="large-3 small-12 medium-4 columns">
+								{{dcities.city.name}}
+							</div>
+							<div class="large-3 small-12 medium-4 columns">
+								<input value="{{dcities.price}}" ng-model="dcities.price" />
+							</div>
+							<div class="large-3 small-12 medium-4 columns">
+								<input value="{{dcities.bound}}" ng-model="dcities.bound" />
+							</div>
+						</div>
+					</div>
+				</div>
+		</fieldset>
+	</form>
+</div>

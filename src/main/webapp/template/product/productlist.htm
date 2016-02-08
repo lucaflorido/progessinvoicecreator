@@ -1,0 +1,255 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()" ><div ng-repeat="mess in msg.message">{{mess}} <br></div></alert>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco Prodotti</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addNew()" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li><a  class="button" ng-click="filterMenu('filter')" ><i class="fi-magnifying-glass"  ></i></a></li>
+		  	<li ><a ng-click="filterMenu('import')" class="button"><i class="fi-page-add"  ></i></a></li>
+		  	<li ><a ng-click="filterMenu('increment')" class="button"><i class="fi-price-tag"  ></i><i class="fi-plus"  ></i></a></li>
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!-- 
+<div class="row">
+	<div class="large-2 medium-2 small-2 columns">
+		<h3>PRODOTTI</h3>
+	</div>
+	<div class="large-10 medium-10 small-10 columns">
+		<ul class="button-group">
+			<li><div class="button" ng-click="addNew()">Nuovo</div></li>
+			<li><div class="button">Stampa</div></li>
+			<li><div class="button" ng-click="filterMenu('filter')">Filtra </div></li>
+			<li><div class="button" ng-click="filterMenu('import')">Importa </div></li>
+			<li><div class="button" ng-click="filterMenu('increment')">Incrementa Prezzi </div></li>
+		</ul>
+	</div>
+</div>-->
+
+<div class="row" ng-show="menuselected == 'filter' || menuselected == 'increment'">
+	<form>
+	<fieldset>
+		<legend>FILTRAGGIO DATI</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Codice o Descrizione
+				  <input type="text"
+					 ng-model="filter.searchstring"
+					value="{{filter.searchstring}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Regione <select  name="region" ng-options="region.code for region in regions" ng-model="filter.region"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Gruppo <select  name="group" ng-options="group.code for group in groups" ng-model="filter.group"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Categoria <select  name="category" ng-options="category.code for category in categories" ng-model="filter.category" ng-change="changeCategory()" >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Sottocategoria <select  name="subcategory" ng-options="subcategory.code for subcategory in subcategories" ng-model="filter.subcategory"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Marca <select  name="brand" ng-options="brand.code for brand in brands" ng-model="filter.brand"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Uvaggio <select  name="composition" ng-options="composition.description for composition in compositions" ng-model="filter.composition"  >
+           		 	<option value=""></option>
+            	</select> 
+				</label>
+			</div>
+		</div>
+		
+	</fieldset>
+	</form>
+</div>
+<div class="row" ng-show="menuselected == 'increment'">
+	<form>
+		<fieldset>
+			<legend>INCREMENTO</legend>
+			<div class="row">
+			<div class="large-4 columns">
+				<label>Incremento
+				  <input type="text"
+					 ng-model="filter.increment"
+					value="{{filter.increment}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Percentuale
+				  <input type="checkbox"
+					 ng-model="filter.percentage"
+					value="{{filter.percentage}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<button class="button" ng-click="incrementPrices()" >Incrementa</button>
+			</div>
+		</div>
+		</fieldset>
+	</form>
+</div>
+<div class="row" ng-show="menuselected == 'import'">
+	<form>
+	<fieldset>
+		<legend>IMPORTAZIONE</legend>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Colonna Codice
+				  <input type="text"
+					 ng-model="importobj.code"
+					value="{{importobj.code}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Colonna Descrizione
+				  <input type="text"
+					 ng-model="importobj.description"
+					value="{{importobj.description}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Colonna Gruppo<input type="text"
+					 ng-model="importobj.group"
+					value="{{importobj.group}}" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label>Colonna Unità di Misura
+				  <input type="text"
+					 ng-model="importobj.umcode"
+					value="{{importobj.umcode}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Colonna Prezzo di costo
+				  <input type="text"
+					 ng-model="importobj.purchaseprice"
+					value="{{importobj.purchaseprice}}" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Colonna Aliquota<input type="text"
+					 ng-model="importobj.taxrate"
+					value="{{importobj.taxrate}}" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-3 columns" ng-repeat="list in lists">
+				<label>{{list.name}}
+				  <input type="text"
+				  	ng-model="list.colprice"	
+					 value="0" capitalize />
+				</label>
+			</div>
+		</div>
+		<div class="row">
+		<div class="large-4 columns">
+				<label>Prima Riga
+				  <input type="text"
+					 ng-model="importobj.startIndex"
+					value="0" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<label>Ultima Riga<input type="text"
+					 ng-model="importobj.endIndex"
+					value="0" capitalize />
+				</label>
+			</div>
+			<div class="large-4 columns">
+				<div class="button import_report"  upload-button    url="{{url.Upload}}" param="file"	data="formData" 	multiple="false"   required="true"  on-upload="onUpload(files)"  on-success="onSuccess(response)" on-error="onError(response)" on-complete="onComplete(response)"> 
+				Importa
+				</div>
+				<div class="button" ng-show="novalid" ng-click="importProduct()">Ripeti </div>
+			</div>
+			
+		</div>
+		</fieldset>
+	</form>
+	
+</div>
+<div class="row">
+	<div class="small-8 columns ">
+		<pagination total-items="totalitems" items-per-page="pagesize_confirmed" page="page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="pages" ng-click="getProducts(page)"></pagination>
+	</div>
+	<div class="small-4 columns ">
+		Prodotti totali: {{totalitems}}
+		<input ng-model="pagesize" value="{{pagesize}}">
+		<div class="button"  ng-click="getProductsNumber()">Applica </div>
+	</div>
+</div>
+<div class="row">
+	<div  >
+		<table >
+			<thead>
+				<tr >
+					<th ><div class="td_div first">&nbsp;</div></th>
+					<th ><div class="td_div ">Codice</td>
+					<th ><div class="td_div ">Descrizione</td>
+					<th class=" hidden_cell">U.M.</td>
+					<th class="  hidden_cell">Prezzo</td>
+					<th class=" hidden_cell">Categoria</td>
+					<th class="  hidden_cell">Gruppo</td>
+					<th ><div class="td_div ">&nbsp;</div></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr  ng-repeat="product in products ">
+					<td ><i class="icon_setup fi-pencil"  ng-click= "location.path('/product/'+product.idProduct)"></i></td>
+					<td >{{product.code}}</td>
+					<td >{{product.description}} </td>
+					<td class=>{{product.umselected.code}}</td>
+					<td class="  hidden_cell">{{product.sellprice}}</td>
+					<td class=" hidden_cell">{{product.category.name}}</td>
+					<td class=" hidden_cell">{{product.group.name}}</td>
+					<td ><i class="icon_setup fi-x-circle"  ng-click="deleteElement(product)"></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+</div>
+

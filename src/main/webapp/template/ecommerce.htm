@@ -1,0 +1,310 @@
+<div class="hero_ec">
+</div>
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+	<div class="row header">
+		<div class="large-5 small-12 right columns">	
+			<div class="row  login_button" >
+				<div class="large-12 small-12 right columns ">
+					 <button class="button round tiny " ng-click="gotoDraft()" ><i class="fi-shopping-cart" ></i> {{draft.products.length}}</button>
+					<button  ng-hide="perm.user" class="button tiny round" ng-click="showLoginForm = !showLoginForm" ng-disabled="showLoginForm" >Login</button>  
+					<button ng-hide="perm.user" ng-disabled="showLoginForm" class="button tiny round" ng-click="signup()" >Registrati</button>
+					 <button ng-show="perm.user" class="button round tiny "> <i   class="fi-torso"></i> {{perm.user.username}} </button>
+					 <button ng-show="perm.user" class="button round tiny " ng-click="logout()">Logout</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="row header_space">
+	</div>
+	<div class="row ec_top_box">
+		<div class="large-3 small-12 columns">
+			<img  src="assets/rocchilogo.png">
+		</div>
+		<div class="large-6 small-12 columns">
+			<div class="row">
+				<div class="large-12 small-12 columns">
+					<h5 class="title" >Enoteca Rocchi</h5>
+				</div>
+				<div class="large-12 small-12 columns">
+					<h3 class="subtitle">A Roma dal 1904</h3>
+				</div>
+				
+			</div>
+		</div>
+		<div class="large-3 login_container small-12 columns">	
+		<!--  	<div class="row  " ng-hide="showLoginForm">
+				<div class="large-12 small-12 right columns ">
+					<a class="button tiny round" ng-click="showLoginForm = !showLoginForm" >Login</a>  <a class="button tiny round" ng-click="signup()" >Registrati</a>
+				</div>
+			</div>
+			<div class="row">
+              	<div class="draftbox large-6 right columns" >
+	               <button class="button round tiny " ng-click="step = 1" ><i class="fi-shopping-cart" ></i> {{draft.products.length}}</button>
+	            </div>
+            </div>-->
+			<div class="row " ng-show="showLoginForm && !perm.user">
+			 	<div class="large-12 small-12 columns">
+			 	<form class="loginbox">
+              		<div class="row"  ng-hide="perm.user">
+					    <div class="large-12 columns" ng-hide="showUIDRecover || showPWDRecover">
+					     <a class="login_recover" >&nbsp;</a>
+					      <input class="login_input" type="text" placeholder="username *" ng-model="login.username" />
+					       <a class="login_recover" ng-click="showUIDRecover = true">username dimenticato?</a>
+					    </div>
+					    <div class="large-12 columns" ng-show="showUIDRecover">
+					     <a class="login_recover" >&nbsp;</a>
+					      <input class="login_input" type="text" placeholder="codice fiscale *" ng-model="recoverUE" capitalize />
+					      <a class="login_recover" >&nbsp;</a>
+					    </div>
+					    <div class="large-12 columns" ng-show="showPWDRecover">
+					     <a class="login_recover" >&nbsp;</a>
+					      <input class="login_input" type="text" placeholder="codice fiscale *" ng-model="recoverPW" capitalize />
+					      <a class="login_recover" >&nbsp;</a>
+					    </div>
+					    
+					    <div class="large-12 columns" ng-hide="showUIDRecover || showPWDRecover">
+					      <input class="login_input" type="password" placeholder="password *"  ng-model="login.password" />
+					      <a class="login_recover"  ng-click="showPWDRecover = true" >password dimenticata?</a>
+					    </div>
+					    
+					    <div class="large-12 columns" ng-hide="showUIDRecover || showPWDRecover">
+					      <button class="button tiny round expand" ng-click="mainFormLogin()">Login</button>
+					      <button class="button tiny round expand" ng-click="showLoginForm = !showLoginForm">Chiudi</button>
+					     <!--   <button class="button tiny" ng-click="signup()" >Registrati</button>-->
+					     </div>
+					     
+					    <div class="large-12 columns" ng-show="showUIDRecover  ">
+					      <button class="button tiny round expand" ng-click="recoverUsername()">Recupera</button>
+					      <button class="button tiny round expand" ng-click="showUIDRecover = false">Indietro</button>
+					    </div>
+					    <div class="large-12 columns" ng-show="showPWDRecover  ">
+					      <button class="button tiny round expand" ng-click="recoverPassword()">Recupera</button>
+					      <button class="button tiny round expand" ng-click="showPWDRecover = false">Indietro</button>
+					    </div>
+					 </div>
+					 
+              	</form> 
+              	</div>
+              </div> 
+              
+		</div>
+	</div>
+  	<div class="row pro_container">
+     	<div class="large-3 small-12 columns">
+     
+              
+              <div>
+        
+              </div>
+              <div class="hide-for-small panel">
+                <div class="row">
+					<form>
+						<div class="row">
+						    <div class="large-12 columns">
+						      <div class="row collapse postfix-round">
+						        <div class="small-10 columns">
+						          <input type="text" placeholder="Cerca" ng-model="filter.searchstring"
+										value="{{filter.searchstring}}"  >
+						        </div>
+						        <div class="small-2 columns">
+						          <a  class="button postfix" ng-click="getProductsNumber()"><i class="fi-magnifying-glass"></i></a>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="row">
+							<div class="large-12 columns">
+								<label> <div class="filterlabel">Categoria</div> <select  name="category" ng-options="category.code for category in categories" ng-model="filter.category" ng-change="changeCategory()" >
+				           		 	<option value=""></option>
+				            	</select> 
+								</label>
+							</div>
+							<div class="large-12 columns">
+								<label><div class="filterlabel">Sottocategoria </div><select  name="subcategory" ng-options="subcategory.code for subcategory in subcategories" ng-model="filter.subcategory"  >
+				           		 	<option value=""></option>
+				            	</select> 
+								</label>
+							</div>
+							<div class="large-12 columns">
+								<label><div class="filterlabel">Marca</div> <select  name="brand" ng-options="brand.code for brand in brands" ng-model="filter.brand"  >
+				           		 	<option value=""></option>
+				            	</select> 
+								</label>
+							</div>
+						</div>
+						  <div class="row">
+						  	<div class="large-12 columns">
+									<label><div class="filterlabel">Regione</div> <select  name="region" ng-options="region.code for region in regions" ng-model="filter.region"  >
+					           		 	<option value=""></option>
+					            	</select> 
+									</label>
+								</div>
+								<div class="large-12 columns">
+									<label><div class="filterlabel">Gruppo</div> <select  name="group" ng-options="group.code for group in groups" ng-model="filter.group"  >
+					           		 	<option value=""></option>
+					            	</select> 
+									</label>
+								</div>
+						  </div>
+					</form>
+					<!--  <div class="small-4 columns ">
+						
+						<div class="button  small"  >Applica </div>
+					</div>-->
+				</div>
+				
+              </div>
+     		  
+             <!--   <a ng-click="step = 1">
+	              <div class="panel callout radius" >
+	                <h6 ng-show="draft.products.length > 0" > {{draft.products.length}} <i class="fi-shopping-cart" ></i></h6>
+	                <h6 ng-show="draft.products.length == 0" ><i class="fi-shopping-cart" ></i></h6>
+	              </div>
+              </a>-->
+     		
+     			
+            </div>
+     		<div class="large-9 columns">
+            
+            <!-- SHOW DRAFT -->
+            <div ng-include="'template/draft/draft.html'"  ng-show="step == 1 && !showProductDetails">
+            
+            </div>
+        	<!-- PAYMENT -->
+        	 <div ng-include="'template/draft/payment.html'"  ng-show="step == 2 && !showProductDetails">
+            
+            </div>
+            <!--  CONFIRMATION -->
+            <div ng-include="'template/draft/confirmation.html'"  ng-show="step == 3 && !showProductDetails">
+            
+            </div>
+            <!--  PRODUCT DETAILS -->
+            <div ng-include="'template/draft/productdetails.html'"  ng-show="showProductDetails">
+            
+            </div>
+            <!-- SHOW PRODUCTS -->
+             <div class="row" ng-include="'template/draft/productlist.html'"  ng-show="step == 0 && !showProductDetails">
+            
+            </div>
+           <!--     <div class="row" ng-show="step == 0 && !showProductDetails">
+     			
+                <div class="large-4 small-6 columns " ng-repeat="element in prodlist" >
+	                <div class="row">
+	                	<div class="large-12  small-12 columns" >
+	                		<img class="ec_image" ng-src="{{element.product.photo}}">
+	                	</div>
+	                </div>
+	                <div class="row">
+	                	  <div class="large-12 small-12 columns" >
+	                		<div class="ec_title" ng-bind="element.product.shortdescription"></div>
+	                	</div>
+	               	 	<div class="large-12 small-12 ec_price columns" >
+	                			<h7 ng-bind="'€'+formatCurrency(element.endprice)"></h7>
+	                		</div>
+	                		<div class="row">
+	                		</div>
+	                		<div class="row">
+	                			<div class="large-12 ec_btn  small-12 columns">
+			                    	<button ng-if="!element.added" class="button round tiny " ng-click="addToChart(element)" ><i class="fi-shopping-cart" ></i> </button>
+			                    	<button class="button round tiny alert " ng-if="element.added" ng-click="removeChart(element)"><i class="fi-x" ></i></button>
+			                    	<button class="button round tiny  "  ng-click="productDetails(element.product.idProduct)"><i class="fi-zoom-in" ></i></button>
+			                    	
+	                    		</div>
+	                		</div>
+	                	
+	                </div> 
+             
+     			</div>
+     			</div>
+	            <div ng-show="step == 0 && !showProductDetails">
+	            	<div class="small-8 columns ">
+							<pagination total-items="totalitems" items-per-page="pagesize_confirmed" page="page" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="pages" ng-click="getProducts(page)"></pagination>
+						</div>
+	            </div>
+         
+     -->
+     
+         
+              <div class="row">
+                <div class="large-12 columns">
+                  <div class="panel">
+                    <div class="row">
+     
+                      <div class="large-2 small-6 columns">
+                        <img src="assets/logo.jpg">
+                      </div>
+     
+                      <div class="large-10 small-6 columns">
+                        <strong>This Site Is Managed By Progess srl<hr/></strong>
+     
+                      </div>
+     
+                    </div>
+                  </div>
+                </div>
+     
+         
+     
+              </div>
+            </div>
+          </div>
+     
+     
+         
+     
+          <footer class="row">
+            <div class="large-12 columns"><hr/>
+              <div class="row">
+     
+                <div class="large-6 columns">
+                  <p>© Copyright Progess srl</p>
+                </div>
+     
+                <div class="large-6 columns">
+                 <!--   <ul class="inline-list right">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                  </ul>-->
+                </div>
+     
+              </div>
+            </div>
+          </footer>
+     
+         
+     
+        </div>
+      </div>
+    
+ <!--  <div class="large-3 large-centered columns">
+		<div class="login-box">
+			<div class="row">
+				<div class="large-12 columns">
+					<form>
+					    <div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="username" placeholder="Username" ng-model="login.username" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password" placeholder="Password" ng-model="login.password" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 large-centered columns">
+								<input type="submit" class="button expand" value="Log In" ng-click="loginfunction()"/>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>-->

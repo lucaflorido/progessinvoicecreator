@@ -1,0 +1,44 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Vettori</h3>
+		<div class=" buttonmenu addbutton admin_grant" >
+			<a href="#/transporter/0">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Vettori 
+				</div>
+			</a>
+		</div>
+		
+	</div>
+	<div class="tablecontainer" >
+		<table class="GECO_table eight_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first single"><div class="sorter" ng-click="sortFunction('transportercode')"><div class="sorter_label">Codice</div><div class="sortericon transportercode"></div></div></td>
+					<td class="header_table row_table double"><div class="sorter" ng-click="sortFunction('transportername')"><div class="sorter_label">Ragione Sociale</div><div class="sortericon transportername"></div></div></td>
+					<td class="header_table row_table single"><div class="sorter" ng-click="sortFunction('platenumber')"><div class="sorter_label">Targa</div><div class="sortericon platenumber"></div></div></td>
+					<td class="header_table row_table double"><div class="sorter" ng-click="sortFunction('address.address')"><div class="sorter_label">Indirizzo</div><div class="sortericon address address"></div></div></td>
+					<td class="header_table row_table single">Telefono</td>
+					<td class="header_table row_table single">Cellulare</td>
+					
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="transporter in transporters | filter:query | orderBy:orderArray">
+					<td class="row_table first single">&nbsp;{{transporter.transportercode}}</td>
+					<td class="row_table double">&nbsp;{{transporter.transportername}} {{transporter.transportersurname}}</td>
+					<td class="row_table single">&nbsp;{{transporter.platenumber}}</td>
+					<td class="row_table double">&nbsp;{{transporter.address.address}}</td>
+					<td class="row_table single">&nbsp;{{transporter.contact.phone1}}</td>
+					<td class="row_table single">&nbsp;{{transporter.contact.mobile1}}</td>
+					<td class="row_table half"><a href="#/transporter/{{transporter.idTransporter}}"><div class=" modify"><div class="modifyicon"></div></div></a></td>
+				    <td class="row_table half"><div class="deleteicon" id="del{{transporter.idTransporter}}" ng-click="deleteElement(transporter.idTransporter)"></div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

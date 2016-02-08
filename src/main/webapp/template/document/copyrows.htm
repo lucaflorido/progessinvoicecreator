@@ -1,0 +1,199 @@
+<div class="container userlist clearfix" ngKeydown="checkKeyCode()">
+	<div class="toolbar_detail">
+		<h3>Generazione Documenti:</h3>
+		<div class="multilayout" >
+			<select ng-model="selectedSection"    ng-options="section for section in listsections" >
+			</select>
+		</div>
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="head_main_detail">	
+				<div class="info " ng-if="selectedSection == listsections[1]">
+					<div class="category_group">
+						<div class="fields code">
+							<div class="label ">Data </div>
+							<div class="field ">
+							<input class="inputfield datepicker" type="text"  ng-model="generateobj.date" value="{{generateobj.date}}" create-datepicker  />
+							</div>
+							
+						</div>
+					
+						<div class="fields code">
+							<div class="label ">Documento Da Generare </div>
+							<div class="field">
+								<select  class="inputfield" ng-model="currentDocumentGenerate"  ng-data-provider="documents" create-chosen on-finish-chosen-update     ng-options="document as document.code for document in documents" ng-change="generateobj.generateDoc = currentDocumentGenerate" ></select>
+							</div>
+						</div>
+						<div class="fields code">
+								<div class="label ">Listino Da applicare </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentList"  ng-data-provider="lists" create-chosen on-finish-chosen-update     ng-options="list as list.code for list in lists" ng-change="generateobj.list = currentList" ></select>
+								</div>
+							</div>
+					</div>	
+					
+				</div>
+				<div class="info " ng-if="selectedSection == listsections[1]">		
+						<div class="category_group  ">
+							<div class="fields code">
+								<div class="label ">Cliente </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentCustomer"  ng-data-provider="customers" create-chosen on-finish-chosen-update     ng-options="customer as customer.customername for customer in customers" ng-change="generateobj.customer = currentCustomer;changeCustomer(currentCustomer.idCustomer)" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentSupplier"    ng-data-provider="suppliers" create-chosen on-finish-chosen-update   ng-options="supplier as supplier.suppliername for supplier in suppliers"  ng-change="generateobj.supplier = currentSupplier" ></select>
+								</div>
+							</div>
+							<div class="PRODUCT_field code ">
+								<div class="filterbutton" ng-click="generateDocs()">
+									<div class="filterlabel">
+										Genera
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>
+				<div class="info" ng-show="selectedSection == listsections[0]">
+					<div class="fields code">
+						<div class="label ">Da Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text" id="endDate" ng-model="filter.fromDate" value="{{filter.fromDate}}"   />
+						</div>
+					</div>
+					<div class="fields code">
+						<div class="label ">A Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text" id="startDate" ng-model="filter.toDate" value="{{filter.toDate}}"   />
+						</div>
+						
+					</div>
+					
+						<div class="fields code">
+							<div class="label ">Documento Sorgente </div>
+							<div class="field">
+								<select id="selgroup" class="inputfield" ng-model="currentDocument"   ng-data-provider="documents" create-chosen on-finish-chosen-update    ng-options="document as document.code for document in documents" ng-change="filter.sourcedoc = currentDocument" ></select>
+							</div>
+						</div>
+				</div>
+				<div class="info added_info" ng-show="selectedSection == listsections[0]">
+					<div class="category_group">
+							<div class="fields code">
+								<div class="label ">Cliente </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentCustomer"  ng-data-provider="customers" create-chosen on-finish-chosen-update     ng-options="customer as customer.customername for customer in customers" ng-change="filter.customer = currentCustomer;changeCustomer(currentCustomer.idCustomer)" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="supplierList" class="inputfield" ng-model="currentSupplier"    ng-data-provider="suppliers" create-chosen on-finish-chosen-update   ng-options="supplier as supplier.suppliername for supplier in suppliers"  ng-change="filter.supplier = currentSupplier" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+								<div class="label ">Destinazione </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentDestination"   ng-data-provider="destinations" create-chosen on-finish-chosen-update    ng-options="destination as destination.destinationname for destination in destinations" ng-change="filter.destination = currentDestination" ></select>
+								</div>
+							</div>
+					</div>
+					<div class="category_group">
+						<div class="fields code">
+								<div class="label ">Vettore </div>
+								<div class="field">
+									<select id="selgroup" class="inputfield" ng-model="currentTransporter"   ng-data-provider="transporters" create-chosen on-finish-chosen-update    ng-options="transporter as transporter.transportersurname for transporter in transporters"  ng-change="filter.transporter = currentTransporter" ></select>
+								</div>
+							</div>
+							<div class="fields code">
+									<div class="label ">&nbsp; </div>
+									<div class="field">
+										&nbsp;
+									</div>
+								</div>
+							<div class="PRODUCT_field code ">
+								<div class="filterbutton" ng-click="selectDocs()">
+									<div class="filterlabel">
+										Seleziona
+									</div>
+								</div>
+								
+							</div>	
+							
+					</div>	
+					
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+	<div class="tablecontainer" >
+		
+<div class="table">
+			<div class="tableheader  heads clearfix">
+				<div class="header_table row_table first single">Numero</div>
+				<div class="header_table row_table single">Data</div>
+				<div class="header_table row_table single">Tipologia</div>
+				<div class="header_table row_table double">Fornitore</div>
+				<div class="header_table row_table double">Cliente</div>
+				<div class="header_table row_table single">Destinazione</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="head in heads | filter:query | orderBy:orderProp">
+				<div class=" heads">
+					<div class="row_table first single">&nbsp;{{head.number}}</div>
+					<div class="row_table single">&nbsp;{{head.date}} </div>
+					<div class="row_table single">&nbsp;{{head.document.code}}</div>
+					<div class="row_table double">&nbsp;{{head.supplier.suppliername}}</div>
+					<div class="row_table double">&nbsp;{{head.customer.customername}}</div>
+					<div class="row_table single">&nbsp;{{head.destination.destinationname}}</div>
+					<a ><div class="row_table modify"><input ng-if="head.generate == false" type="checkbox"   ng-click="setGenerate(head)" /><input ng-if="head.generate == true" type="checkbox"   ng-click="setGenerate(head)" checked/></div></a>
+				    <div class="row_table delete"><div ng-if="head.rows != null && head.rows.length > 0" class="detailicon open" id="del{{head.idHead}}" ng-click="detailView(head.idHead)"></div></div>
+					
+				</div>
+				<div class="tabledetail_generate  clearfix" id="det{{head.idHead}}" ng-if="head.rows != null && head.rows.length > 0" style="display:none;">
+							<div class="tabledetail_content head_rows">
+								<div class="tabledetail_header">
+									<div class="tabledetail_header_element tabledetail_row first row_single">Codice</div>
+									<div class="tabledetail_header_element tabledetail_row row_double">Descrizione</div>
+									<div class="tabledetail_header_element tabledetail_row row_half">UM</div>
+									<div class="tabledetail_header_element tabledetail_row row_half">Qta</div>
+									<div class="tabledetail_header_element tabledetail_row row_single">Prezzo</div>
+									<div class="tabledetail_header_element tabledetail_row row_single">Totale</div>
+									<div class="tabledetail_header_element tabledetail_row  modify">&nbsp;</div>
+								</div>
+								<div class="tabledetail_rows indetail" ng-repeat="row in head.rows | orderBy:orderYear" >
+									
+									<div class="tabledetail_row first row_single">
+										<div >&nbsp;{{row.productcode}}</div>
+									</div>
+									<div class="tabledetail_row row_double">
+										<div >&nbsp;{{row.productdescription}}</div>
+									</div>
+									<div class="tabledetail_row row_half">
+										<div >&nbsp;{{row.productum}}</div>
+									</div>
+									<div class="tabledetail_row row_half">
+										<div >&nbsp;{{row.quantity}}</div>
+									</div>
+									<div class="tabledetail_row row_single">
+										<div >&nbsp;{{row.price}}</div>
+									</div>
+									<div class="tabledetail_row row_single">
+										<div >&nbsp;{{row.total}}</div>
+									</div>
+									<div class="tabledetail_row row_single modify">
+										<div ><input ng-if="row.generate == false" type="checkbox"   ng-click="setGenerateRow(row,head)" /><input ng-if="row.generate == true" type="checkbox"   ng-click="setGenerateRow(row,head)" checked/></div>
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

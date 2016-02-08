@@ -1,0 +1,151 @@
+<div class="row "><!-- main row  -->
+     <div class=" small-12 columns" ng-class="{'large-8 medium-6':showDraft,'large-12 medium-12':!showDraft}"> <!-- filter -->
+	      <form>
+               <fieldset class="search_fieldset"  ng-class="{'height-400 ':morefilters,'height-75':!morefilters}">
+                    <legend>Prodotto <i  class="fi-small fi-button "  ng-class="{'fi-arrows-in ':morefilters,'fi-arrows-out':!morefilters}" ng-click="morefilters = !morefilters"></i></legend>
+                         <div class="row">
+                              
+                                <div class="large-6 medium-6 small-12 columns">
+								      <div class="row collapse postfix-round">
+								        <div class="small-9 columns">
+								          <input ng-model="wiz.filter.searchstring" type="text" placeholder="Codice o Descrizione">
+								        </div>
+								        <div class="small-3 columns">
+								          <a href="#"  class="button postfix" ng-click="wiz.getProductsNumber()" >Go</a>
+								        </div>
+								      </div>
+							</div>
+                         </div>
+                         <div class="row" ng-show="morefilters">
+	    				      <div class="large-4 medium-8 small-12 columns"></div>
+                              <div class="large-4 medium-8 small-12  columns">
+							       <label>Regione 
+							            <select  name="region" ng-options="region.code for region in wiz.regions" ng-model="wiz.filter.region"  >
+				           		             <option value=""></option>
+				            		    </select> 
+								   </label>
+							  </div>
+							  <div class="large-4 medium-8 small-12  columns">
+							       <label>Gruppo 
+							            <select  name="group" ng-options="group.code for group in wiz.groups" ng-model="wiz.filter.group"  >
+				           		 	          <option value=""></option>
+				            	        </select> 
+								   </label>
+							  </div>
+							  <div class="large-4 medium-8 small-12  columns">
+							       <label>Categoria 
+							             <select  name="category" ng-options="category.code for category in wiz.categories" ng-model="wiz.filter.category" ng-change="wiz.changeCategory()" >
+				           		 	          <option value=""></option>
+				            	         </select> 
+								   </label>
+							 </div>
+							 <div class="large-4 medium-8 small-12  columns">
+								   <label>Sottocategoria 
+								        <select  name="subcategory" ng-options="subcategory.code for subcategory in wiz.subcategories" ng-model="wiz.filter.subcategory"  >
+				           		 	         <option value=""></option>
+				            	        </select> 
+								   </label>
+							 </div>
+							 <div class="large-4 medium-8 small-12  columns">
+						          <label>Marca 
+						               <select  name="brand" ng-options="brand.code for brand in wiz.brands" ng-model="wiz.filter.brand"  >
+				           		 	        <option value=""></option>
+				            	       </select> 
+								  </label>
+							 </div>
+							  <div class="large-4 medium-8 small-12  columns">
+						          <label>Uvaggio 
+						               <select  name="composition" ng-options="composition.description for composition in wiz.compositions" ng-model="wiz.filter.composition"  >
+				           		 	        <option value=""></option>
+				            	       </select> 
+								  </label>
+							 </div>
+							 <div class="large-4 medium-8 small-12  columns">
+								  <label>U.M. Secondarie 
+								       <input type="checkbox" ng-model="wiz.filter.isnotUmPref" />
+								  </label>
+					         </div>
+					         
+					         <div class="large-8 medium-8 small-12  columns">
+					         	 <div class="row">
+					          	  <div class="large-2 medium-2 small-2 columns">
+										Ordina per
+								  </div>
+								  <div class="large-10 medium-10 small-10 columns">
+									  <ul >
+										<li><input type="radio" value="code" ng-model="wiz.filter.orderBy" name="Order" />Codice</li>
+										<li><input type="radio" value="product.description" ng-model="wiz.filter.orderBy" name="Order" />Descrizione</li>
+										</ul>
+								  </div>
+					          </div>
+					         </div>
+					        
+					          <div class="large-4 medium-8 small-12  columns">
+					          	  <label>Ordinamento 
+								       <select  name="ordir"  ng-model="wiz.filter.orderdirection"  >
+				           		 	        <option value="asc">Dal basso verso l'alto</option>
+				           		 	        <option value="desc">Dall'alto verso il basso</option>
+				            	       </select> 
+								  </label>
+					          </div>
+					    </div>
+                   </fieldset>
+              </form> 
+              <div class="row"  ng-show="wiz.productlist.length > 0 &&  wiz.productlist.length > wiz.pagesize_confirmed">
+		           <div class="small-12 columns ">
+				         Prodotti totali: {{wiz.totalitems}} Prodotti per pagina
+				        <input ng-model="wiz.pagesize" value="{{wiz.pagesize}}">
+		           </div>
+              </div>
+	        <!--    <div class="row"  ng-show="wiz.productlist.length > 0">
+	          	   <div class="small-8 columns ">
+	          	   		&nbsp;
+	          	   </div>
+	          </div>-->
+              <div class="row"  ng-show="wiz.productlist.length > 0 &&  wiz.productlist.length > wiz.pagesize_confirmed">
+			       <div class="small-12 columns ">
+				        <pagination total-items="wiz.totalitems" items-per-page="wiz.pagesize_confirmed" page="wiz.page" max-size="3" class="pagination-sm" boundary-links="true" rotate="false" num-pages="wiz.pages" ng-click="wiz.getProducts(wiz.page)" previous-text="<" next-text=">" first-text="<<" last-text=">>"></pagination>
+			       </div>
+	          </div>
+	          
+	          <div class="row " ng-show="wiz.productlist.length > 0" ><!-- product list -->
+			       <div class="small-12 columns" >
+              	        <div class="row" ng-repeat="prod in wiz.productlist">
+               		         <div class="small-12 columns">
+                   		          <div class="elements height-100">
+                      		            <div class="small-1 columns">
+                       		 	             <div class="smallwine"></div>
+                      	 	            </div>
+                       		            <div class="small-6 columns">
+                        	 	             <div class="voice height-100">
+			                                      <ul>
+			                                           <li><span>{{prod.code}}</span> {{prod.product.description}}</li>
+			                                           <li>PREZZO <span> {{prod.product.listprice}}</span> {{prod.um.name}} ({{prod.conversion}})</li>
+			                          			  </ul>
+                       		                 </div>
+                                        </div>
+		                                <div class="small-2 columns">
+			                                 <div class="howmuch height-100">
+		                        	              <label>
+		                          		               <input class="square" type="text" ng-model="prod.quantity" ng-change="wiz.quantityChange(prod)" select-on-click> 
+		                         	              </label>
+		                                     </div>
+							            </div>
+							             
+		                                <div class="small-2 small-collapse btn_status_list columns">
+		                                     <!-- <div ng-click="wiz.addProduct(prod)" class="cart height-50" ng-class="{'pr_warning':prod.status == 2,'pr_error':prod.status == 3,'pr_full':prod.status == 1}">
+		                                     </div>-->
+		                                     <i class="fi-shopping-cart" ng-click="wiz.addProduct(prod)" ng-class="{'warning':prod.status == 2,'error':prod.status == 3,'inserted':prod.status == 1}" ></i>
+		                                      <!-- <button class="button tiny round" ng-class="{'warning':prod.status == 2,'error':prod.status == 3}"></button>-->
+		                                </div>
+						           </div>
+                              </div>
+                         </div>
+                    </div>
+               </div> <!-- product list -->
+          </div>  <!-- filter -->
+         
+    </div> 
+    <div class="row show-for-small-only heads_list_item">
+
+</div>

@@ -1,0 +1,284 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Dettaglio prodotto</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><button ng-disabled="product_form.$invalid" ng-click="saveProduct()"  class="button"><i class="fi-save" ></i></button></li>
+		  	<li ><button ng-show="isNew == false" ng-click="newProduct()" class="button"><i class="fi-plus" ></i></button></li>
+		   <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	<!-- <li ng-if="auth.permission != conf_permission.Promoter"><a ng-click="filterMenu('import')" class="button"><i class="fi-arrow-left"  ></i></a></li>-->
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!-- 
+<div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3 ng-show="product.idProduct == 0">NUOVO PRODOTTO o SERVIZIO:</h3>
+		<h3 ng-hide="product.idProduct > 0">PRODOTTO: {{product.code}} {{product.description}}</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><button ng-disabled="product_form.$invalid" ng-click="saveProduct()" class="button">Salva</button></li>
+		  	<li><button ng-click="mainPage()" class="button">Elenco</button></li>
+		  	<li><button ng-show="isNew == false" ng-click="newProduct()" class="button">Nuovo</button></li>
+		</ul>
+	</div>
+</div>
+-->
+
+
+<div class="row">
+    <div class="large-6 medium-12 small-12 columns">
+  
+
+    <div class="login">
+		<form name="product_form" >
+			<div class="row">
+    			<div class="large-12 medium-12 small-12 columns"   ng-class="{'has-error':product_form.code.$invalid}" >
+            		<label>Codice *</label>
+            		<input type="text" placeholder="Codice" value="{{product.code}}" ng-model="product.code" name="code" required>
+				</div>
+				<div class="large-12 medium-12 small-12 columns"   ng-class="{'has-error':product_form.description.$invalid}">
+            		 <label>Descrizione *</label>
+           			 <input type="text" placeholder="Descrizione" value="{{product.description}}" name="description" ng-model="product.description" required>
+			</div>
+			<div class="large-12 medium-12 small-12 columns">
+			<label>Titolo</label>
+            <input type="text" placeholder="Titolo" value="{{product.shortdescription}}" ng-model="product.shortdescription" >
+			</div>
+			<div class="large-12 medium-12 small-12 columns">
+			<label>Descrizione completa</label>
+            <textarea  placeholder="Descrizione completa" value="{{product.longdescription}}" ng-model="product.longdescription" ></textarea>
+			</div>
+			<div class="large-12 medium-12 small-12 columns">
+			<label>Categoria</label>
+            <select  name="category" ng-options="category.code for category in categorys" ng-model="product.category" ng-change="changeCategory()" >
+          		 	<option value=""></option>
+           	</select> 
+            </div>
+            <div class="large-12 medium-12 small-12 columns">
+            <label>Sottocategoria</label>
+            <select  name="subcategory" ng-options="subcategory.code for subcategory in subcategories" ng-model="product.subcategory"  >
+          		 	<option value=""></option>
+           	</select> 
+           		</div>
+           	<div class="large-12 medium-12 small-12 columns">	
+            <label>Gruppo</label>
+            <select  name="group" ng-options="group.code for group in groups" ng-model="product.group"  >
+           		 	<option value=""></option>
+            	</select> 
+         </div>
+         <div class="large-12 medium-12 small-12 columns">
+             <label>Regione</label>
+             <select  name="region" ng-options="region.name for region in regions" ng-model="product.region"  >
+           		 	<option value=""></option>
+            	</select> 
+            	</div>
+            	<div class="large-12 medium-12 small-12 columns">
+        	<label>Marca</label>
+             <select  name="brand" ng-options="brand.name for brand in brands" ng-model="product.brand"  >
+           		 	<option value=""></option>
+            	</select> 	
+</div>
+<div class="large-12 medium-12 small-12 columns"  ng-class="{'has-error':product_form.purchaseprice.$invalid || product.purchaseprice == 0}">
+             <label>Prezzo di Costo *</label>
+            <input type="text" placeholder="Codice" value="{{product.purchaseprice}}" name="purchaseprice"  ng-model="product.purchaseprice" ng-blur="calculateListPrices();" required>
+			</div>
+			<div class="large-12 medium-12 small-12 columns">
+			<label>Percentuale Ricarico</label>
+            <input type="text" value="{{product.percentage}}" ng-model="product.percentage" ng-blur="calculatePrices('sellprice')">
+			</div>
+			<div class="large-12 medium-12 small-12 columns"  ng-class="{'has-error':product_form.sellprice.$invalid || product.sellprice == 0}">
+			<label>Prezzo di Vendita base *</label>
+            <input type="text"  value="{{product.sellprice}}" name="sellprice" ng-model="product.sellprice" ng-blur="calculatePrices('percentage')" required>
+			</div>
+			<div class="large-12 medium-12 small-12 columns" ng-class="{'has-error':product_form.taxrate.$invalid}">
+			 <label>Aliquota *</label>
+            <select name="taxrate" ng-options="taxrate.description for taxrate in taxrates" ng-model="product.taxrate" ng-change="calculateListPrices();" required>
+           		 <option value=""></option>
+            </select> 
+            </div>
+            <div class="large-12 medium-12 small-12 columns">
+            <label>Pubblica</label>
+            <input type="checkbox" value="{{product.publish}}" ng-model="product.publish" >
+            </div>
+			</div>
+      </form>
+		
+    </div>
+    <div class="row">
+    	<div class="large-6 columns" ><h6>COMPOSIZIONE (Uvaggio)</h6></div>
+    	<div class="small-3 columns" ><button class="button small"  ng-click="addCompositionElement(product)" >Aggiungi</button></div>
+    </div>
+    <div class="row">
+     <table  st-table="cmpsToDisplay" class="table table-striped" st-safe-src="product.compositions" >
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="50%">Uvaggio</th>
+            <th width="10%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="composition in cmpsToDisplay ">
+            <td><a ng-click="changeUMElement($index)" class="matita"></a> </td>
+            <td><div ng-if="umpid != $index">&nbsp;{{composition.composition.description}}</div>
+										<select ng-if="umpid == $index" id="selcounter"  ng-model="currentComposition"    ng-options="c as c.description for c in compositions" ng-change="composition.composition = currentComposition;" ></select></td>
+            
+            <td><a  class="x" ng-click="deleteUMElement(ump)"></a></td>
+          </tr>     
+        </tbody>
+      </table>
+      </div>
+  </div>
+
+  <div class="large-6 medium-12 small-12 columns">
+  	<div class="row">
+  		<div class="large-6 columns" ><img ng-src="data:image/png;base64,{{imageProduct}}"></div>
+  		<div class="small-3 columns" ><button class="button small"  ngf-select ngf-change="upload($file)" >Carica</button></div>
+  	</div>
+    <div class="row">
+    	<div class="large-6 columns" ><h6>UNITA' DI MISURA</h6></div>
+    	<div class="small-3 columns" ><button class="button small"  ng-click="addUMElement(product)" >Aggiungi</button></div>
+    </div>
+    <div class="row">
+     <table  st-table="umsToDisplay" class="table table-striped" st-safe-src="product.ums" >
+        <thead>
+          <tr>
+            <th width="10%"></th>
+            <th width="30%">Codice</th>
+            <th width="30%">U.M</th>
+            <th width="10%" class="hidden_cell">Pref.</th>
+            <th width="10%" class="hidden_cell">Conv.</th>
+            <th width="10%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="ump in umsToDisplay ">
+            <td><a ng-click="changeUMElement($index)" class="matita"></a> </td>
+            <td><div ng-if="umpid != $index">&nbsp;{{ump.code}} </div>
+																					<input type="text" ng-if="umpid == $index"  ng-model="ump.code"  value="{{ump.code}}"  capitalize   >  
+																			</td>
+            <td><div ng-if="umpid != $index">&nbsp;{{ump.um.code}}</div>
+										<select ng-if="umpid == $index" id="selcounter"  ng-model="currentUMP"    ng-options="um as um.code for um in ums" ng-change="ump.um = currentUMP;" ></select></td>
+            <td class="hidden_cell"><div ng-if="umpid != $index">&nbsp;{{ump.preference}}</div>
+										<input ng-if="umpid == $index" type="checkbox" ng-model="ump.preference"  value="{{ump.preference}}" /></td>
+            <td class="hidden_cell"><div ng-if="umpid != $index">&nbsp;{{ump.conversion}}</div>
+										<input ng-if="umpid == $index" ng-model="ump.conversion"  value="{{ump.conversion}}"  /></td>
+            <td><a  class="x" ng-click="deleteUMElement(ump)"></a></td>
+          </tr>     
+        </tbody>
+      </table>
+      </div>
+      <div class="row">
+    	<div class="row" >
+	<form>
+		<fieldset>
+			<legend>INCREMENTO</legend>
+			<div class="row">
+			<div class="large-3 columns">
+				<label>Incremento
+				  <input type="text"
+					 ng-model="increment.increment"
+					value="{{increment.increment}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Percentuale
+				  <input type="checkbox"
+					 ng-model="increment.isPercentage"
+					value="{{increment.isPercentage}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<label>Prezzo Finale
+				  <input type="checkbox"
+					 ng-model="increment.isEndPrice"
+					value="{{increment.isEndPrice}}" capitalize />
+				</label>
+			</div>
+			<div class="large-3 columns">
+				<button class="button"  ng-click="incrementPrices()" >Incrementa</button>
+				
+			</div>
+		</div>
+		</fieldset>
+	</form>
+</div>
+		<div class="row">
+	    	<div class="large-6 columns" ><h6>LISTINI</h6></div>
+	    	<div class="small-3 columns" ><button class="button small" ng-click="addListElement()"  >Aggiungi</button></div>
+	    </div>
+        <table st-table="prodsToDisplay" class="table table-striped" st-safe-src="product.listproduct">
+        <thead>
+          <tr>
+            <th width="50"></th>
+            <th width="200">Codice</th>
+            <th width="200">Prezzo</th>
+            <th width="200">%</th>
+            <th width="200">Finale</th>
+            <th width="50"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="prod in prodsToDisplay ">
+            <td><a  class="matita" ng-click="setListId(prod)"></a> </td>
+            <td><div ng-hide="listid == prod.idListProduct && listid == 0">{{prod.list.code}}</div>
+				<select ng-show="listid == prod.idListProduct && listid == 0 " name="list" ng-options="list.code for list in availablelists" ng-model="prod.list" ng-change="selectList(prod)" >
+           		 	<option value=""></option>
+            	</select> 
+			</td>
+            <td><div ng-hide="listid == prod.idListProduct">{{prod.price}}</div><input  ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.price}}" ng-model="prod.price"  ng-blur="calculatePercentage(prod)"  ></td>
+            <td><div ng-hide="listid == prod.idListProduct">{{prod.percentage}}</div><input ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.percentage}}" ng-model="prod.percentage"  ng-blur="calculateSellPrice(prod)"  ></td>
+            <td><div ng-hide="listid == prod.idListProduct">{{prod.endprice}}</div><input ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.endprice}}" ng-model="prod.endprice"   ng-blur="calculateEndPrice(prod)" ></td>
+            <td><a  class="x" ng-click="deleteListElement(prod)"></a></td>
+          </tr>
+		</tbody>
+      </table>
+      </div>
+      <div class="row" ng-show="product.publish">
+	    	<div class="large-6 columns" ><h6>ECOMMERCE</h6></div>
+	    </div>
+      <div class="row" ng-show="product.publish">
+      	<form>
+      		<label>Giorni Consegna</label>
+      		<input type="numeric" ng-model="product.ecconfig.deliverydays">
+      		<label>Giorni Riordino</label>
+      		<input type="numeric" ng-model="product.ecconfig.orderdays">
+      		<label>Quantità minima</label>
+      		<input type="numeric" ng-model="product.ecconfig.quantitymin">
+      		<label>Quantità disponibile</label>
+      		<input type="numeric" ng-model="product.ecconfig.quantitymax">
+      		<label>Unità di misura </label>
+      		<select  name="um" ng-options="um.um.code for um in product.ums" ng-model="product.ecconfig.umproduct"  >
+          		 	
+           	</select> 
+      	</form>
+      </div>
+  </div>
+
+   
+
+
+
+</div>		
+
+

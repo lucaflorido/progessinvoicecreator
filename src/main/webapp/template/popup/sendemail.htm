@@ -1,0 +1,53 @@
+ <div class="container userlist clearfix">
+	<div class="POPUP_CLOSE_CONTAINER">
+		<div class="POPUP_CLOSE_BUTTON">
+			<div class="loginbutton" ng-click="close()">
+				<div class="loginlabel">
+					X
+				</div>
+			</div>
+		</div>
+	</div>
+	<div  ng-if="type == 'document'">
+		<table>
+			<tbody>
+				<tr ng-repeat="mail in mails">
+					<td>
+						<input type="radio" name="mailsender" ng-model="mailUserSelected.idMailConfig" ng-value="mail.mailconfig.idMailConfig" >
+					</td>
+					<td>
+						{{mail.mailconfig.email}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="POPUP_MESSAGE" ng-show="type == 'document' ">
+		Inserisci la Password:
+		<input type="password" ng-model="mailUserSelected.password" value="mailUserSelected.password"></input>
+	</div>
+	<div class="POPUP_MESSAGE" ng-show="type == 'test'">
+		Inserisci la Password:
+		<input type="password" ng-model="mailconfig.password" value="mailconfig.password"></input>
+	</div>
+	
+	<div class="POPUP_CLOSE_CONTAINER" ng-show="type == 'test'">
+		<div class="POPUP_CLOSE_BUTTON">
+			<div class="loginbutton" ng-click="sendEmail()">
+				<div class="loginlabel">
+					Invia
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="POPUP_CLOSE_CONTAINER" ng-show="type == 'document'">
+		<div class="POPUP_CLOSE_BUTTON">
+			<div class="loginbutton" ng-click="sendDocument()">
+				<div class="loginlabel">
+					Invia
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

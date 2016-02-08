@@ -1,0 +1,53 @@
+
+<div class="container_menu userlist clearfix">
+	
+	<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td class="title_td">
+					Elenco Aliquote
+				</td>
+			</tr>
+  </table>
+	
+	<table class="menutable"><tr>
+	<td class="buttontd"  >
+	<a href="#/rates" ng-click="addTaxrateElement()" ng-if="taxratesaved == true">
+	<div class="addlabel">  Aggiungi Aliquota 
+		</div>
+		</a>
+	</td>
+	<td class="buttontd" >
+	<a ng-click="saveTaxrates()">
+	<div class="addlabel">  Salva 
+		</div>
+		</a>
+	</td>
+	</tr>
+	</table>
+	
+		<table class="GECO_table  clearfix"">
+			<thead>
+				<tr>
+					<td class="header_table row_table first name">Descrizione</td>
+					<td class="header_table row_table cognome">Valore</td>
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="tr_table" ng-repeat="taxrate in taxrates | filter:query | orderBy:orderProp">
+					<td class="row_table td_twenty"  ><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.description}}</div><div><input  class="input_field" ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.description"  value="{{taxrate.description}}" />  </div></td>
+					<td class="row_table td_twenty"><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.value}}</div>
+					  <div>
+					    <input name="Input" class="input_field"  value="{{taxrate.value}}" ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.value" />
+					  </div></td>
+					<td class="row_table half cognome"><a href="#/rates"><div class=" modify"><div class="modifyicon" ng-click="modifyTaxrateElement(taxrate.idtaxrate)" ></div></div></a></td>
+				    <td class="row_table half delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deleteTaxrateElement(taxrate.idtaxrate)" ></div></td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+
+

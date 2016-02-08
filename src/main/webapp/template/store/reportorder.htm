@@ -1,0 +1,75 @@
+<div class="container userlist clearfix" ngKeydown="checkKeyCode()">
+	<div class="toolbar_detail">
+		<h3>Riepilogo Fornitori:</h3>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa Elenco
+			</div>
+		</div>
+	</div>
+	<div class="details">
+		<div class="generaltable">
+			<div class="head_main_detail">	
+				<div class="info" >
+					<div class="fields code">
+						<div class="label ">Data </div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text"  ng-model="filter.date" value="{{filter.date}}"  create-datepicker />
+						</div>
+						
+					</div>
+					
+						<div class="fields code">
+							<div class="label ">Documento</div>
+							<div class="field">
+								<select  class="inputfield" ng-model="currentDocument" ng-data-provider="documents" create-chosen on-finish-chosen-update     ng-options="document as document.code for document in documents" ng-change="filter.document = currentDocument" ></select>
+							</div>
+						</div>
+					
+					<div class="PRODUCT_field code ">
+								<div class="filterbutton" ng-click="calculateReport()">
+									<div class="filterlabel">
+										Genera
+									</div>
+								</div>
+								
+							</div>	
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div ng-repeat="obj in objects">
+				<div class="report_supplier">{{obj.suppliername}}</div>
+				<div ng-repeat="prod in obj.products">
+					<div class="report_productcode"><b>{{prod.productcode}}</b> {{prod.productdescription}}  {{prod.productum}}</div>
+					<table class="GECO_table four_two_detail clearfix report_customer ">
+						<thead>
+							<tr>
+													<td class="header_table row_table first username">Cliente</td>
+													<td class="header_table row_table first username">UM</td>
+													<td class="header_table row_table cognome">Quantit&#224; </td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="customer in prod.customers">
+								<td class="row_table first username" >{{customer.customername}}</td>
+								<td class="row_table  username">{{prod.productum}}</td>
+								<td class="row_table  username">{{customer.quantity}}</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+				
+			</div>		
+			
+		</div>
+	</div>
+</div>

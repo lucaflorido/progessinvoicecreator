@@ -1,0 +1,158 @@
+			<div class="row"    >
+							<div class="large-12 large-centered columns">
+								<button  ng-show="$parent.enable_registration"  class="button round tiny" value="Indietro" ng-click="$parent.enable_registration = false">Indietro</button>
+							</div>
+						</div>
+            <div class="row" >
+            	<div class="large-8 large-centered small-12 columns" ng-hide="perm.user" >
+            		<form ng-hide="$parent.enable_registration" name="steploginform" novalidate>
+					    <div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="username" placeholder="Username*" ng-model="login.username" required />
+								<small class="error" ng-show="steploginform.username.$error.required && (!steploginform.username.$pristine || (steploginform.username.$error.required && steploginform.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password" placeholder="Password*" ng-model="login.password" required />
+								<small class="error" ng-show="steploginform.password.$error.required && (!steploginform.password.$pristine || (steploginform.password.$error.required && steploginform.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 large-centered columns">
+								<div class="row">
+			            			<div class="large-4 small-4 columns">
+			            				<button class="button round tiny" ng-click="stepLoginCheck(steploginform)">Log In</button>
+			           				</div>
+			           				<div class="large-4 small-4 columns">
+			            				<button class="button round tiny" ng-click="$parent.enable_registration = true">Registrati</button>
+			            			</div>
+			            		</div>
+							</div>
+						</div>
+					</form>
+					<form ng-hide="!$parent.enable_registration" name="newUserForm"  novalidate>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="name" placeholder="Nome *" ng-model="draftFactory.user.name" class="input-text small" required />
+								<small class="error" ng-show="newUserForm.name.$error.required && (!newUserForm.name.$pristine || (newUserForm.name.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="surname" placeholder="Cognome *" ng-model="draftFactory.user.surname" class="input-text small" required/>
+								<small class="error" ng-show="newUserForm.surname.$error.required && (!newUserForm.surname.$pristine || (newUserForm.surname.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="birthday" placeholder="Data di nascita *" ng-model="draftFactory.user.birthday" f-datepicker required/>
+								<small class="error" ng-show="newUserForm.birthday.$error.required && (!newUserForm.birthday.$pristine || (newUserForm.birthday.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="taxcode" placeholder="Codice fiscale *" ng-model="draftFactory.user.taxcode" capitalize required/>
+								<small class="error" ng-show="newUserForm.taxcode.$error.required && (!newUserForm.taxcode.$pristine || (newUserForm.taxcode.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" name="phone" placeholder="Telefono " ng-model="draftFactory.user.phone" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="email" name="email" placeholder="Email *" ng-model="draftFactory.user.email" required/>
+								<small class="error" ng-show="newUserForm.email.$error.required && (!newUserForm.email.$pristine || (newUserForm.email.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+								<small class="error" ng-show="newUserForm.email.$error.email && (!newUserForm.email.$pristine || (newUserForm.email.$error.email && newUserForm.$submitted) )" >Email non valida</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password" placeholder="Password" ng-model="draftFactory.user.password" required/>
+								<small class="error" ng-show="newUserForm.password.$error.required && (!newUserForm.password.$pristine || (newUserForm.password.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="password" name="password_confimed" placeholder="Conferma Password" ng-model="draftFactory.user.confirmpassword" required/>
+								<small class="error" ng-show="newUserForm.password_confimed.$error.required && (!newUserForm.password_confimed.$pristine || (newUserForm.password_confimed.$error.required && newUserForm.$submitted) )" >Campo obbligatorio</small>
+							</div>
+						</div>
+					 
+						 <div class="row"  >
+							<div class="large-12 large-centered columns">
+								Per inserire un diverso indirizzo di fatturazione clicca <a ng-click="showDeliveryAddress = !showDeliveryAddress">qui</a> 
+								
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-8 columns">
+								<input type="text" name="street" placeholder="Indirizzo *" ng-model="draftFactory.user.address.address" />
+							</div>
+							<div class="large-4 columns">
+								<input type="text" name="number" placeholder="Civico *" ng-model="draftFactory.user.address.number" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="city" placeholder="Citt&#224; *" ng-model="draftFactory.user.address.city" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="zipcode" placeholder="CAP *" ng-model="draftFactory.user.address.zipcode" />
+							</div>
+						</div>
+						<div class="row" ng-show="showDeliveryAddress">
+							<div class="large-12 columns">
+								<input type="text" name="zone" placeholder="Provincia *" ng-model="draftFactory.user.address.zone" />
+							</div>
+						</div>
+					</form>
+					
+            	</div>
+            	<div class="large-8 large-centered small-12 columns" ng-show="perm.user" >
+            		<div class="row" >
+							<div class="large-12 large-centered columns">
+							  	<h5 class="draft_title" >Benvenuto {{draftFactory.user.name}} {{draftFactory.user.surname}}</h5>
+							</div>
+					</div>
+            	</div>
+            </div>
+            <div class="row" >
+                <div class="large-12  columns">
+            		<h5  class="draft_title">Pagamenti </h5>
+	            </div>
+            	<div class="large-12  columns">
+            		<form >
+	            		<label ng-repeat="ecp in ecpayments"><input type="radio" name="paymentmethod" ng-model="paymentValue.code" ng-value="ecp.ecpayment.paysolution.code" ng-click="commissionCalculation(ecp)" >  {{ecp.ecpayment.paysolution.name}}</label>
+	            	</form>
+            	</div>
+            </div>
+            <div class="row" >
+            	<form id="paypalform" action="{{trustSrc(config.PaypalURL)}}" method="post" target="_top" >
+					<input type="hidden" name="cmd" value="_xclick">
+					<input type="hidden" name="business" value="{{accountID}}">
+					<input type="hidden" name="amount" value="{{draft.total}}">
+					<input type="hidden" name="upload" value="1" />
+					<input type="hidden" name="first_name" value="{{draftFactory.user.name}}">
+					<input type="hidden" name="last_name" value="{{draftFactory.user.surname}}">
+					<input type="hidden" name="address1" value="{{draftaddress.address}} {{draftaddress.number}}">
+					<input type="hidden" name="address2" value="">
+					<input type="hidden" name="city" value="{{draftaddress.city}}">
+					<input type="hidden" name="state" value="{{draftaddress.country}}">
+					<input type="hidden" name="zip" value="{{draftaddress.zipcode}}">
+					<!-- <input type="hidden" name="item_name_{{$index+1}}" value="{{prod.product.shortdescription}}" ng-repeat="prod in draft.products">
+					<input type="hidden" name="amount_{{$index+1}}" value="{{prod1.quantity}}" ng-repeat="prod1 in draft.products"> -->
+					<input type="hidden" name="currency_code" value="{{draftFactory.company.currency.code}}">
+					<input type="hidden" name="return" value="http://localhost:8080/InvoiceCreator/PaymentResult?did={{draft.id}}">
+				</form>
+                
+            </div>
+            <div class="row" >
+            	<div class="large-4 columns right">
+            		<button class="button round tiny"  ng-disabled="!paymentValue.code " ng-click="confirmChart(draftFactory.user,steploginform,newUserForm)">Procedi</button>
+            	</div>
+            </div>

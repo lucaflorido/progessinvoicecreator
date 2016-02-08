@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Aliquote</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addTaxrateElement()" ng-if="taxratesaved == true" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ><a  ng-click="saveTaxrates()" class="button"><i class="fi-save" ></i></a></li>
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  
+<div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3>ALIQUOTE</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="addTaxrateElement()" ng-if="taxratesaved == true" class="button">Aggiungi</a></li>
+		  	<li><a ng-click="saveTaxrates()" class="button">Salva</a></li>
+		</ul>
+	</div>
+</div>-->
+<div class="row">
+	<div class="large-12 medium-12 small-12">
+	
+		<table st-table="taxratesToDisplay" class="table table-striped" st-safe-src="taxrates" >
+			<thead>
+				<tr>
+					<th >&nbsp;</th>
+					<th st-sort="description"  st-sort-default="anything" st-skip-natural="true" >Descrizione</th>
+					<th  st-sort="value"  st-skip-natural="true">Valore</th>
+					<th >&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="taxrate in taxratesToDisplay ">
+					<td ><i class="icon_setup fi-pencil"  ng-click="modifyTaxrateElement(taxrate.idtaxrate)" ></i></td>
+					<td   ><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.description}}</div><div><input class="input_field"  ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.description"  value="{{taxrate.description}}" />  </div></td>
+					<td   ><div ng-if="modifyid != taxrate.idtaxrate">&nbsp;{{taxrate.value}}</div><div><input class="input_field"  ng-if="modifyid == taxrate.idtaxrate" ng-model="taxrate.value"  value="{{taxrate.value}}" />  </div></td>
+					<td ><i class="icon_setup fi-x-circle"  id="del{{role.idrole}}" ng-click="deleteElement(taxrate)" ></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

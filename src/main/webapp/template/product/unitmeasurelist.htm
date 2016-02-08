@@ -1,0 +1,71 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Unità di misura</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addUmElement()" ng-if="umsaved == true" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ><a  ng-click="saveUms()" class="button"><i class="fi-save" ></i></a></li>
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+<!--  <div class="row">
+	<div class="large-5 medium-5 small-5 columns">
+		<h3>UNITA' MISURA</h3>
+	</div>
+	<div class="large-7 medium-7 small-7 columns">
+		<ul class="button-group">
+		  	<li><a ng-click="addUmElement()" ng-if="umsaved == true" class="button">Aggiungi</a></li>
+		  	<li><a ng-click="saveUms()" class="button">Salva</a></li>
+		</ul>
+	</div>
+	
+</div>-->
+
+<div class="row">
+	<div class="large-12 medium-12 small-12">
+	
+		<table st-table="umsToDisplay" class="table table-striped" st-safe-src="ums" >
+			<thead>
+				<tr>
+					<th >&nbsp;</th>
+					<th st-sort="code"  st-sort-default="anything" st-skip-natural="true" >Codice</th>
+					<th  st-sort="name"  st-skip-natural="true">Nome</th>
+					<th >Descrizione</th>
+					<th >Note</th>
+					<th >&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="um in umsToDisplay" >
+					<td><i class="icon_setup fi-pencil"  ng-click="modifyUmElement(um.idUnitMeasure)"></i></td>
+					<td><div ng-if="modifyid != um.idUnitMeasure">&nbsp;{{um.code}}</div><div><input class="input_field"  ng-if="modifyid == um.idUnitMeasure" ng-model="um.code"  value="{{um.code}}" />  </div></td>
+					<td><div ng-if="modifyid != um.idUnitMeasure">&nbsp;{{um.name}}</div><div><input class="input_field"  ng-if="modifyid == um.idUnitMeasure" ng-model="um.name"  value="{{um.name}}" />  </div></td>
+					<td><div ng-if="modifyid != um.idUnitMeasure">&nbsp;{{um.description}}</div><div><input class="input_field"  ng-if="modifyid == um.idUnitMeasure" ng-model="um.description"  value="{{um.description}}" />  </div></td>
+					<td><div ng-if="modifyid != um.idUnitMeasure">&nbsp;{{um.note}}</div><div><input class="input_field"  ng-if="modifyid == um.idUnitMeasure" ng-model="um.note"  value="{{um.note}}" />  </div></td>
+					<td><i class="icon_setup fi-x-circle"  ng-click="deleteElement(um)"></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Gruppi Prodotto</h3>
+		<div class=" buttonmenu addbutton "  >
+			<a ng-click="addgroupproductElement()" ng-if="groupproductsaved == true">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Gruppo Prodotto 
+				</div>
+			</a>
+		</div>
+		<div class="buttonmenu savebutton admin" ng-click="savegroupproducts()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer groupproduct" >
+		<div class="table">
+			<div class="tableheader   clearfix">
+				<div class="header_table row_table first name">Codice</div>
+				<div class="header_table row_table cognome">Nome</div>
+				<div class="header_table row_table cognome">Descrizione</div>
+				<div class="header_table row_table cognome">Note</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="groupproduct in groupproducts | filter:query | orderBy:orderProp">
+				<div class="row ">
+					<div class="row_table first username"  ><div ng-if="modifyid != groupproduct.idGroupProduct">&nbsp;{{groupproduct.code}}</div><div><input ng-if="modifyid == groupproduct.idGroupProduct" ng-model="groupproduct.code"  value="{{groupproduct.code}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != groupproduct.idGroupProduct">&nbsp;{{groupproduct.name}}</div><div><input ng-if="modifyid == groupproduct.idGroupProduct" ng-model="groupproduct.name"  value="{{groupproduct.name}}" />  </div></div>
+					<div class="row_table  username"  ><div ng-if="modifyid != groupproduct.idGroupProduct">&nbsp;{{groupproduct.description}}</div><div><input ng-if="modifyid == groupproduct.idGroupProduct" ng-model="groupproduct.description"  value="{{groupproduct.description}}" />  </div></div>
+					<div class="row_table  usernote"  ><div ng-if="modifyid != groupproduct.idGroupProduct">&nbsp;{{groupproduct.note}}</div><div><input ng-if="modifyid == groupproduct.idGroupProduct" ng-model="groupproduct.note"  value="{{groupproduct.note}}" />  </div></div>
+					<a href="#/groupproduct"><div class="row_table modify"><div class="modifyicon" ng-click="modifygroupproductElement(groupproduct.idGroupProduct)" ></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletegroupproductElement(groupproduct.idGroupProduct)" ></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

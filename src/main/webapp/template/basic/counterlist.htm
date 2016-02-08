@@ -1,0 +1,105 @@
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" ng-show="msg.type != ''">
+		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
+	</div>
+</div>
+<div class="row show-for-medium-up" >
+	<div class="large-4 medium-4 small-12 logo columns">
+		<img src="assets/rocchilogo.png" />
+	</div>
+	<div class="large-8 medium-8  small-12 columns">
+		<div class="row">
+			<div class="large-12 small-12 columns">
+				<h3 class="title" >Elenco Contatori</h3>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    <li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
+		  	<li ><a  ng-click="addcounterElement()" ng-if="countersaved == true" class="button"><i class="fi-plus" ></i></a></li>
+		  	<li ><a  ng-click="savecounters()" class="button"><i class="fi-save" ></i></a></li>
+		  <!--  	<li><a href="#" class="button" ng-click="showfilter = !showfilter"><i class="fi-magnifying-glass"  ></i></a></li>-->
+		  	
+		 	<!-- <li><a ng-click="printMassElements()" class="button"><i class="fi-print"  ></i></a></li> -->
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="large-12 medium-12 small-12 columns" >
+		<table class="GECO_table three_two clearfix">
+			<tr>
+			<td class="header_table row_table icon half">&nbsp;</td>
+				<td class="header_table row_table first name">Codice</td>
+				<td class="header_table row_table cognome">Nome</td>
+				<td class="header_table row_table cognome">Descrizione</td>
+				<td class="header_table row_table icon half">&nbsp;</td>
+				
+				<td class="header_table row_table icon half">&nbsp;</td>
+			</tr>
+		</table>
+		<div ng-repeat="counter in counters | filter:query | orderBy:orderProp">	
+			<table class="GECO_table store_table three_two clearfix">	
+				<tbody>
+					<tr >
+					<td class="row_table half cognome"><a >
+						<a href="#/counter"><div class="  "><i class="icon_setup fi-pencil"  ng-click="modifycounterElement(counter.idCounter)" ></i></div></a>
+						</td>
+						<td class="row_table first cognome">
+							<div ng-if="modifyid != counter.idCounter">&nbsp;{{counter.code}}</div>
+							<div><input ng-if="modifyid == counter.idCounter" ng-model="counter.code"  value="{{counter.code}}" />  </div>
+						</td>
+						<td class="row_table  username"  >
+							<div ng-if="modifyid != counter.idCounter">&nbsp;{{counter.name}}</div>
+							<div><input ng-if="modifyid == counter.idCounter" ng-model="counter.name"  value="{{counter.name}}" />  </div>
+						</td>
+						
+						<td class="row_table cognome">
+							<div ng-if="modifyid != counter.idCounter">&nbsp;{{counter.description}}</div>
+							<div><input ng-if="modifyid == counter.idCounter" ng-model="counter.description"  value="{{counter.description}}" />  </div>
+						</td>
+						<td class="row_table half cognome"><a >
+							<div class="  icon detail">
+								<div class="detailicon open" ng-click="detailView(counter.idCounter)" id="detail{{counter.idCounter}}" ></div>
+							</div>
+						</a></td>
+						
+						<td class="row_table half cognome"><a >
+							<div class="  "><i class="icon_setup fi-x-circle"  id="del{{role.idrole}}" ng-click="deleteElement(counter.idCounter)" ></i></div>
+						</td>
+						 
+					</tr>
+				</tbody>
+			</table>
+			<div class="detailview" id="detailview{{counter.idCounter}}" on-finish-render>
+				<div class="GECO_right_table">
+				<table class="GECO_table GECO_table_subdetail three_two clearfix">
+					<thead>
+						<tr>
+							<td class="header_table row_table first">Anno</td>
+							<td class="header_table row_table" >Valore</td>
+						</tr>
+						
+					</thead>
+					<tbody>
+						<tr  ng-repeat="yearvalue in counter.yearsvalue | orderBy:orderYear" >
+							<td class="row_table first">{{yearvalue.year}}</td>
+							<td class="row_table">
+								<div ng-if="modifyid != counter.idCounter">&nbsp;{{yearvalue.value}}</div>
+								<div><input ng-if="modifyid == counter.idCounter" ng-model="yearvalue.value"  value="{{yearvalue.value}}" />  </div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+

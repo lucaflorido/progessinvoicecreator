@@ -1,0 +1,73 @@
+<div class="container_menu userlist clearfix">
+<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td class="title_td">
+					Elenco Causali Magazzino
+				</td>
+			</tr>
+  </table>
+  
+  	<table class="menutable"><tr>
+	<td class="buttontd"  >
+	<a ng-click="addstoremovementElement()" ng-if="storemovementsaved == true">
+	<div class="addlabel">  Aggiungi Causale
+		</div>
+		</a>
+	</td>
+	<td class="buttontd" >
+	<a ng-click="savestoremovements()">
+	<div class="addlabel">  Salva 
+		</div>
+		</a>
+	</td>
+	</tr>
+	</table>
+
+	
+	
+	<div class="tablecontainer storemovement" >
+		<table class="GECO_table ten_two clearfix">
+			<thead>
+				<tr>
+					<td class="header_table row_table first name">Nome</td>
+					<td class="header_table row_table cognome">C. Generico</td>
+					<td class="header_table row_table cognome">C. Acquisto</td>
+					<td class="header_table row_table cognome">C. Interno</td>
+					<td class="header_table row_table cognome">C. Reso</td>
+					<td class="header_table row_table cognome">S. Generico</td>
+					<td class="header_table row_table cognome">S. Vendita</td>
+					<td class="header_table row_table cognome">S. Interno</td>
+					<td class="header_table row_table cognome">S. Scaduto</td>
+					<td class="header_table row_table cognome">Impegnato</td>
+					<td class="header_table row_table half">&nbsp;</td>
+					<td class="header_table row_table half">&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="tr_table" ng-repeat="storemovement in storemovements | filter:query | orderBy:orderProp">
+					
+					<td class="row_table td_twenty"><div ng-if="modifyid != storemovement.idstoremovement">&nbsp;{{storemovement.name}}</div><div><input class="input_field" ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.name"  value="{{storemovement.name}}" />  </div></td>
+					
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.genericLoad == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.genericLoad"  value="{{storemovement.genericLoad}}" type="checkbox" />  </div></td>
+					
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.supplierLoad == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.supplierLoad"  value="{{storemovement.supplierLoad}}" type="checkbox" />  </div></td>
+
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.internalLoad == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.internalLoad"  value="{{storemovement.internalLoad}}" type="checkbox" />  </div></td>
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.comebackLoad == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.comebackLoad"  value="{{storemovement.comebackLoad}}" type="checkbox" />  </div></td>
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.genericUnload == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.genericUnload"  value="{{storemovement.genericUnload}}" type="checkbox" />  </div></td>
+					<td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.customerUnload == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.customerUnload"  value="{{storemovement.customerUnload}}" type="checkbox" />  </div></td>
+                    <td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.internalUnload == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.internalUnload"  value="{{storemovement.internalUnload}}" type="checkbox" />  </div></td>
+                    <td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.expiredUnload == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.expiredUnload"  value="{{storemovement.expiredUnload}}" type="checkbox" />  </div></td>
+                    <td class="row_table nome"><div ng-if="modifyid != storemovement.idstoremovement"><div class="checkicon" ng-if="storemovement.genericreserved == true"></div></div><div><input ng-if="modifyid == storemovement.idstoremovement" ng-model="storemovement.genericreserved"  value="{{storemovement.genericreserved}}" type="checkbox" />  </div></td>
+
+				
+				
+					<td class="row_table half"><a href="#/storemovement"><div ><div class="modifyicon" ng-click="modifystoremovementElement(storemovement.idstoremovement)" ></div></div></a></td>
+				    <td class="row_table half"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deletestoremovementElement(storemovement.idstoremovement)" ></div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+

@@ -1,0 +1,593 @@
+<div class="container userlist "   >
+	<table class="menutable">
+		<thead>
+			<tr class="title_tr">
+				<td  class="title_td" colspan="3" ng-if="head.idHead != 0">
+					DOCUMENTO: Num. {{head.number}} del {{head.date}} {{head.customer.customername}}
+				</td>
+				<td  class="title_td" colspan="3" ng-if="head.idHead == 0">
+					NUOVO DOCUMENTO: 
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="buttontd">
+					<a>
+						<div class="  addbutton admin_grant"  ng-click="saveHead()">
+							<div class="printlabel">
+								Salva
+							</div>
+						</div>
+					</a>
+				</td >
+				<td class="buttontd">
+					<a>
+						<div class="  addbutton admin_grant"  ng-click="openNewDocument()">
+							<div class="printlabel">
+								Nuovo Documento
+							</div>
+						</div>
+					</a>
+				</td >
+				<td class="buttontd">
+					<a>
+						<div class="  addbutton admin_grant"  ng-click="printElements()">
+							<div class="printlabel">
+								Stampa
+							</div>
+						</div>
+					</a>
+				</td >
+				<td class="buttontd disabled">
+					<a>
+						<div class="  addbutton admin_grant"  >
+							<div class="printlabel">
+								Ricarica
+							</div>
+						</div>
+					</a>
+				</td >
+				
+			</tr>
+		</tbody>
+	</table>
+	<!--div class="toolbar_detail">
+		<h3>Documento:</h3>
+		<div class="buttonmenu savebutton admin" ng-click="saveHead()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva [Alt+Q]
+			</div>
+		</div>
+		<div class="buttonmenu redobutton ">
+			<div class="redo buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Ricarica [Alt+R]
+			</div>
+		</div>
+		<div class="buttonmenu redobutton " ng-click="openNewDocument()">
+			<div class="redo buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Nuovo Documento [Alt+J]
+			</div>
+		</div>
+		<div class="printbutton buttonmenu" ng-click="printElements()">
+			<div class="print">
+			</div>
+			<div class="printlabel">
+				Stampa
+			</div>
+		</div>
+		<div class="multilayout" >
+			<select ng-model="selectedSection"    ng-options="section for section in listsections" >
+			</select>
+		</div>
+	</div-->
+	
+	
+	<div id="accordion" create-accordion>
+		<h3>Intestazione</h3>
+		<div>
+			<p>
+				<div class="head_main_detail">
+				<div class="info" >
+					<div class="PRODUCT_fields_details code">
+						<div class="label ">Numero *</div>
+						<div class="field "><input class="inputfield" id="ifname" ng-model="head.number" value="{{head.number}}" ng-change="setModified()"  /></div>
+						
+					</div>
+					<div class="PRODUCT_fields_details code">
+						<div class="label ">Data *</div>
+						<div class="field ">
+						<input class="inputfield datepicker" type="text" id="startDate" ng-model="head.date" value="{{head.date}}" ng-change="calculateNumber();setModified()" create-datepicker />
+						</div>
+						
+					</div>
+					
+						<div class="PRODUCT_fields_details code">
+							<div class="label ">Tipologia </div>
+							<div class="field">
+								<select id="selgroup" class="inputfield" ng-model="currentDocument"    ng-options="document as document.code for document in documents" ng-change="head.document = currentDocument;calculateNumber();setModified()" ng-data-provider="documents" create-chosen on-finish-chosen-update  ></select>
+							</div>
+						</div>
+				</div>
+				<div class="info added_info" >
+					<div class="category_group">
+							<div class="PRODUCT_fields_details code"  ng-show="currentDocument.supplier == false" >
+								<div class="label ">Cliente </div>
+								<div class="field">
+									<select id="selcliente" class="inputfield" ng-model="currentCustomer"    ng-options="customer as customer.customername for customer in customers" ng-change="head.customer = currentCustomer;changeCustomer(currentCustomer.idCustomer);setModified()"  ng-data-provider="customers" create-chosen on-finish-chosen-update  ></select>
+								</div>
+							</div>
+							<div class="PRODUCT_fields_details code" ng-show="currentDocument.customer == false">
+								<div class="label ">Fornitore </div>
+								<div class="field">
+									<select id="selsupplier" class="inputfield" ng-model="currentSupplier"    ng-options="supplier as supplier.suppliername for supplier in suppliers"  ng-change="head.supplier = currentSupplier;changeSupplier();setModified()"   ng-data-provider="suppliers" create-chosen on-finish-chosen-update ></select>
+								</div>
+							</div>
+							<div class="PRODUCT_fields_details code" ng-show="currentDocument.supplier == false" >
+								<div class="label ">Destinazione </div>
+								<div class="field">
+									<select id="seldestination" class="inputfield" ng-model="currentDestination"    ng-options="destination as destination.destinationname for destination in destinations" ng-change="head.destination = currentDestination;setModified()"  ng-data-provider="destinations" create-chosen on-finish-chosen-update ></select>
+								</div>
+							</div>
+					</div>
+					<div class="category_group">
+						<div class="PRODUCT_fields_details code">
+								<div class="label ">Listino </div>
+								<div class="field">
+									<select id="sellist" class="inputfield" ng-model="currentList"    ng-options="list as list.code for list in lists"  ng-change="head.list = currentList;setModified()"  ng-data-provider="lists" create-chosen on-finish-chosen-update  ></select>
+								</div>
+							</div>
+						<div class="PRODUCT_fields_details code">
+								<div class="label ">Vettore </div>
+								<div class="field">
+									<select id="selvettore" class="inputfield" ng-model="currentTransporter"    ng-options="transporter as transporter.transportersurname for transporter in transporters"  ng-change="head.transporter = currentTransporter;setModified()"  ng-data-provider="transporters" create-chosen on-finish-chosen-update   ></select>
+								</div>
+							</div>
+						<div class="PRODUCT_fields_details code">
+								<div class="label ">Pagamento </div>
+								<div class="field">
+									<select id="selpayment" class="inputfield" ng-model="currentPayment"    ng-options="payment as payment.code for payment in payments"  ng-change="head.payment = currentPayment;setModified()"  ng-data-provider="payments" create-chosen on-finish-chosen-update  ></select>
+								</div>
+							</div>	
+					</div>	
+					<div class="category_group">
+						<div class="PRODUCT_fields_details code">
+								<div class="label ">Ritenuta </div>
+								<div class="field">
+									{{head.taxrate.value}}%
+								</div>
+							</div>
+						
+					</div>	
+				</div>
+				</div>
+			</p>
+        </div>
+		<h3>Dettaglio</h3>
+		<div>
+			<p>
+			<div id="dialog"  class="HEAD_dialog_box " ng-show="showSearch == true">
+		<div class="HEAD_dialog_box_content ui-dialog" >
+			<div>
+				<div>
+					<input id="search_field" ng-model="search" value="{{search}}"></input>
+					<button ng-click="searchProd()">Cerca</button>
+					<button ng-click="addNewProduct()">Aggiungi Prodotto</button>
+					<button ng-click="showSearch = false">Chiudi</button>
+				</div>
+			</div>
+		<div class="HEAD_dialog_prod_container">
+			<table class="GECO_table clearfix  ">
+								<thead  >
+									<tr class="header_table">
+										<td class="  row_table threequarter "><div class="td_div first">Codice</div></td>
+										<td class="  row_table double"><div class="td_div ">Descrizione</div></td>
+										<td class="  row_table "><div class="td_div ">UM</div></td>
+										<td class="  row_table half "><div class="td_div ">&nbsp;</div></td>
+										
+									</tr>
+								</thead>
+								<tbody  >
+									<tr class="tr_table" ng-repeat="prod in prodFound | orderBy:orderYear">
+										<td class="row_table threequarter  "><div class="td_div first">&nbsp;{{prod.code}}</div></td>
+										<td class="row_table  double"><div class="td_div ">&nbsp;{{prod.product.description}}</div></td>
+										<td class="row_table  "><div class="td_div ">&nbsp;{{prod.um.code}}</div></td>
+										<td class="row_table half  "><div class="td_div "><div class=" modify" ng-click="insertProduct(prod.code)"><div class="modifyicon"></div></div></div></td>
+									</tr>
+								</tbody>
+							</table>
+			
+		</div>
+		</div>
+	</div>
+	
+				<div class="add_container_doc" ng-click="addRowElement();setModified()" >
+							<div class="add buttonicon">
+							</div>
+							<div class="addlabel">
+								Aggiungi Prodotto [Alt+n]
+							</div>
+							
+						</div>
+						<div class="  GECO_table_container ">
+							<table class="GECO_table clearfix  " ng-if="isOrder == false && isLoadSerialN == false && isUnloadSerialN == false">
+								<thead>
+									<tr class="header_table">
+										<td class="  row_table td_five "><div class="td_div first">&nbsp;</div></td>
+										<td class="  row_table td_ten"><div class="td_div ">Codice</div></td>
+										<td class="  row_table td_thirty"><div class="td_div ">Descrizione</div></td>
+										<td class="  row_table td_five" ><div class="td_div ">UM</div></td>
+										<td class="  row_table td_five"><div class="td_div ">Qta</div></td>
+										<td class="  row_table td_ten"><div class="td_div ">Prezzo</div></td>
+										<td class="  row_table td_ten" ><div class="td_div ">Imponibile</div></td>
+										<td class="  row_table td_ten"><div class="td_div ">Imposta</div></td>
+										<td class="  row_table td_ten"><div class="td_div ">Totale</div></td>
+										
+										<td class="  row_table td_five "><div class="td_div ">&nbsp;</div></td>
+									</tr>
+								</thead>
+								<tbody  >
+									<tr class="tr_table" ng-repeat="row in head.rows | orderBy:predicate">
+										<td class="row_table td_five "><div class="td_div first"><div class=" modify" ng-click="setCurrentRow(row)"><div class="modifyicon"></div></div></div></td>
+										<td class="row_table  td_ten" ng-click="predicate = 'productcode'; reverse=false"><div class="td_div ">&nbsp;{{row.productcode}}</div></td>
+										<td class="row_table  td_thirty" ng-click="predicate = 'productdescription'; reverse=false"><div class="td_div ">&nbsp;{{row.productdescription}}</div></td>
+										<td class="row_table  td_five"><div class="td_div ">&nbsp;{{row.productum}}</div></td>
+										<td class="row_table  td_five"><div class="td_div "><div class="contain_input_td"  ng-show="row.productum !== undefined && row.productum !== null" ><input type="text" class="inputfield" value="{{row.quantity}}" ng-model="row.quantity"  ng-change="calculateRow(row);setModified()" /></div></div></td>
+										<td class="row_table  td_ten"><div class="td_div ">&nbsp;{{row.price}}</div></td>
+										<td class="row_table  td_ten"><div class="td_div ">&nbsp;{{row.amount}}</div></td>
+										<td class="row_table  td_ten"><div class="td_div ">&nbsp;{{row.taxamount}}</div></td>
+										<td class="row_table td_ten "><div class="td_div ">&nbsp;{{row.total}}</div></td>
+										<td class="row_table td_five  "><div class="td_div "><div class=" delete confirm" ng-click="confirmDelete(row)" ><div class="deleteicon"></div></div></div></td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="GECO_table_detail clearfix ten_two " ng-if="isOrder == true">
+								<thead>
+									<tr>
+										<td class=" tabledetail_row row_table half first">&nbsp;</td>
+										<td class=" tabledetail_row row_table double ">Fornitore</td>
+										<td class=" tabledetail_row row_table ">Codice</td>
+										<td class=" tabledetail_row row_table double">Descrizione</td>
+										<td class="tabledetail_header_element tabledetail_row row_table half" >UM</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Qta</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Prezzo</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Imponibile</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Imposta</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Totale</td>
+										
+										<td class="tabledetail_header_element tabledetail_row row_table half ">&nbsp;</td>
+									</tr>
+								</thead>
+								<tbody  >
+									<tr ng-repeat="row in head.rows | orderBy:['product.supplier.suppliername','productcode']">
+										<td class="row_table half first "><div class=" modify" ng-click="setCurrentRow(row)"><div class="modifyicon"></div></div></td>
+										<td class="row_table  double  " >&nbsp;{{row.product.supplier.suppliername}}</td>
+										<td class="row_table ">&nbsp;{{row.productcode}}</td>
+										<td class="row_table  double" >&nbsp;{{row.productdescription}}</td>
+										<td class="row_table  half">&nbsp;{{row.productum}}</td>
+										<td class="row_table  "><div class="contain_input_td"  ng-show="row.productum !== undefined && row.productum !== null" ><input type="text" class="inputfield" value="{{row.quantity}}" ng-model="row.quantity"  ng-change="calculateRow(row);setModified()" /></div></td>
+										<td class="row_table  ">&nbsp;{{row.price}}</td>
+										<td class="row_table  ">&nbsp;{{row.amount}}</td>
+										<td class="row_table  ">&nbsp;{{row.taxamount}}</td>
+										<td class="row_table  ">&nbsp;{{row.total}}</td>
+										
+										<td class="row_table half  "><div class=" delete confirm" ng-click="confirmDelete(row)" ><div class="deleteicon"></div></div></td>
+									</tr>
+								</tbody>
+							</table>
+							<div ng-if="isLoadSerialN == true">
+								<div>
+									Lotto:
+									<input id="forceserial" />
+									Scadenza:
+									<input id="forceexpiredate" create-datepicker />
+									<button ng-click="forceSerialNumbers()">Inserisci lotti generici</button>
+								</div>
+							</div>	
+							<div ng-if="isUnloadSerialN == true">
+								<div>
+									<button ng-click="forceLoadSerialNumbers()">Inserisci lotti disponibili</button>
+								</div>
+							</div>	
+							<table class="GECO_table_detail clearfix ten_two " ng-if="isLoadSerialN == true || isUnloadSerialN == true">
+								<thead>
+									<tr>
+										<td class="tabledetail_header_element tabledetail_row row_table half first">&nbsp;</td>
+										<td class="tabledetail_header_element tabledetail_row row_table ">Codice</td>
+										<td class="tabledetail_header_element tabledetail_row row_table double">Descrizione</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Lotto</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Scadenza</td>
+										<td class="tabledetail_header_element tabledetail_row row_table half" >UM</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Qta</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Prezzo</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Imponibile</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Imposta</td>
+										<td class="tabledetail_header_element tabledetail_row row_table">Totale</td>
+										
+										<td class="tabledetail_header_element tabledetail_row row_table half ">&nbsp;</td>
+									</tr>
+								</thead>
+								<tbody  >
+									<tr ng-repeat="row in head.rows | orderBy:['product.supplier.suppliername','productcode']">
+										<td class="row_table half first "><div class=" modify" ng-click="setCurrentRow(row)"><div class="modifyicon"></div></div></td>
+										<td class="row_table red_signal " ng-if="row.product.manageserialnumber == true && (row.serialnumber == '' || row.expiredate == '')  " >!!!!!{{row.productcode}}</td>
+										<td class="row_table " ng-if="row.product.manageserialnumber == false || (row.product.manageserialnumber == true && row.serialnumber != '' && row.expiredate != '')  " >{{row.productcode}}</td>
+										<td class="row_table  double" >&nbsp;{{row.productdescription}}</td>
+										<td class="row_table  "><div class="contain_input_td"><input type="text"  class="inputfield" ng-model="row.serialnumber" value="{{row.serialnumber}}" ng-change="setModified()" /></div></td>
+										<td class="row_table  "><div class="contain_input_td"><input type="text" class="inputfield"  ng-model="row.expiredate" value="{{row.expiredate}}" create-datepicker ng-change="setModified()" /></div></td>
+										<td class="row_table  half">&nbsp;{{row.productum}}</td>
+										<td class="row_table  "><div class="contain_input_td" ng-show="row.productum !== undefined && row.productum !== null" ><input type="text" class="inputfield" value="{{row.quantity}}" ng-model="row.quantity"  ng-change="calculateRow(row);setModified()" /></div></td>
+										<td class="row_table  ">&nbsp;{{row.price}}</td>
+										<td class="row_table  ">&nbsp;{{row.amount}}</td>
+										<td class="row_table  ">&nbsp;{{row.taxamount}}</td>
+										<td class="row_table  ">&nbsp;{{row.total}}</td>
+										
+										<td class="row_table half  "><div class=" delete confirm" ng-click="confirmDelete(row)" ><div class="deleteicon"></div></div></td>
+									</tr>
+								</tbody>
+							</table>
+							
+						
+						</div>
+						<div class ="addrow_container" ng-show="currentRow != null" >
+						<div class="close_icon" ng-click="currentRow = null">
+							
+						</div>
+						<table class="GECO_table_detail HEAD_addrow clearfix" >
+								<tbody>
+									<tr>
+										<td class=" td_thirty">
+											<div class="td_col">
+												<div class="label ">Codice * <button ng-click="getProduct(currentRow.productcode)">Cerca</button></div>
+												<div class="field "><input tabindex="0" class="inputfield" id="prod_code" ng-model="currentRow.productcode" value="{{currentRow.productcode}}" ng-blur="getProduct(currentRow.productcode)" ng-change="setModified()" capitalize /></div>
+												
+											</div>
+										
+										</td>
+										<td class=" td_thirty">
+											<div >
+												<div class="label ">Descrizione *</div>
+												<div class=" field"><input class="inputfield" id="ifname" ng-model="currentRow.productdescription" value="{{currentRow.productdescription}}"  ng-change="setModified()" capitalize /></div>
+											</div>
+										</td>
+										
+										<td class=" td_ten">
+											<div class="td_col td_ten">
+												<div class="label " ng-show="currentRow.productum !== undefined && currentRow.productum !== null">UM *</div>
+												<div class="field " ng-show="currentRow.productum !== undefined && currentRow.productum !== null">&nbsp;{{currentRow.productum}}</div>
+											</div>
+										</td>
+										<td class=" td_ten">
+											<div class="td_col ">
+												<div class="label " ng-show="currentRow.productum !== undefined && currentRow.productum !== null">Quantit&#224; </div>
+												<div class="field " ng-show="currentRow.productum !== undefined && currentRow.productum !== null"><input class="inputfield" id="qta" ng-model="currentRow.quantity" value="{{currentRow.quantity}}" ng-change="calculateRow(currentRow)" ng-keydown="addNewRowFromQuantity($event)" /></div>
+											</div>
+										</td>
+										<td class=" td_ten">
+											<div class="td_col ">
+												<div class="label ">Prezzo * </div>
+												<div class="field "><input class="inputfield" id="price" ng-model="currentRow.price" value="{{currentRow.price}}"  ng-change="calculateRow(currentRow);setModified()"  /></div>
+											</div>
+										</td>
+										<td class=" td_ten">
+											<div class="td_col ">
+												<div class="label ">Aliquota *</div>
+												<div class="field ">&nbsp;{{currentRow.taxrate.value}}</div>
+											</div>
+										</td>
+										
+										<!--td>
+											<div  ng-show="show_qta">
+													<div class="td_col td_ten">
+														<div class="label ">Giacenza</div>
+														<div class="field ">&nbsp;{{currentRow.product.stockqta}} {{currentRow.productum}}</div>
+													</div>
+												</div>
+											<div class="td_col td_five" ng-show="currentRow.product != null">
+												<div class="label " ng-show="show_qta == false" ng-click="show_qta = !show_qta" ><div class="storeicon open"></div></div>
+												<div class="label " ng-show="show_qta == true" ng-click="show_qta = !show_qta" ><div class="storeicon close"></div></div>
+											</div>
+										<div class="td_col td_ten">
+											<div class="label ">Quantit&#224; </div>
+											<div class="field "><input class="inputfield" id="qta" ng-model="currentRow.quantity" value="{{currentRow.quantity}}" ng-change="calculateRow(currentRow)" ng-keydown="addNewRowFromQuantity($event)" /></div>
+										</div>
+										
+										<div class="td_col td_ten">
+											<div class="label ">UM *</div>
+											<div class="field ">&nbsp;{{currentRow.productum}}</div>
+										</div>
+										<div class="td_col td_five">
+											<div class="label " ng-show="currentRow.product != null" ng-click="show_price = !show_price" ><div class="detailicon open"></div></div>
+											<div class="HEAD_overlay " ng-show="show_price">
+												<table class="GECO_table two_two clearfix">
+													<thead>
+														<tr >
+															<td class="header_table row_table first" >Data</td>
+															<td class="header_table row_table">Prezzo</td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr  ng-repeat="history in currentRow.product.pricehistory ">
+															<td class="row_table first">{{history.date}}</td>
+															<td class="row_table"> {{history.price}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										
+										<div class="td_col td_ten">
+											<div class="label ">Causale *</div>
+											<div class="field "><select ng-model="currentRow.type" value="{{currentRow.type}}"  ng-change="calculateRow();setModified()"  ><option>V</option><option>S</option><option>O</option> </select></div>
+										</div>
+										</td-->
+									</tr>
+									
+									<!--tr ng-if="currentRow.product.manageserialnumber == true">
+										<td ng-show="currentDocument.storemovement.genericLoad == true || currentDocument.storemovement.supplierLoad == true || currentDocument.storemovement.internalLoad == true || currentDocument.storemovement.comebackLoad == true">
+											<div class="td_col td_thirty">
+												<div class="label ">Lotto *</div>
+												<div class="field "><input class="inputfield" id="ifname" ng-model="currentRow.serialnumber" value="{{currentRow.serialnumber}}" ng-change="setModified()"  /></div>
+											</div>
+											<div class="td_col td_thirty">
+												<div class="label ">Scadenza *</div>
+												<div class="field "><input class="inputfield" id="ifname" ng-model="currentRow.expiredate" value="{{currentRow.expiredate}}" ng-change="setModified()" create-datepicker  /></div>
+											</div>
+										</td>
+										<td ng-show="currentDocument.storemovement.genericUnload == true || currentDocument.storemovement.customerUnload == true  || currentDocument.storemovement.internalUnload == true   || currentDocument.storemovement.expiredUnload == true">
+											<div class="fields code">
+												<div class="label ">Lotto </div>
+												<div class="field">
+													<select id="sc" class="inputfield" ng-model="currentRow.serialnumber"    ng-options="sc as sc.serialcode for sc in currentRow.product.storage.storagesc" ng-change="setModified()"  ></select>
+												</div>
+											</div>
+											<div>Lotto </div>
+										</td>
+									</tr-->
+									</tbody>
+							</table>
+						    <table class="GECO_table_detail HEAD_addrow" ng-show="currentRow != null">
+								<tbody>
+									<tr>
+										<td class=" td_thirty">
+										<div class="td_col td_thirty">
+											<div class="label ">Importo *</div>
+											<div class="field ">&nbsp;{{currentRow.amount}}</div>
+										</div>
+										</td>
+										<td class=" td_thirty">
+										<div class="td_col td_thirty">
+											<div class="label ">Imposta *</div>
+											<div class="field ">&nbsp;{{currentRow.taxamount}}</div>
+										</div>
+										</td>
+										
+										<td class=" td_thirty">
+										<div class="td_col td_thirty">
+											<div class="label ">Totale *</div>
+											<div class="field ">&nbsp;{{currentRow.total}}</div>
+										</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+						</div>
+				
+			</p>
+        </div>
+		<h3>Totale</h3>
+		<div>
+			<p>
+										
+				<div class="HEAD_Total_group">
+							<table class="GECO_table ">
+									<thead >
+										<tr class="header_table">
+											<th class="  row_table td_ten"><div class="td_div first">Imponibile</div> </th>
+											<th class="  row_table td_five"><div class="td_div "></div> </th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr class="tr_table">
+											<td class="row_table  td_ten"><div class="td_div first">Tot.Imponibile</div></td>
+											<td class=" row_table td_five" ><div class="td_div ">{{head.amount}}</div></td>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Imponibile 4</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.amount4}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Imponibile 10</div></td>
+											<td class="row_table td_five amount" ><div class="td_div ">{{head.amount10}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten "><div class="td_div first">Imponibile 22</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.amount20}}</div></td>
+										</tr>
+									</tbody>
+							</table>
+					</div>
+					<div class="HEAD_Total_group">
+							<table class="GECO_table">
+									<thead>
+										<tr class="header_table">
+											<th class="  row_table td_ten"><div class="td_div first">Imposta </div></th>
+											<th class="  row_table td_five "><div class="td_div "> </div></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Tot.Imposta</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.taxamount}}</div></td>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Imposta 4</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.taxamount4}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Imposta 10</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.taxamount10}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Imposta 22</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.taxamount20}}</div></td>
+										</tr>
+									</tbody>
+							</table>
+					</div>
+					<div class="HEAD_Total_group">
+							<table class="GECO_table">
+									<thead>
+										<tr class="header_table">
+											<th class="  row_table td_ten"><div class="td_div first">Totale</div> </th>
+											<th class="  row_table td_five "><div class="td_div "> </div></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Totale Doc.</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.total}}</div></td>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Totale 4</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.total4}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten "><div class="td_div first">Totale 10</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.total10}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Totale 22</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.total20}}</div></td>
+										</tr>
+										<tr class="tr_table">
+											<td class="row_table td_ten"><div class="td_div first">Ritenuta {{head.taxrate.value}}%</div></td>
+											<td class="row_table td_five" ><div class="td_div ">{{head.withholdingtax}}</div></td>
+										</tr>
+									</tbody>
+							</table>
+					</div>
+					<div class="category_group">
+							Note:
+							<textarea class="HEAD_note" ng-model="head.note" value="{{head.note}}" ng-change="setModified()" >
+							</textarea >
+					</div>
+			</p>
+        </div>		
+	</div>
+	
+	
+</div>

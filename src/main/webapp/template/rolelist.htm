@@ -1,0 +1,58 @@
+<div class="container userlist clearfix">
+	<div class="toolbar_table">
+		<h3>Elenco Utenti</h3>
+		<div class=" buttonmenu addbutton admin_grant"  >
+			<a ng-click="addRoleElement()" ng-if="rolesaved == true">
+				<div class="add">
+				</div>
+				<div class="addlabel">
+					Aggiungi Ruolo 
+				</div>
+			</a>
+		</div>
+		<div class="buttonmenu savebutton admin" ng-click="saveRoles()">
+			<div class="save buttonicon">
+			</div>
+			<div class="buttonlabel">
+				Salva
+			</div>
+		</div>
+		<div class="filter">
+			<input class="filter" ng-model="query">
+			<div class="label filter">Cerca:</div>
+		</div>
+		<div class="sort">
+		    <select class="sort" ng-model="orderProp">
+				<option value="username">Username</option>
+				<option value="cognome">Cognome</option>
+			</select>
+			<div class="label sort">Ordina:</div> 
+		</div>
+	</div>
+	<div class="tablecontainer" >
+		<div class="table">
+			<div class="tableheader  roles clearfix">
+				<div class="header_table row_table first name">Username</div>
+				<div class="header_table row_table cognome">Crea</div>
+				<div class="header_table row_table nome">Modifica</div>
+				<div class="header_table row_table ruolo">Elimina</div>
+				<div class="header_table row_table telefono">Visualizza</div>
+				<div class="header_table row_table telefono">Super Amministratore</div>
+				<div class="header_table row_table modify">&nbsp;</div>
+				<div class="header_table row_table delete">&nbsp;</div>
+			</div>
+			<div class="tablerows"  ng-repeat="role in roles | filter:query | orderBy:orderProp">
+				<div class="row roles">
+					<div class="row_table first username"  ><div ng-if="modifyid != role.idrole">&nbsp;{{role.name}}</div><div><input ng-if="modifyid == role.idrole" ng-model="role.name"  value="{{role.name}}" />  </div></div>
+					<div class="row_table cognome"><div ng-if="modifyid != role.idrole">&nbsp;{{role.create}}</div><div><input ng-if="modifyid == role.idrole" ng-model="role.create"  value="{{role.create}}" type="checkbox" />  </div></div>
+					<div class="row_table nome"><div ng-if="modifyid != role.idrole">&nbsp;{{role.update}}</div><div><input ng-if="modifyid == role.idrole" ng-model="role.update"  value="{{role.update}}" type="checkbox" />  </div></div>
+					<div class="row_table ruolo"><div ng-if="modifyid != role.idrole">&nbsp;{{role.delete}}</div><div><input ng-if="modifyid == role.idrole" ng-model="role.delete"  value="{{role.delete}}" type="checkbox" />  </div></div>
+					<div class="row_table telefono"><div ng-if="modifyid != role.idrole">&nbsp;{{role.read}}</div><div><input ng-if="modifyid == role.idrole" ng-model="role.read"  value="{{role.read}}" type="checkbox" />  </div></div>
+					<div class="row_table email">&nbsp;{{role.admin}}</div>
+					<a href="#/role"><div class="row_table modify"><div class="modifyicon" ng-click="modifyRoleElement(role.idrole)" ></div></div></a>
+				    <div class="row_table delete"><div class="deleteicon" id="del{{role.idrole}}" ng-click="deleteRoleElement(role.idrole)" ></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
