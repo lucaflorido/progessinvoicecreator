@@ -3,11 +3,11 @@
 		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
 	</div>
 </div>
-<div class="row show-for-medium-up" >
+<div class="row " >
 	<div class="large-4 medium-4 small-12 logo columns">
-		<img src="assets/rocchilogo.png" />
+		<img src="assets/logo.jpg" />
 	</div>
-	<div class="large-8 medium-8  small-12 columns">
+	<div class="large-8 medium-8  small-12 show-for-medium-up columns">
 		<div class="row">
 			<div class="large-12 small-12 columns">
 				<h3 class="title" >Azienda</h3>
@@ -32,17 +32,17 @@
 			<legend>Denominazione  </legend>
 			<div class="large-4 small-12 medium-6 columns">
 				<label>Ragione Sociale
-					<input type="text" ng-model="company.companyname" value="{{company.companyname}}" /> 
+					{{company.companyname}}
 				</label>
 			</div>
 			<div class="large-4 small-12 medium-6 columns">
 				<label>Partita Iva
-					<input type="text" ng-model="company.companynumber" value="{{company.companynumber}}" /> 
+					{{company.companynumber}}
 				</label>
 			</div>
 			<div class="large-4 small-12 medium-6 columns">
 				<label>Codice Fiscale
-					<input type="text" ng-model="company.taxcode" value="{{company.taxcode}}" /> 
+					{{company.taxcode}}
 				</label>
 			</div>
 	</fieldset>
@@ -125,5 +125,94 @@
 				</label>
 			</div>
 		</fieldset>
+	</form>
+</div>
+<div class="row">
+	<form>
+	<fieldset>
+		<legend>Dati Bancari</legend>
+			<div class="large-8 small-12 medium-12 columns">
+				<label>IBAN
+					<input type="text" ng-model="company.bankcontact.iban" value="{{company.bankcontact.iban}}" /> 
+				</label>
+			</div>
+			<div class="large-4 small-12 medium-6 columns">
+				<label>BICSWIFT
+					<input type="text" ng-model="company.bankcontact.bicswift" value="{{company.bankcontact.bicswift}}" /> 
+				</label>
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+<div class="row">
+	<form>
+	<fieldset>
+		<legend>Dati Bancari</legend>
+<div class="row show-for-medium-up" >
+	<div class="large-8 medium-8 small-8 columns">
+		<ul class="button-group header_menu_button">
+		    
+		  	<li ><a  ng-click="addMailObject()" class="button"><i class="fi-plus" ></i></a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div class="row" >
+	<div class="large-2 small-12 medium-4 columns">
+		Email
+	</div>
+	<div class="large-2 small-12 medium-4 columns">
+		Host
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		Porta
+	</div>
+	<div class="large-2 small-12 medium-4 columns">
+		Password
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		Pec
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		auth
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		Tls
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		&nbsp;
+	</div>
+</div>
+<div class="row" ng-repeat="mail in company.mailconfig">
+	
+	<div class="large-2 small-12 medium-4 columns">
+		<input type="text" ng-model="mail.mailconfig.email" value="{{mail.mailconfig.email}}"  />
+	</div>
+	<div class="large-2 small-12 medium-4 columns">
+		<input type="text" ng-model="mail.mailconfig.host" value="{{mail.mailconfig.host}}" />
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		<input type="text" ng-model="mail.mailconfig.port" value="{{mail.mailconfig.port}}" />
+	</div>
+	<div class="large-2 small-12 medium-4 columns">
+		<input type="password" ng-model="mail.mailconfig.password" value="{{mail.mailconfig.password}}" />
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		<input type="checkbox" ng-model="mail.mailconfig.pec" value="{{mail.mailconfig.pec}}" />
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		<input type="checkbox" ng-model="mail.mailconfig.auth" value="{{mail.mailconfig.auth}}" />
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		<input type="checkbox" ng-model="mail.mailconfig.starttls" value="{{mail.mailconfig.starttls}}" />
+	</div>
+	<div class="large-1 small-12 medium-4 columns">
+		<i class="icon_setup fi-x-circle" ng-click="deleteElement(mail)" ></i>
+	</div>
+</div>
+
+</fieldset>
 	</form>
 </div>

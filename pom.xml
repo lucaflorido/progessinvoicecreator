@@ -45,6 +45,11 @@
 	    <version>1.19</version>
 	</dependency>
 	<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.0.1</version>
+	</dependency>
+	<dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>
 	<version>2.5</version>
@@ -106,6 +111,7 @@
 		         <targetPath>WEB-INF/classes</targetPath>
 		        </resource>
       		</webResources>
+      		<outputDirectory>D:\Applications\tomcat\apache-tomcat-7.0.54\webapps</outputDirectory>
           </configuration>
         </plugin>
         

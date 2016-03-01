@@ -4,11 +4,11 @@
 	</div>
 </div>
 
-<div class="row show-for-medium-up" >
+<div class="row " >
 	<div class="large-4 medium-4 small-12 logo columns">
-		<img src="assets/rocchilogo.png" />
+		<img src="assets/logo.jpg" />
 	</div>
-	<div class="large-8 medium-8  small-12 columns">
+	<div class="large-8 medium-8  small-12 show-for-medium-up columns">
 		<div class="row">
 			<div class="large-12 small-12 columns">
 				<h3 class="title" >Elenco Prodotti</h3>
@@ -30,21 +30,6 @@
 		</ul>
 	</div>
 </div>
-<!-- 
-<div class="row">
-	<div class="large-2 medium-2 small-2 columns">
-		<h3>PRODOTTI</h3>
-	</div>
-	<div class="large-10 medium-10 small-10 columns">
-		<ul class="button-group">
-			<li><div class="button" ng-click="addNew()">Nuovo</div></li>
-			<li><div class="button">Stampa</div></li>
-			<li><div class="button" ng-click="filterMenu('filter')">Filtra </div></li>
-			<li><div class="button" ng-click="filterMenu('import')">Importa </div></li>
-			<li><div class="button" ng-click="filterMenu('increment')">Incrementa Prezzi </div></li>
-		</ul>
-	</div>
-</div>-->
 
 <div class="row" ng-show="menuselected == 'filter' || menuselected == 'increment'">
 	<form>
@@ -58,12 +43,12 @@
 					value="{{filter.searchstring}}" capitalize />
 				</label>
 			</div>
-			<div class="large-4 columns">
+		<!--  	<div class="large-4 columns">
 				<label>Regione <select  name="region" ng-options="region.code for region in regions" ng-model="filter.region"  >
            		 	<option value=""></option>
             	</select> 
 				</label>
-			</div>
+			</div>-->
 			<div class="large-4 columns">
 				<label>Gruppo <select  name="group" ng-options="group.code for group in groups" ng-model="filter.group"  >
            		 	<option value=""></option>
@@ -90,12 +75,12 @@
             	</select> 
 				</label>
 			</div>
-			<div class="large-4 columns">
-				<label>Uvaggio <select  name="composition" ng-options="composition.description for composition in compositions" ng-model="filter.composition"  >
+			<!-- <div class="large-4 columns">
+				<label>Composizione <select  name="composition" ng-options="composition.description for composition in compositions" ng-model="filter.composition"  >
            		 	<option value=""></option>
             	</select> 
 				</label>
-			</div>
+			</div>-->
 		</div>
 		
 	</fieldset>

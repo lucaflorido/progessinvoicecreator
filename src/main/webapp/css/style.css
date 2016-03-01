@@ -23,7 +23,7 @@ h1{
 }
 /*GOLD : #AE9A71;*/
 .menu_title_text{
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
 	color: #00ABF4;
 	text-align: center;
 	font-size: 70px;
@@ -42,7 +42,7 @@ h1{
 }
 .menu_button{
 	height:60px;
-	border: 4px solid #00ADEF;
+	border: 4px solid #FE860C;
 	width: 100%;
 	border-radius: 10px;
 	background-color :#ffffff;
@@ -61,7 +61,7 @@ h1{
 	  text-shadow: 1px 2px #000;
 }
 .menu_icon{
-	background-color:	#00ADEF;
+	background-color:	#FE860C;
 	padding-left:15px;
 	padding-right:15px;
 	width: 64px;
@@ -69,7 +69,7 @@ h1{
 	
 }
 .menu_text{
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
 	color: #00ABF4;
 	text-align: center;
 	font-size: 40px;
@@ -106,7 +106,7 @@ max-height:100%;
  }
 .sub_header_document label{
 	text-align: center;
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
 	color: #00ABF4;
 	font-size: 40px;
 	font-weight: lighter;
@@ -132,7 +132,7 @@ button.selected {
 
 }
 .title {
-    font-family: england_hand_dbregular;
+    font-family: Verdana;
     text-align: center;
     font-size: 80px;
     color: #00ABF4;
@@ -140,7 +140,7 @@ button.selected {
     font-weight: lighter;
 }
 .title_header {
-    font-family: england_hand_dbregular;
+    font-family: Verdana;
     text-align: center;
     font-size: 30px;
     color: #00ABF4;
@@ -224,7 +224,7 @@ button{
 	
 }
 .draft_title{
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
     text-align: center;
     font-size: 40px;
     color: #00ABF4;
@@ -247,7 +247,7 @@ alert{
 .subtotal_ec_amount{}
 h5.ec_warning{
 	color:orange;
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
 }
 button.tiny, .button.tiny{
 	font-size:16px;
@@ -272,7 +272,7 @@ border: 2px solid  #00ABF4;
 	max-width: 240px;
 }
 .filterlabel{
-	font-family: england_hand_dbregular;
+	font-family: Verdana;
 	color: #AE9A71;
 	text-align: left;
 	font-size:20px;
@@ -543,7 +543,7 @@ background-color: white;
 	padding-bottom: 10px;
 }
 .ec_quantity{
-	background-color:#00ADEF;
+	background-color:#FE860C;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }

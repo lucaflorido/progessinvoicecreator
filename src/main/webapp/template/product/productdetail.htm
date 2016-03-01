@@ -3,11 +3,11 @@
 		<alert  class="{{msg.type}}" close="msg.initialize()">{{msg.message}}</alert>
 	</div>
 </div>
-<div class="row show-for-medium-up" >
+<div class="row " >
 	<div class="large-4 medium-4 small-12 logo columns">
-		<img src="assets/rocchilogo.png" />
+		<img src="assets/logo.jpg" />
 	</div>
-	<div class="large-8 medium-8  small-12 columns">
+	<div class="large-8 medium-8  small-12 show-for-medium-up columns">
 		<div class="row">
 			<div class="large-12 small-12 columns">
 				<h3 class="title" >Dettaglio prodotto</h3>
@@ -86,12 +86,12 @@
            		 	<option value=""></option>
             	</select> 
          </div>
-         <div class="large-12 medium-12 small-12 columns">
+     <!--     <div class="large-12 medium-12 small-12 columns">
              <label>Regione</label>
              <select  name="region" ng-options="region.name for region in regions" ng-model="product.region"  >
            		 	<option value=""></option>
             	</select> 
-            	</div>
+            	</div>-->
             	<div class="large-12 medium-12 small-12 columns">
         	<label>Marca</label>
              <select  name="brand" ng-options="brand.name for brand in brands" ng-model="product.brand"  >
@@ -116,14 +116,19 @@
            		 <option value=""></option>
             </select> 
             </div>
-            <div class="large-12 medium-12 small-12 columns">
+                <div class="large-12 medium-12 small-12 columns">
+            <label>Prodotto/Servizio</label>
+            <input type="checkbox" value="{{product.isProduct}}" ng-model="product.isProduct" >
+            </div>
+          <!--    <div class="large-12 medium-12 small-12 columns">
             <label>Pubblica</label>
             <input type="checkbox" value="{{product.publish}}" ng-model="product.publish" >
-            </div>
+            </div>-->
 			</div>
       </form>
 		
     </div>
+    <!--  
     <div class="row">
     	<div class="large-6 columns" ><h6>COMPOSIZIONE (Uvaggio)</h6></div>
     	<div class="small-3 columns" ><button class="button small"  ng-click="addCompositionElement(product)" >Aggiungi</button></div>
@@ -147,7 +152,7 @@
           </tr>     
         </tbody>
       </table>
-      </div>
+      </div>-->
   </div>
 
   <div class="large-6 medium-12 small-12 columns">
@@ -173,7 +178,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="ump in umsToDisplay ">
-            <td><a ng-click="changeUMElement($index)" class="matita"></a> </td>
+            <td><i class="icon_setup fi-pencil" ng-click="changeUMElement($index)" ></i> </td>
             <td><div ng-if="umpid != $index">&nbsp;{{ump.code}} </div>
 																					<input type="text" ng-if="umpid == $index"  ng-model="ump.code"  value="{{ump.code}}"  capitalize   >  
 																			</td>
@@ -183,7 +188,7 @@
 										<input ng-if="umpid == $index" type="checkbox" ng-model="ump.preference"  value="{{ump.preference}}" /></td>
             <td class="hidden_cell"><div ng-if="umpid != $index">&nbsp;{{ump.conversion}}</div>
 										<input ng-if="umpid == $index" ng-model="ump.conversion"  value="{{ump.conversion}}"  /></td>
-            <td><a  class="x" ng-click="deleteUMElement(ump)"></a></td>
+            <td><i class="icon_setup fi-x-circle"  ng-click="deleteUMElement(ump)"></i></td>
           </tr>     
         </tbody>
       </table>
@@ -240,7 +245,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="prod in prodsToDisplay ">
-            <td><a  class="matita" ng-click="setListId(prod)"></a> </td>
+            <td><i class="icon_setup fi-pencil" ng-click="setListId(prod)" ></i> </td>
             <td><div ng-hide="listid == prod.idListProduct && listid == 0">{{prod.list.code}}</div>
 				<select ng-show="listid == prod.idListProduct && listid == 0 " name="list" ng-options="list.code for list in availablelists" ng-model="prod.list" ng-change="selectList(prod)" >
            		 	<option value=""></option>
@@ -249,11 +254,12 @@
             <td><div ng-hide="listid == prod.idListProduct">{{prod.price}}</div><input  ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.price}}" ng-model="prod.price"  ng-blur="calculatePercentage(prod)"  ></td>
             <td><div ng-hide="listid == prod.idListProduct">{{prod.percentage}}</div><input ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.percentage}}" ng-model="prod.percentage"  ng-blur="calculateSellPrice(prod)"  ></td>
             <td><div ng-hide="listid == prod.idListProduct">{{prod.endprice}}</div><input ng-show="listid == prod.idListProduct" type="text" placeholder="Number" value="{{prod.endprice}}" ng-model="prod.endprice"   ng-blur="calculateEndPrice(prod)" ></td>
-            <td><a  class="x" ng-click="deleteListElement(prod)"></a></td>
+            <td><i class="icon_setup fi-x-circle"  ng-click="deleteListElement(prod)"></i></td>
           </tr>
 		</tbody>
       </table>
       </div>
+     <!--  
       <div class="row" ng-show="product.publish">
 	    	<div class="large-6 columns" ><h6>ECOMMERCE</h6></div>
 	    </div>
@@ -272,7 +278,7 @@
           		 	
            	</select> 
       	</form>
-      </div>
+      </div>-->
   </div>
 
    

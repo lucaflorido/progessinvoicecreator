@@ -11,7 +11,13 @@ angular.module("rocchi.list")
 		for(var i=0;i<$scope.lists.length;i++){
 			if (id == $scope.lists[i].idList){
 				$scope.deletelist = $scope.lists[i];
-				$.ajax({
+				$http.delete(AppConfig.ServiceUrls.List,$scope.deletelist).success(function(result){
+					$scope.msg.successMessage("ELIMINAZIONE RIUSCITA CON SUCCESSO");
+					$http.get(AppConfig.ServiceUrls.List).success(function(data){
+						$scope.lists= data;
+					});
+				});
+				/*$.ajax({
 						url:AppConfig.ServiceUrls.List,
 						type:"DELETE",
 						data:"listobj="+JSON.stringify($scope.deletelist),
@@ -21,7 +27,7 @@ angular.module("rocchi.list")
 								$scope.lists= data;
 							});
 						}	
-					})
+					})*/
 			}	
 		}
 	}
@@ -143,7 +149,24 @@ angular.module("rocchi.list")
 	}
 	$scope.calculatePercentage = function(listprod){
 		var obj = {purchaseprice:listprod.product.purchaseprice,sellprice:listprod.price,percentage:listprod.percentage,endprice:listprod.endprice,taxrate:listprod.product.taxrate.value};
-		$.ajax({
+		
+		$http.post(AppConfig.ServiceUrls.UtilPricePercentage,obj).success(function(result){
+			
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
+			}	
+		});
+		
+		
+	/*	$.ajax({
 			url:AppConfig.ServiceUrls.UtilPricePercentage,
 			type:"POST",
 			data:"prices="+JSON.stringify(obj),
@@ -164,36 +187,46 @@ angular.module("rocchi.list")
 				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
 				$scope.$apply();
 			}	
-		})
+		})*/
 	};
 	$scope.calculateSellPrice = function(listprod){
 		var obj = {purchaseprice:listprod.product.purchaseprice,sellprice:listprod.price,percentage:listprod.percentage,endprice:listprod.endprice,taxrate:listprod.product.taxrate.value};
-		$.ajax({
-			url:AppConfig.ServiceUrls.UtilPricePrice,
-			type:"POST",
-			data:"prices="+JSON.stringify(obj),
-			success:function(data){
-				result = JSON.parse(data);
-				if (result.type == "success"){	
-					var priceCalc = result.success;
-					listprod.price = priceCalc.sellprice;
-					listprod.percentage = priceCalc.percentage;
-					listprod.endprice = priceCalc.endprice;
-					$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
-					$scope.$apply();
-				}else{
-					$scope.msg.alertMessage(result.errorMessage);
-					$scope.$apply();
-				}	
-			},error:function(data){
-				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
-				$scope.$apply();
+		
+		$http.post(AppConfig.ServiceUrls.UtilPricePrice,obj).success(function(result){
+			
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
 			}	
-		})
+		});
+		
+		
+		
 	};
 	$scope.calculateEndPrice = function(listprod){
 		var obj = {purchaseprice:listprod.product.purchaseprice,sellprice:listprod.price,percentage:listprod.percentage,endprice:listprod.endprice,taxrate:listprod.product.taxrate.value};
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.UtilPriceEndPrice,obj).success(function(result){
+			
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
+			}	
+		});
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.UtilPriceEndPrice,
 			type:"POST",
 			data:"prices="+JSON.stringify(obj),
@@ -214,7 +247,7 @@ angular.module("rocchi.list")
 				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
 				$scope.$apply();
 			}	
-		})
+		})*/
 	};
 	$scope.saveProduct = function(){
 	//if (GECO_validator.requiredFields()== true && GECO_validator.emailFields()==true){
@@ -222,7 +255,7 @@ angular.module("rocchi.list")
 			
 			$scope.newList.list = $scope.list;
 			$scope.value = 0;
-			$.ajax({
+			/*$.ajax({
 				url:AppConfig.ServiceUrls.List,
 				type:"PUT",
 				data:"lists="+JSON.stringify($scope.newList),
@@ -232,9 +265,7 @@ angular.module("rocchi.list")
 						$scope.list.idList = result.success;
 						$scope.idlist = result.success;
 						$scope.msg.successMessage("LISTINO SALVATO CON SUCCESSO");
-						/*$http.get(AppConfig.ServiceUrls.List+$scope.idlist).success(function(data){
-							$scope.list= data;
-						});*/
+						
 						$scope.getProductsNumber();
 					}else{
 						$scope.msg.alertMessage(result.errorMessage);
@@ -242,7 +273,19 @@ angular.module("rocchi.list")
 				},error:function(data){
 					$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
 				}	
-			})
+			})*/
+			$http.put(AppConfig.ServiceUrls.List,$scope.newList).success(function(result){
+					var resultdata = result;
+					if (resultdata.type == "success"){	
+						$scope.list.idList = resultdata.success;
+						$scope.idlist = resultdata.success;
+						$scope.msg.successMessage("LISTINO SALVATO CON SUCCESSO");
+						
+						$scope.getProductsNumber();
+					}else{
+						$scope.msg.alertMessage(resultdata.errorMessage);
+					}	
+			});
 		//}
 	} ;
 	$scope.incrementPrices = function(){

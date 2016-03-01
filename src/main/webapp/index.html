@@ -15,8 +15,8 @@
     <script src="js/vendor/modernizr.js"></script>
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
-    <!--  <script src="lib/bower_components/angular/angular.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+     <script src="lib/bower_components/angular/angular.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>-->
     <script src="lib/bower_components/angular-cookies/angular-cookies.js"></script>
 	<script src="lib/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="lib/bower_components/angular-upload/angular-upload.min.js"></script>
@@ -78,14 +78,15 @@
     <div class="loading" ng-class="{'active':loader.loader == true}" ng-controller="StartupCtrl">
     	<span us-spinner></span>
     </div>
+    <!--  
     <nav class="top-bar" data-topbar role="navigation" ng-controller="StartupCtrl"  > 
 		<ul class="title-area" > 
-			 <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+			
 
 					<li class="toggle-topbar menu-icon"><a ><span>Menu</span></a></li>
 		</ul> 
-		<section class="top-bar-section" > <!-- Right Nav Section 
-			<!-- Left Nav Section --> 
+		<section class="top-bar-section" > 
+			
 
 			<ul class="left" ng-show="viewheader == true"> 
 
@@ -137,15 +138,7 @@
 						</li>    
 					</ul> 
 				</li> 
-				<!--  li class="has-dropdown"><a href="#">Listini</a>
-					<ul class="dropdown"> 
-						<li><a href="#">Aggiornamento listino</a></li> 
-						<li><a href="#">Excel aggiornmenti prodotti</a></li> 
-						<li><a href="#">Listino vini rappresentanti</a></li> 
-						<li><a href="#">Listino liquori rappresentanti</a></li> 
-						<li><a href="#">Listino altri prodotti rappresentanti</a></li> 
-					</ul> 
-				</li--> 
+				
 				<li class="has-dropdown"  ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" > <a >Documenti</a> 
 					<ul class="dropdown"> 
 						<li class="has-dropdown" ><a>Ordini</a>
@@ -153,9 +146,7 @@
 								<li><a href="#/head_wizard/0">Nuovo Ordine</a></li> 
 								<li><a href="#/wizard_customer/0">Nuovo Ordine Cliente</a></li>
 								<li><a href="#/headlist/1/1">Elenco Ordini</a></li> 
-								<!-- li><a >Riepilogo ordine e stampa</a></li> 
-								<li><a >Esportazione Ordini</a></li> 
-								<li><a >Annullamento ordini</a></li-->
+								
 							</ul> 
 						</li>
 						<li class="has-dropdown" ng-if="auth.permission != conf_permission.Promoter" ><a>Documenti Generici</a>
@@ -164,9 +155,7 @@
 								<li><a href="#/head/0">Nuovo Documento</a></li> 
 								
 								<li><a >Elenco Ordini</a></li> 
-								<!-- li><a >Riepilogo ordine e stampa</a></li> 
-								<li><a >Esportazione Ordini</a></li> 
-								<li><a >Annullamento ordini</a></li-->
+								
 							</ul> 
 						</li>
 						
@@ -183,7 +172,7 @@
 			</ul>
 		</section> 
 	</nav>
-
+-->
    	<div class="maincontainer" ui-view>
 
 		 

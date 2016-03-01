@@ -60,7 +60,7 @@ angular.module("rocchi.customer")
 							}
 						}
 					});
-	$http.get('rest/basic/categorycustomer')
+	$http.get(AppConfig.ServiceUrls.CustomerCategory)
 			.success(
 					function(data) {
 						$scope.categorys = data;
@@ -76,7 +76,7 @@ angular.module("rocchi.customer")
 		$scope.filterCustomer.pagefilter.startelement = (1 - 1)	* $scope.pagesize;
 		$scope.filterCustomer.pagefilter.pageSize = $scope.pagesize;
 		$rootScope.filterCustomer = $scope.filterCustomer
-		$.ajax({
+		/*$.ajax({
 					url : AppConfig.ServiceUrls.ListOfCustomer,
 					type : "POST",
 					data : "filter="
@@ -89,7 +89,10 @@ angular.module("rocchi.customer")
 
 						$scope.$apply();
 					}
-				})
+				})*/
+		$http.post(AppConfig.ServiceUrls.ListOfCustomer,$scope.filterCustomer).success(function(result){
+			$scope.customers = result;
+		})
 	}
 	$scope.getCustomers();
 
@@ -160,12 +163,16 @@ var initialize = function(){
 $q.all([$http.get(AppConfig.ServiceUrls.CustomerCategory),
         $http.get(AppConfig.ServiceUrls.CustomerGroup),
         $http.get(AppConfig.ServiceUrls.Promoter),
-        $http.get(AppConfig.ServiceUrls.List)])
+        $http.get(AppConfig.ServiceUrls.List),
+        $http.get(AppConfig.ServiceUrls.TaxRate),
+        $http.get(AppConfig.ServiceUrls.PaymentsList)])
  .then(function(data){
 	$scope.categorys= data[0].data;
 	$scope.groups= data[1].data;
 	$scope.promoters= data[2].data;
 	$scope.lists= data[3].data;
+	$scope.taxrates= data[4].data;
+	$scope.payments= data[5].data;
 	getCustomer();
  });
 }
@@ -233,6 +240,28 @@ $http.get(AppConfig.ServiceUrls.DetailsOfCustomer+ $scope.idcustomer).success(fu
 					}
 				}
 			}
+			if ($scope.taxrates !== null && $scope.taxrates !== undefined) {
+				for (var itr = 0; itr < $scope.taxrates.length; itr++) {
+					if ($scope.customer.taxrate != null) {
+						if ($scope.customer.taxrate.idTaxrate == $scope.taxrates[itr].idTaxrate) {
+							$scope.currentTaxrate = $scope.taxrates[itr];
+						}
+					} else {
+						$scope.customer.taxrate = {};
+					}
+				}
+			}
+			if ($scope.payments !== null && $scope.payments !== undefined) {
+				for (var ip = 0; ip < $scope.payments.length; ip++) {
+					if ($scope.customer.payment != null) {
+						if ($scope.customer.payment.idPayment == $scope.payments[ip].idPayment) {
+							$scope.currentPayment = $scope.payments[ip];
+						}
+					} else {
+						$scope.customer.payment = {};
+					}
+				}
+			}
 			fillList();
 		});
 
@@ -262,7 +291,8 @@ initialize();
 	$scope.saveCustomer = function() {
 		$scope.customer.group = $scope.currentGroup;
 		$scope.customer.category = $scope.currentCategory;
-		$scope.customer.taxrate = $scope.currentTaxRate;
+		$scope.customer.taxrate = $scope.currentTaxrate;
+		$scope.customer.payment = $scope.currentPayment;
 		$scope.customer.promoter = $scope.currentPromoter;
 		if ($scope.customer.lists && $scope.customer.lists.length > 0 ){
 			$scope.customer.lists[0].list = $scope.currentList;

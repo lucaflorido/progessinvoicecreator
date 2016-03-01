@@ -1,15 +1,13 @@
 	<div class="row  header_reserved_area ">
 		<div class="large-3 medium-3 small-12 logo columns">
-			<img src="assets/rocchilogo.png" />
+			<img src="assets/logo.jpg" />
 		</div>
 		<div class="large-9 medium-9 hide_mobile_view small-12 columns">
 			<div class="row">
 				<div class="large-12 small-12 columns">
-					<h5 class="title" >Enoteca Rocchi</h5>
+					<h5 class="title" >Invoice Creator</h5>
 				</div>
-				<div class="large-12 small-12 columns">
-					<h3 class="subtitle">A Roma dal 1904</h3>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -17,12 +15,12 @@
 	</div>
  	<div class="row  ">
 
-	        <div class="small-10 large-6 large-offset-3 medium-8 medium-offset-2  small-offset-1 columns" ng-click="location.path('/head_wizard/0')">
+	        <div class="small-10 large-6 large-offset-3 medium-8 medium-offset-2  small-offset-1 columns" ng-click="location.path('/head/0')">
 	        	<div class="menu_button row">
 	        		<div class="menu_icon_container large-2 medium-2 small-2 columns" >
-	        			<div class="menu_icon" ><i class="fi-shopping-cart "></div></i>
+	        			<div class="menu_icon" ><i class="fi-page-filled "></div></i>
 	        		</div>
-	        		<div class="menu_text large-10 medium-10 small-10 columns ">Nuovo ordine</div>
+	        		<div class="menu_text large-10 medium-10 small-10 columns ">Nuova fattura</div>
 	        	</div>
 	        </div>
 </div> 
@@ -32,14 +30,14 @@
 	        		<div class="menu_icon_container large-2 medium-2 small-2 columns" >
 	        			<div class="menu_icon" ><i class="fi-list "></div></i>
 	        		</div>
-	        		<div class="menu_text large-10 medium-10 small-10 columns ">I miei ordini</div>
+	        		<div class="menu_text large-10 medium-10 small-10 columns ">Le mie fatture</div>
 	        	</div>
 	        	
 	        </div>
 
 	</div>    
 	<div class="row  "  ng-if=" auth.permission != conf_permission.Promoter" >
-	        <div  class="small-10 large-6 large-offset-3 medium-8 medium-offset-2  small-offset-1 columns"  ng-click="location.path('/headlist/1/1')"  >
+	        <div  class="small-10 large-6 large-offset-3 medium-8 medium-offset-2  small-offset-1 columns"  ng-click="location.path('/headlist/1/2')"  >
 	        	<div class="menu_button row">
 	        		<div class="menu_icon_container large-2 medium-2 small-2 columns" >
 	        			<div class="menu_icon" ><i class="fi-page-multiple "></div></i>
@@ -98,7 +96,7 @@
 	     	</div>
 </div> 
 
-
+<!--  
 <div class="row  " ng-if=" auth.permission != conf_permission.Promoter" >    
 	     	 <div  class="small-10 large-6 large-offset-3 medium-8 medium-offset-2  small-offset-1 columns"  ng-click="location.path('/promoter')">
 	        	<div class="menu_button row">
@@ -111,7 +109,7 @@
 	     	</div>
 </div> 
 
-
+-->
  
 
 <div class="row  " ng-if=" auth.permission != conf_permission.Promoter">

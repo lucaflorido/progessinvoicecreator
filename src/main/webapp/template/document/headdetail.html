@@ -57,7 +57,7 @@
 -->
 <div class="row show-for-medium-up" >
 	<div class="large-4 medium-4 small-12 logo columns">
-		<img src="assets/rocchilogo.png" />
+		<img src="assets/logo.jpg" />
 	</div>
 	<div class="large-8 medium-8  small-12 columns">
 		<div class="row">
@@ -72,10 +72,10 @@
 	<div class="large-8 medium-8 small-8 columns">
 		<ul class="button-group header_menu_button">
 			<li><a  class="button" go-back><i class="fi-arrow-left"  ></i></a></li>
-		  	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter"><a ng-click="saveHead()" ng-hide="head.generateTo" class="button"><i class="fi-save" ></i></a></li>
-		  	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" ><a ng-click="openNewDocument()" class="button"><i class="fi-plus"  ></i></a></li>
+		  	<li ><a ng-click="saveHead()" ng-hide="head.generateTo" class="button"><i class="fi-save" ></i></a></li>
+		  	<li  ><a ng-click="openNewDocument()" class="button"><i class="fi-plus"  ></i></a></li>
 		 	<li ng-show="head.idHead"><a  ng-click="printElements()" class="button"><i class="fi-print"  ></i></a></li>
-		 	<li ng-if="auth.permission != conf_permission.Customer && auth.permission != conf_permission.Promoter" ><a class="button"><i class="fi-x-circle"  ></i></a></li>
+		 	<li  ><a class="button"><i class="fi-x-circle"  ></i></a></li>
 		</ul>
 	</div>
 </div>
@@ -171,7 +171,7 @@
 			<legend>Righe</legend>
 		
 		<div class="large-12 medium-12 small-12 columns">
-			<ul class="button-group"  ng-if="auth.permission != conf_permission.Customer" >
+			<ul class="button-group"  >
 			  	<li><a ng-click="addRowElement()" class="button progess_uppercase tiny">Aggiungi</a></li>
 			  	<li><a ng-click="addProduct = false; showRowDetail = false;" class="button progess_uppercase tiny">Chiudi</a></li>
 			</ul>

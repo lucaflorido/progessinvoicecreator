@@ -7,13 +7,13 @@ gecoRegistryControllers.controller('CompanyCtrl',function($scope,$http,$modal,Ap
 	$scope.msg = AlertsFactory;
 	$scope.msg.initialize();
 	$scope.companysaved = true;
-	$http.get(AppConfig.ServiceUrls.Company+AppConfig.Const.CompanyId).success(function(result){
+	$http.get(AppConfig.ServiceUrls.Company).success(function(result){
 		$scope.company = result;
 	});
 	$scope.savecompany = function(){
 		$http.post(AppConfig.ServiceUrls.Company,$scope.company).success(function(result){
 			if (result.type == "success"){
-				$http.get(AppConfig.ServiceUrls.Company+AppConfig.Const.CompanyId).success(function(result){
+				$http.get(AppConfig.ServiceUrls.Company).success(function(result){
 					$scope.company = result;
 					$scope.msg.successMessage("AZIENDA SALVATA CON SUCCESSO");
 				});
@@ -37,7 +37,7 @@ gecoRegistryControllers.controller('CompanyCtrl',function($scope,$http,$modal,Ap
 			}else{
 				$scope.msg.alertMessage(result.errorMessage);
 			}
-			$http.get(AppConfig.ServiceUrls.Company+AppConfig.Const.CompanyId).success(function(result){
+			$http.get(AppConfig.ServiceUrls.Company).success(function(result){
 				$scope.company = result;
 			});
 		});

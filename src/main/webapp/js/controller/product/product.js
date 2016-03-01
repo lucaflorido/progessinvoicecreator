@@ -338,8 +338,10 @@ var getProduct = function(){
 }
 	initMasterData();
 	$scope.changeCategory = function(){
-		$scope.subcategories = $scope.currentCategory.subcategories		
-		$scope.currentSubCategory = null;
+		if ($scope.currentCategory){
+			$scope.subcategories = $scope.currentCategory.subcategories		
+			$scope.currentSubCategory = null;
+		}
 	}
 	$scope.addUMElement = function(product){
 		product.ums.push({idUnitMeasureProduct:0});
@@ -350,20 +352,14 @@ var getProduct = function(){
 		$scope.compid = product.compositions.length-1 ;
 	}
 	$scope.deleteListElement = function(obj){
-		/*$.ajax({
-				url:AppConfig.ServiceUrls.ProductList,
-				type:"DELETE",
-				data:"productobj="+JSON.stringify(prod),
-				success:function(data){
-					$scope.msg.successMessage("UNITA' DI MISURA ELIMINATA CON SUCCESSO");
-					getProduct();
-					
-				}	
-			});*/
 		CommonFunction.deleteElement(AppConfig.ServiceUrls.ProductListDelete,obj,getProduct);
 	}
 	$scope.deleteUMElement = function(um){
-		$.ajax({
+		$http.delete(AppConfig.ServiceUrls.ProductUniteMeasure,um).success(function(){
+			$scope.msg.successMessage("UNITA' DI MISURA ELIMINATA CON SUCCESSO");
+					getProduct();
+					})
+		/*$.ajax({
 				url:AppConfig.ServiceUrls.ProductUniteMeasure,
 				type:"DELETE",
 				data:"productobj="+JSON.stringify(um),
@@ -372,7 +368,7 @@ var getProduct = function(){
 					getProduct();
 					
 				}	
-			});
+			});*/
 	}
 	/*$scope.deleteCompositionElement = function(um){
 		$.ajax({
@@ -387,7 +383,16 @@ var getProduct = function(){
 			});
 	}*/
 	$scope.addListElement = function(){
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.ListNoProduct,$scope.product).success(function(result){
+			if (result.type == "success"){	
+				$scope.availablelists = result;
+				$scope.product.listproduct.push({idListProduct:0});
+				$scope.listid = 0 ;
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+			}	
+		})
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.ListNoProduct,
 			type:"POST",
 			data:"product="+JSON.stringify($scope.product),
@@ -399,7 +404,7 @@ var getProduct = function(){
 				$scope.$apply();
 				
 			}	
-		});
+		});*/
 		
 	}
 	$scope.selectList = function(prodlist){
@@ -471,7 +476,16 @@ var getProduct = function(){
 		$scope.basicPrices.sellprice = $scope.product.sellprice;
 		$scope.basicPrices.percentage = $scope.product.percentage;
 		$scope.basicPrices.purchaseprice = $scope.product.purchaseprice;
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.ProductBasicPrice+type,$scope.basicPrices).success(function(result){
+			if (result.type == "success"){	
+				$scope.product.sellprice = result.success.sellprice;
+				$scope.product.percentage = result.success.percentage;
+				$scope.product.purchaseprice = result.success.purchaseprice;
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+			}	
+		})
+		/*$.ajax({
 				url:AppConfig.ServiceUrls.ProductBasicPrice+type,
 				type:"POST",
 				data:"prices="+JSON.stringify($scope.basicPrices),
@@ -487,11 +501,19 @@ var getProduct = function(){
 						$scope.msg.alertMessage(result.errorMessage);
 					}	
 				}	
-			})
+			})*/
 	}
 	$scope.calculateListPrices = function(){
 		//$scope.product.taxrate = $scope.currentTaxRate;
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.ProductBasicPriceList,$scope.product).success(function(result){
+			if (result.type == "success"){	
+				$scope.product = result.success;
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+			}	
+		})
+		/*$.ajax({
 				url:AppConfig.ServiceUrls.ProductBasicPriceList,
 				type:"POST",
 				data:"product="+JSON.stringify($scope.product),
@@ -505,12 +527,25 @@ var getProduct = function(){
 						$scope.msg.alertMessage(result.errorMessage);
 					}	
 				}	
-			})
+			})*/
 	}
 	
 	$scope.calculatePercentage = function(listprod){
 		var obj = createProductCalcObj(listprod);
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.UtilPricePercentage,obj).success(function(result){
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
+			}	
+		})
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.UtilPricePercentage,
 			type:"POST",
 			data:"prices="+JSON.stringify(obj),
@@ -531,11 +566,24 @@ var getProduct = function(){
 				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
 				$scope.$apply();
 			}	
-		})
+		})*/
 	};
 	$scope.calculateSellPrice = function(listprod){
 		var obj = createProductCalcObj(listprod);
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.UtilPriceEndPrice,obj).success(function(result){
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
+			}	
+		})
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.UtilPricePrice,
 			type:"POST",
 			data:"prices="+JSON.stringify(obj),
@@ -556,15 +604,28 @@ var getProduct = function(){
 				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL LISTINO");
 				$scope.$apply();
 			}	
-		})
+		})*/
 	};
 	var createProductCalcObj = function(listprod){
-		$scope.product.taxrate = $scope.currentTaxRate;
+		
 		return {purchaseprice:$scope.product.purchaseprice,sellprice:listprod.price,percentage:listprod.percentage,endprice:listprod.endprice,taxrate:$scope.product.taxrate.value};
 	}
 	$scope.calculateEndPrice = function(listprod){
 		var obj = createProductCalcObj(listprod);
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.UtilPriceEndPrice,obj).success(function(result){
+			if (result.type == "success"){	
+				var priceCalc = result.success;
+				listprod.price = priceCalc.sellprice;
+				listprod.percentage = priceCalc.percentage;
+				listprod.endprice = priceCalc.endprice;
+				$scope.msg.infoMessage("SALVARE PER REGISTRARE LE MODIFICHE");
+				
+			}else{
+				$scope.msg.alertMessage(result.errorMessage);
+				
+			}	
+		})
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.UtilPriceEndPrice,
 			type:"POST",
 			data:"prices="+JSON.stringify(obj),
@@ -585,7 +646,7 @@ var getProduct = function(){
 				$scope.msg.alertMessage("ERRORE NEL SALVATAGGIO DEL PRODOTTO");
 				$scope.$apply();
 			}	
-		})
+		})*/
 	};
 	$scope.setListId = function(listProd){
 		if (listProd.idListProduct == $scope.listid ){

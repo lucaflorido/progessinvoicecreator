@@ -184,7 +184,7 @@ angular.module("rocchi.documents")
 				}
 		});
 		if ($scope.head.document != null){
-			if ($scope.head.document.credit == true || $scope.head.document.debit == true){
+			if (($scope.head.document.credit == true || $scope.head.document.debit == true) && $scope.payments ){
 				for(var i=0;i<$scope.payments.length;i++){
 					if ($scope.payments[i].idPayment == $scope.currentCustomer.payment.idPayment){
 						$scope.currentPayment = $scope.payments[i] 
@@ -250,7 +250,42 @@ angular.module("rocchi.documents")
 			if ($scope.head.list!= null){
 				idList = $scope.head.list.idList
 			}
-			$.ajax({
+			$http.post(AppConfig.ServiceUrls.SearchProductCode+code+"/"+idList,$scope.head).success(function(data){
+				if (data.idProduct != 0){
+					$scope.currentRow.product = data;
+					$scope.currentRow.productcode = code;
+					$scope.currentRow.productdescription = data.description;
+					$scope.currentRow.price = data.listprice;
+					$scope.currentRow.taxrate = data.taxrate;
+					if($scope.currentRow.product.storage){
+						$scope.currentRow.product.stockqta = Math.round($scope.currentRow.product.storage.stock/$scope.currentRow.product.conversionrate *100) /100;
+					}
+					if (data.umselected !== undefined && data.umselected != null){
+						$scope.currentRow.productum = data.umselected.code;
+						$scope.currentRow.um = data.umselected;
+						if ($scope.currentRow.quantity == 0 || $scope.currentRow.quantity == "" ){
+							$scope.currentRow.quantity  = 1;
+						}
+						
+						$("#qta").focus();
+					}else{
+						$scope.currentRow.quantity  = 1;
+						$scope.$apply();
+						$("#price").focus();
+						$scope.calculateRow($scope.currentRow);
+					}
+					
+					
+				}else{
+					$scope.search=code;
+					$scope.prodFound = [];
+					$scope.searchProd(code);
+					
+					$scope.showSearch = true;
+				}
+			
+			})
+			/*$.ajax({
 					url:AppConfig.ServiceUrls.SearchProductCode+code+"/"+idList,
 					type:"POST",
 					data:"head="+JSON.stringify($scope.head),
@@ -289,7 +324,7 @@ angular.module("rocchi.documents")
 						$scope.showSearch = true;
 					}
 				}
-			});
+			});*/
 			
 		}
 	}
@@ -338,8 +373,31 @@ angular.module("rocchi.documents")
 		$scope.checkHead();
 	};
 	$scope.checkHead = function(){
-		
-		$.ajax({
+		$http.post(AppConfig.ServiceUrls.CheckHead,$scope.head).success(function(result){
+			if (result.type == "success"){	
+				$scope.saveHeadChecked();
+			}else{
+				$.confirm({
+					text: result.errorMessage,
+					confirm: function(button) {
+							$scope.$apply();
+							$scope.saveHeadChecked();
+							},							
+					cancel: function(button) {
+						
+					},
+					
+					confirmButton:"Continua" ,
+					cancelButton: "No"
+				});
+
+			}
+			$scope.isSaving = false;
+		}).error(function(){
+			$scope.isSaving = false;
+			$scope.errorMessage(data);
+		});
+		/*$.ajax({
 			url:AppConfig.ServiceUrls.CheckHead,
 			type:"POST",
 			data:"head="+JSON.stringify($scope.head),
@@ -369,18 +427,37 @@ angular.module("rocchi.documents")
 				$scope.isSaving = false;
 				$scope.errorMessage(data);
 			}		
-		});
+		});*/
 	}
 	
 	$scope.saveHeadChecked = function(){
 		LoaderFactory.loader = true;
-		$scope.head.payment = $scope.currentPayment;
+		$scope.head.payment = $scope.head.customer.payment;
 		if ($scope.head.withholdingtax === undefined || $scope.head.withholdingtax === null ){
 			$scope.head.withholdingtax = 0;
 		}
 	     if ($scope.isSaving == false){  
 			$scope.isSaving = true;	
-				$.ajax({
+			$http.put(AppConfig.ServiceUrls.HeadList,$scope.head).success(function(result){
+				if (result.type == "success"){	
+					$scope.head = result.success;
+					$scope.idhead = $scope.head.idHead;
+					$scope.fillHead();
+					$rootScope.selectedSection = $scope.selectedSection
+					$rootScope.issaved = true;
+					LoaderFactory.loader = false;
+					$scope.msg.successMessage("Documento salvato con successo")
+				}else{
+					LoaderFactory.loader = false;
+					$scope.errorMessage(result.errorMessage);
+				}
+                $scope.isSaving = false;
+			}).error(function(data){
+				$scope.isSaving = false;
+				$scope.errorMessage(data);
+				LoaderFactory.loader = false;
+			}	)
+				/*$.ajax({
 					url:AppConfig.ServiceUrls.HeadList,
 					type:"PUT",
 					data:"heads="+JSON.stringify($scope.head),
@@ -407,7 +484,7 @@ angular.module("rocchi.documents")
 						$scope.errorMessage(data);
 						LoaderFactory.loader = false;
 					}		
-				});
+				});*/
 		}
 	}
 	$rootScope.saveFuntion = $scope.saveHeadChecked;
@@ -433,7 +510,22 @@ angular.module("rocchi.documents")
 	}
 	$scope.printElements = function(){
 		if ($scope.head.idHead != 0 && $scope.head.idHead != null ){
-		$.ajax({
+			$http.get(AppConfig.ServiceUrls.PrintHead+$scope.head.idHead).success(function(result){
+				var deviceAgent = navigator.userAgent;
+				// Set var to iOS device name or null
+				var ios = deviceAgent.toLowerCase().match(/(iphone|ipod|ipad|android|webos|blackberry|iemobile|opera mini)/);
+				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				 // some code..
+				}
+				if (ios) {
+					// This is the line that matters
+					$scope.openTab(result.url);
+				} else {
+					// Your code that works for desktop browsers
+					window.open(result.url);
+				}
+			})
+		/*$.ajax({
 				url:AppConfig.ServiceUrls.PrintHead+$scope.head.idHead,
 				type:"GET",
 				success:function(data){
@@ -453,7 +545,7 @@ angular.module("rocchi.documents")
 								window.open(result.url);
 							}
 				}	
-			});
+			});*/
 		}
 	}
 	$scope.search = "";
